@@ -20,3 +20,10 @@ export type Label = {
   name: string;
   color: string;
 };
+
+export enum EDropdowmMenus {
+  PRIORITY = 'priority',
+  STATUS = 'status',
+  LABEL = 'label',
+  ASSIGNEE = 'assignee'
+};

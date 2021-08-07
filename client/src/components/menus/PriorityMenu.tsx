@@ -1,8 +1,3 @@
-// import { Portal } from '@headlessui/react';
-// import React, { ReactNode, useState } from 'react';
-// import { ContextMenuTrigger } from 'react-contextmenu';
-// import { Priority } from '../../shared/constants';
-// import { Menu } from './Menu';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import MenuList from '@material-ui/core/MenuList';
@@ -60,27 +55,6 @@ export const PriorityMenu = ({ button, className, onSelect }: Props) => {
       </div>
     );
   });
-
-  // return (
-  //   <>
-  //     <ContextMenuTrigger id={id} holdToDisplay={1}>
-  //       {button}
-  //     </ContextMenuTrigger>
-  //     <Portal>
-  //       <Menu
-  //         id={id}
-  //         size='small'
-  //         filterKeyword={filterKeyword}
-  //         searchPlaceholder='Set priority...'
-  //         onKeywordChange={(kw) => setKeyword(kw)}
-  //         className={className}
-  //       >
-  //         {React.Children.toArray(options)}
-  //       </Menu>
-  //     </Portal>
-  //   </>
-  // );
-
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
