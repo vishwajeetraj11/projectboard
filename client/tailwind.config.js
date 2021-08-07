@@ -25,10 +25,43 @@ module.exports = {
                 'Helvetica\\ Neue',
                 'sans-serif'
             ]
+        },
+        extend: {
+            boxShadow: {
+                modal: 'rgb(0 0 0 / 9%) 0px 3px 12px',
+                'large-modal': 'rgb(0 0 0 / 50%) 0px 16px 70px'
+            },
+            spacing: {
+                2.5: '10px',
+                4.5: '18px',
+                3.5: '14px',
+                34: '136px',
+
+                70: '280px',
+                140: '560px',
+                100: '400px',
+                175: '700px',
+                53: '212px',
+                90: '360px'
+            },
+            fontSize: {
+                xxs: '0.5rem',
+                xs: '0.75rem', // 12px
+                sm: '0.8125rem', // 13px
+                md: '0.9357rem', //15px
+                14: '0.875rem',
+                base: '1.0rem' // 16px
+            },
+            zIndex: {
+                100: 100
+            }
         }
     },
     variants: {
-        extend: {}
+        extend: {
+            backgroundColor: ['checked'],
+            borderColor: ['checked']
+        }
     },
-    plugins: []
+    plugins: [require('@tailwindcss/line-clamp'), require('@tailwindcss/forms')]
 };
