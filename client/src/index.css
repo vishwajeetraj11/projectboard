@@ -37,3 +37,7 @@ body {
     font-display: swap;
     src: url("assets/fonts/Inter-UI-ExtraBold.woff2") format("woff2"), url("assets/fonts/Inter-UI-ExtraBold.woff") format("woff");
 }
+
+.ProseMirror {
+    font-family: 'Inter UI', sans-serif !important;
+}

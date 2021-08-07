@@ -16,10 +16,18 @@ export const Status = {
   CANCELED: 'canceled',
 };
 
+// export const Labels = {
+//   BUG: 'Bug',
+//   FEATURE: 'FEATURE',
+//   IMPROVEMENT: 'IMPROVEMENT',
+//   NO_LABEL: 'NO_LABEL'
+// };
+
 export const DEFAULT_LABLES: Array<Label> = [
   { id: '1', name: 'Bug', color: '#eb5757' },
   { id: '2', name: 'Feature', color: '#bb87fc' },
-  { id: '3', name: 'Improvement', color: '#4ea7fc' }
+  { id: '3', name: 'Improvement', color: '#4ea7fc' },
+  { id: '4', name: 'No Label', color: '#999999' },
 ];
 
 // export const DropdownMenus = {

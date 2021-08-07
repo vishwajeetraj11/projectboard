@@ -8,9 +8,10 @@ import Modal from 'components/Modal';
 import { useState } from 'react';
 // import { useDispatch } from 'react-redux';
 import Editor from "rich-markdown-editor";
+import { Label } from 'shared/types';
 // import { AppDispatch } from 'store';
 // import { createIssue } from 'store/actions/issueActions';
-import { Priority, Status } from '../shared/constants';
+import { DEFAULT_LABLES, Priority, Status } from '../shared/constants';
 import { showInfo, showWarning } from '../shared/utils/Notification';
 import LabelMenu from './menus/LabelMenu';
 import { PriorityMenu } from './menus/PriorityMenu';
@@ -41,12 +42,12 @@ const getPriorityString = (priority: string) => {
   }
 };
 
-
 export default function IssueModal({ isOpen, onDismiss }: Props) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState(Priority.NO_PRIORITY);
   const [status, setStatus] = useState(Status.BACKLOG);
+  const [label, setLabel] = useState(DEFAULT_LABLES[3]);
 
   // const dispatch = useDispatch<AppDispatch>();
 
@@ -143,20 +144,20 @@ export default function IssueModal({ isOpen, onDismiss }: Props) {
         button={<button
           className='inline-flex items-center h-6 px-2 text-gray-500 bg-gray-200 border-none rounded focus:outline-none hover:bg-gray-100 hover:text-gray-700'
         >
-          <PriorityIcon priority={priority} className='mr-0.5' />
+          <PriorityIcon priority={priority} className='mr-2' />
           <span>{getPriorityString(priority)}</span>
         </button>}
         onSelect={(val) => setPriority(val)}
       />
       <button className='inline-flex items-center h-6 px-2 ml-2 text-gray-500 bg-gray-200 border-none rounded focus:outline-none hover:bg-gray-100 hover:text-gray-700'>
-        <OwnerIcon className='w-3.5 h-3.5 ml-2 mr-0.5' />
+        <OwnerIcon className='w-3.5 h-3.5 mr-2' />
         <span>Assignee</span>
       </button>
       <LabelMenu
         id='label-menu'
+        onSelect={(label: Label) => setLabel(label)}
         button={<button className='inline-flex items-center h-6 px-2 ml-2 text-gray-500 bg-gray-200 border-none rounded focus:outline-none hover:bg-gray-100 hover:text-gray-700'>
-          <LabelIcon className='w-3.5 h-3.5 ml-2 mr-0.5' />
-          <span>Label</span>
+          {label.name === 'No Label' ? <><LabelIcon className='w-3.5 h-3.5  mr-2' /> <span>No Label</span> </> : <><div className="w-2.5 h-2.5 rounded-full mr-2" style={{ background: label.color }}></div> <span>{label.name}</span> </>}
         </button>} />
     </div>
     {/* Footer */}
