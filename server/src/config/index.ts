@@ -5,7 +5,6 @@ import path from 'path';
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 // const __dirname = path.resolve();
-console.log();
 const envFound = dotenv.config({
   path: path.join(__dirname, '../../.env'),
 });
