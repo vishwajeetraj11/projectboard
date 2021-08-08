@@ -6,6 +6,6 @@ interface Props {
 
 export const Board: React.FC<Props> = () => {
   return (
-    <div></div>
+    <div>Board</div>
   );
 };

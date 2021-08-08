@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const Routes: React.FC<Props> = () => {
-  const user = true;
+  const user = false;
   return (
     <>
       {user ? <AuthenticatedRoutes /> : <UnauthenticatedRoutes />}

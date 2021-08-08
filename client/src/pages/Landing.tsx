@@ -5,5 +5,5 @@ interface Props {
 }
 
 export const Landing: React.FC<Props> = () => {
-  return (<div></div>);
+  return (<div>Landing</div>);
 };

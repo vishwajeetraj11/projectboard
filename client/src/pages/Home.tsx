@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 interface Props {
 
 }
 
 export const Home: React.FC<Props> = () => {
+  const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <h1 className='text-3xl font-sans'></h1>
+    <div>Home</div>
   );
 };
