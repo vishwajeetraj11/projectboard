@@ -1,3 +1,4 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import { Transition } from '@headlessui/react';
 import classnames from 'classnames';
 import { useClickOutside } from 'hooks/useClickOutside';
@@ -12,6 +13,8 @@ export const ProfileMenu = ({ isOpen, className, onDismiss }: Props) => {
   let classes = classnames('select-none w-53 shadow-modal z-50 flex flex-col py-1 bg-white font-normal rounded text-gray-800', className);
   const ref = useRef(null);
   let ready = false;
+
+  const { logout } = useAuth0();
 
   useClickOutside(ref, () => {
 
@@ -47,7 +50,9 @@ export const ProfileMenu = ({ isOpen, className, onDismiss }: Props) => {
         <div className='flex items-center h-8 px-3 hover:bg-gray-100 '>Help & Support</div>
         <div className='flex items-center h-8 px-3 hover:bg-gray-100 '>API</div>
         <div className='w-full px-3 my-1 border-b border-gray-200'></div>
-        <div className='flex items-center h-8 px-3 hover:bg-gray-100'>Logout</div>
+        <div className='flex items-center h-8 px-3 hover:bg-gray-100 cursor-pointer' onClick={() => logout({
+          returnTo: window.location.origin,
+        })}>Logout</div>
       </Transition >
     </div>
   );

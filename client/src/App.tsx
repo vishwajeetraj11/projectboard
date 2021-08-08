@@ -1,3 +1,4 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import "animate.css/animate.min.css";
 import { cssTransition, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,6 +11,8 @@ const slideUp = cssTransition({
 });
 
 export const App = () => {
+  const { isLoading } = useAuth0();
+  if (isLoading) return <div>Loading</div>;
   return (
     <div className="App">
       <Routes />

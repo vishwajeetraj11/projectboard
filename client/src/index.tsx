@@ -1,4 +1,5 @@
 import { StylesProvider } from '@material-ui/core';
+import { Auth0ProviderWithHistory } from 'auth/auth0-provider-with-history';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
@@ -10,7 +11,9 @@ ReactDOM.render(
   <React.StrictMode>
     <StylesProvider injectFirst>
       <BrowserRouter>
-        <App />
+        <Auth0ProviderWithHistory>
+          <App />
+        </Auth0ProviderWithHistory>
       </BrowserRouter>
     </StylesProvider>
   </React.StrictMode>,

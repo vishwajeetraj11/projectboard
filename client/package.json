@@ -7,7 +7,9 @@
     "build": "craco build",
     "test": "craco test"
   },
+  "proxy": "http://localhost:3000",
   "dependencies": {
+    "@auth0/auth0-react": "^1.6.0",
     "@craco/craco": "^6.2.0",
     "@headlessui/react": "^1.4.0",
     "@material-ui/core": "^4.12.3",
