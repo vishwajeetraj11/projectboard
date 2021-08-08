@@ -1,36 +1,32 @@
 {
   "compilerOptions": {
-      "allowJs": true,
-      "baseUrl": "src",
-      "esModuleInterop": true,
-      "isolatedModules": true,
-      "forceConsistentCasingInFileNames": true,
-      "jsx": "react",
-      "lib": ["es2017", "es2015", "dom", "es2018.promise"],
-      "module": "esnext",
-      "moduleResolution": "node",
-      "noEmit": true,
-      "resolveJsonModule": true,
-      "rootDir": "../",
-      "skipLibCheck": true,
-      "strict": true,
-      "strictFunctionTypes": false,
-      "strictNullChecks": false,
-      "target": "esnext",
-      "types": ["jest", "testing-library__jest-dom"],
-      "paths": {
-          "@components": ["components"],
-          "@components/*": ["components/*"],
-          "@utils": ["utils"],
-          "@utils/*": ["utils/*"],
-          "@redux": ["redux"],
-          "@redux/*": ["redux/*"],
-          "@routes": ["routes"],
-          "@routes/*": ["routes/*"],
-          "@pages": ["pages"],
-          "@pages/*": ["pages/*"]
-      }
+    "target": "es2017",
+    "lib": [
+      "es2017",
+      "esnext.asynciterable"
+    ],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types"
+    ],
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "pretty": true,
+    "sourceMap": true,
+    "outDir": "./build",
+    "allowJs": true,
+    "noEmit": false,
+    "esModuleInterop": true
   },
-  "include": ["src", "types"],
-  "exclude": ["node_modules"]
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "tests"
+  ]
 }
