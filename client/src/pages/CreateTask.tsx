@@ -3,26 +3,25 @@ import { ReactComponent as OwnerIcon } from 'assets/icons/avatar.svg';
 import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
 import { ReactComponent as GitIssueIcon } from 'assets/icons/git-issue.svg';
 import { ReactComponent as LabelIcon } from 'assets/icons/label.svg';
-import { ReactComponent as ZoomIcon } from 'assets/icons/zoom.svg';
-import Modal from 'components/Modal';
+import LabelMenu from 'components/menus/LabelMenu';
+import { PriorityMenu } from 'components/menus/PriorityMenu';
+import { StatusMenu } from 'components/menus/StatusMenu';
+import { PriorityIcon } from 'components/PriorityIcon';
+import { StatusIcon } from 'components/StatusIcon';
+import { Toggle } from 'components/Toggle';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 // import { useDispatch } from 'react-redux';
 import Editor from "rich-markdown-editor";
 import { Label } from 'shared/types';
+import { MarkdownStyles } from 'styled/Markdown';
 // import { AppDispatch } from 'store';
 // import { createIssue } from 'store/actions/issueActions';
 import { DEFAULT_LABLES, Priority, Status } from '../shared/constants';
 import { showInfo, showWarning } from '../shared/utils/Notification';
-import LabelMenu from './menus/LabelMenu';
-import { PriorityMenu } from './menus/PriorityMenu';
-import { StatusMenu } from './menus/StatusMenu';
-import { PriorityIcon } from './PriorityIcon';
-import { StatusIcon } from './StatusIcon';
-import { Toggle } from './Toggle';
 
 interface Props {
-  isOpen: boolean;
-  onDismiss?: () => void;
+
 }
 
 const getPriorityString = (priority: string) => {
@@ -42,7 +41,7 @@ const getPriorityString = (priority: string) => {
   }
 };
 
-export default function IssueModal({ isOpen, onDismiss }: Props) {
+export const CreateTask = ({ }: Props) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState(Priority.NO_PRIORITY);
@@ -75,7 +74,6 @@ export default function IssueModal({ isOpen, onDismiss }: Props) {
     // clear state
     // close modal
 
-    // if (onDismiss) onDismiss();
     // setTitle('');
     // setDescription('');
     // setPriority(Priority.NO_PRIORITY);
@@ -83,11 +81,7 @@ export default function IssueModal({ isOpen, onDismiss }: Props) {
     showInfo('You created new issue.', 'Issue created');
   };
 
-  const handleClickCloseBtn = () => {
-    if (onDismiss) onDismiss();
-  };
-
-  let body = <div id='issue-modal' className='flex flex-col w-full py-4'>
+  return (<div id='issue-modal' className='flex flex-col w-full py-4 flex-1'>
     {/* header */}
     <div className='flex items-center justify-between flex-shrink-0 px-4'>
       <div className='flex items-center'>
@@ -98,11 +92,9 @@ export default function IssueModal({ isOpen, onDismiss }: Props) {
         <span className='ml-2 font-normal text-gray-700'>› New Issue</span>
       </div>
       <div className='flex items-center'>
-        <div className='inline-flex items-center justify-center text-gray-500 rounded h-7 w-7 hover:bg-gray-100 hover:text-gray-700'><ZoomIcon className='w-3' /></div>
-        <div
+        <Link to='/'
           className='inline-flex items-center justify-center ml-2 text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'
-          onClick={handleClickCloseBtn}
-        ><CloseIcon className='w-4' /></div>
+        ><CloseIcon className='w-4' /></Link>
       </div>
     </div>
     <div className='flex flex-col flex-1 pb-3.5 overflow-y-auto'>
@@ -126,14 +118,16 @@ export default function IssueModal({ isOpen, onDismiss }: Props) {
 
       {/* Issue description editor */}
       <div className='flex w-full px-4'>
-        <Editor
-          autoFocus
-          id='editor'
-          defaultValue={description}
-          onChange={(value) => setDescription(value())}
-          className='w-full mt-4 ml-5 font-normal border-none appearance-none min-h-12 text-md focus:outline-none'
-          placeholder='Add description...'
-        />
+        <MarkdownStyles>
+          <Editor
+            autoFocus
+            id='editor'
+            defaultValue={description}
+            onChange={(value) => setDescription(value())}
+            className='w-full mt-4 ml-5 font-normal border-none appearance-none min-h-12 text-md focus:outline-none'
+            placeholder='Add description...'
+          />
+        </MarkdownStyles>
       </div>
 
     </div>
@@ -174,16 +168,6 @@ export default function IssueModal({ isOpen, onDismiss }: Props) {
         </button>
       </div>
     </div>
-  </div>;
-
-  return (
-    <Modal
-      isOpen={isOpen}
-      center={false}
-      size='large'
-      onDismiss={onDismiss}
-    >
-      {body}
-    </Modal>
+  </div>
   );
-}
+};

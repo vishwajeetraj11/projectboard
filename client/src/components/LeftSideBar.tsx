@@ -9,7 +9,6 @@ import { ReactComponent as ViewIcon } from 'assets/icons/view.svg';
 import classNames from 'classnames';
 import HelpModal from 'components/HelpModal';
 import InviteBox from 'components/InviteBox';
-import IssueModal from 'components/IssueModal';
 import { SearchBox } from 'components/SearchBox';
 import { useClickOutside } from 'hooks/useClickOutside';
 import React, { RefObject, useEffect, useRef, useState } from 'react';
@@ -35,7 +34,6 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showInviteModal, setShowInviteModal] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
-  const [showIssueModal, setShowIssueModal] = useState(false);
 
   let classes = classNames(
     'absolute lg:static inset-0 transform duration-300 lg:relative lg:translate-x-0 bg-white flex flex-col flex-shrink-0 w-56 font-sans text-sm text-gray-700 border-r border-gray-100 lg:shadow-none justify-items-start',
@@ -86,14 +84,11 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
           </div>
 
           {/* Create issue btn */}
-          <button
+          <Link to='/create-task'
             className='inline-flex items-center px-2 py-2 mt-3 bg-white border border-gray-300 rounded hover:bg-gray-100 focus:outline-none h-7'
-            onClick={() => {
-              setShowIssueModal(true);
-            }}
           >
             <AddIcon className='mr-2.5 w-3.5 h-3.5' /> New Issue
-          </button>
+          </Link>
         </div>
 
         {/* Search box */}
@@ -163,7 +158,6 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
       {/* Modals */}
       {<HelpModal isOpen={showHelpModal} onDismiss={() => setShowHelpModal(false)} />}
       {<InviteBox isOpen={showInviteModal} onDismiss={() => setShowInviteModal(false)} />}
-      {<IssueModal isOpen={showIssueModal} onDismiss={() => setShowIssueModal(false)} />}
     </>
   );
 };

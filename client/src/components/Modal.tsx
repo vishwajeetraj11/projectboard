@@ -40,7 +40,9 @@ function Modal({ title, isOpen, center, size, className, onDismiss, children }: 
   );
   const handleClick = useCallback((e) => {
     if (!onDismiss) return;
-    if (ref.current && !ref.current.contains(e.target)) {
+    const markdownDropdown = document.getElementById('block-menu-container');
+    const insideMarkdown = markdownDropdown?.contains(e.target);
+    if (ref.current && !ref.current.contains(e.target) && !insideMarkdown) {
       onDismiss();
     }
   }, [onDismiss]);
