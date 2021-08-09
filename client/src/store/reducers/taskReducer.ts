@@ -1,35 +1,46 @@
-import { Status } from "../../shared/constants";
+import { Task } from 'shared/types';
 // import { Task } from "../../shared/types";
-import { GET_TASKS_FAIL, GET_TASKS_SUCCESS, GET_TASKS_REQUEST } from "../contants/taskConstants";
+import { GET_TASKS_FAIL, GET_TASKS_REQUEST, GET_TASKS_SUCCESS } from "../contants/taskConstants";
 
 const INITIAL_STATE = {
   loading: false,
   error: false,
   success: false,
-
-  // tasks:{backlog: [] as Array<Task>,
-  //   todo: [] as Array<Task>,
-  //   inProgress: [] as Array<Task>,
-  //   done: [] as Array<Task>,
-  //   canceled: [] as Array<Task>,} 
+  tasks: {
+    backlog: [] as Array<Task>,
+    todo: [] as Array<Task>,
+    in_progress: [] as Array<Task>,
+    done: [] as Array<Task>,
+    cancelled: [] as Array<Task>,
+  }
 };
 
-const issueReducer = (state = INITIAL_STATE, action: any) => {
+export const taskListReducer = (state = INITIAL_STATE, action: any) => {
   const { type, payload } = action;
 
   switch (type) {
     case GET_TASKS_REQUEST:
       return {
+        ...state,
         loading: true
-        // backlog: data[Status.BACKLOG] || [],
-        // todo: data[Status.TODO] || [],
-        // inProgress: data[Status.IN_PROGRESS] || [],
-        // done: data[Status.DONE] || [],
-        // canceled: data[Status.CANCELED] || []
+      };
+    case GET_TASKS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        success: true,
+        tasks: payload
+      };
+    case GET_TASKS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        error: payload
       };
     default:
       break;
   }
   return state;
 };
-export default issueReducer;

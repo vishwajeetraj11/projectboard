@@ -1,12 +1,12 @@
 
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import ReduxThunk from 'redux-thunk';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from "redux-devtools-extension";
-// import taskReducer from './reducers/taskReducer';
+import ReduxThunk from 'redux-thunk';
+import { taskListReducer } from './reducers/taskReducer';
 
 
 let rootReducer = combineReducers({
-  // issues: issueReducer,
+  taskList: taskListReducer,
 });
 const middlewares = [ReduxThunk];
 

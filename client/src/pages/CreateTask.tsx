@@ -54,7 +54,7 @@ export const CreateTask = ({ }: Props) => {
   const [label, setLabel] = useState(DEFAULT_LABLES[3]);
   const [assignee, setAssignee] = useState('');
   const [dueDate, setDate] = useState('');
-  const [startDate, setStartDate] = useState('');
+  const [startDate, setStartDate] = useState(new Date());
 
   const { getAccessTokenSilently } = useAuth0();
 
@@ -79,7 +79,7 @@ export const CreateTask = ({ }: Props) => {
       status,
       label: label.name,
       description,
-      startDate,
+      // startDate,
       dueDate
     };
     const token = await getAccessTokenSilently();
@@ -99,7 +99,7 @@ export const CreateTask = ({ }: Props) => {
     setDescription('');
     setPriority(Priority.NO_PRIORITY);
     setStatus(Status.BACKLOG);
-    // showInfo('You created new issue.', 'Issue created');
+    showInfo('You created new issue.', 'Issue created');
   };
 
   return (

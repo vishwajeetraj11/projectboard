@@ -21,9 +21,25 @@ export type Label = {
   color: string;
 };
 
-export enum EDropdowmMenus {
-  PRIORITY = 'priority',
-  STATUS = 'status',
-  LABEL = 'label',
-  ASSIGNEE = 'assignee'
-};
+// export enum EDropdowmMenus {
+//   PRIORITY = 'priority',
+//   STATUS = 'status',
+//   LABEL = 'label',
+//   ASSIGNEE = 'assignee'
+// };
+
+export interface Task {
+  _id: string,
+  title: string,
+  priority: string,
+  label: string,
+  status: string,
+  description: string,
+  startDate: Date | null | undefined;
+  dueDate: Date | null | undefined;
+  author: {
+    _id: string,
+    email: string;
+  };
+  updatedAt: Date;
+}
