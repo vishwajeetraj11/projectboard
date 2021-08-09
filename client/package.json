@@ -28,6 +28,7 @@
     "classnames": "^2.3.1",
     "dayjs": "^1.10.6",
     "react": "^17.0.2",
+    "react-beautiful-dnd": "^13.1.0",
     "react-contextmenu": "^2.14.0",
     "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",
@@ -62,6 +63,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-beautiful-dnd": "^13.1.1",
     "@types/react-router-dom": "^5.1.8",
     "@types/styled-components": "^5.1.12",
     "autoprefixer": "^9",
