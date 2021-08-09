@@ -14,13 +14,14 @@ interface Props {
   onDismiss?: () => void;
   children?: React.ReactNode;
   size: 'normal' | 'large';
+  modalStyles?: {};
 }
 const sizeClasses = {
   'large': 'w-175',
   'normal': 'w-140'
 };
 
-function Modal({ title, isOpen, center, size, className, onDismiss, children }: Props) {
+function Modal({ title, isOpen, center, size, className, onDismiss, children, modalStyles }: Props) {
   const ref = useRef<HTMLDivElement>(null) as RefObject<HTMLDivElement>;
   const outerRef = useRef(null);
 
@@ -31,7 +32,7 @@ function Modal({ title, isOpen, center, size, className, onDismiss, children }: 
     }
   );
   const modalClasses = classnames(
-    'flex flex-col items-center transform bg-white modal shadow-large-modal rounded-xl',
+    'flex flex-col items-center transform bg-white modal shadow-large-modal rounded-xl overflow-hidden',
     {
       'mt-20 mb-2 ': !center,
     },
@@ -65,6 +66,7 @@ function Modal({ title, isOpen, center, size, className, onDismiss, children }: 
       >
         <div ref={ref}
           className={modalClasses}
+          style={modalStyles}
         >
           {title && <div className='flex items-center justify-between w-full pl-8 pr-4 border-b border-gray-200'>
             <div className='text-sm font-semibold text-gray-700'>{title}</div>

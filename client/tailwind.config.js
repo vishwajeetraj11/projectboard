@@ -26,6 +26,15 @@ module.exports = {
                 'sans-serif'
             ]
         },
+        borderWidth: {
+            DEFAULT: '1px',
+            0: '0',
+            2: '2px',
+            3: '3px',
+            4: '4px',
+            6: '6px',
+            8: '8px'
+        },
         extend: {
             boxShadow: {
                 modal: 'rgb(0 0 0 / 9%) 0px 3px 12px',

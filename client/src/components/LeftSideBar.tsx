@@ -59,7 +59,7 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
       <div className={classes} ref={ref}>
         <button
           className='flex-shrink-0 px-5 ml-2 lg:hidden h-14 focus:outline-none'
-        // onClick={onCloseMenu}
+          onClick={onCloseMenu}
         ><MenuIcon className='w-3.5 text-gray-500 hover:text-gray-800' /></button>
 
         {/* Top menu*/}

@@ -16,16 +16,13 @@ export const AuthenticatedRoutes: React.FC<Props> = () => {
 
   return (
     <div className='flex w-full h-screen overflow-y-hidden'>
-      <LeftSideBar showMenu={showMenu} onCloseMenu={() => setShowMenu(false)} />
-      <div className='flex flex-col flex-grow'>
-        <Switch>
-          <Route path='/home' exact component={Home} />
-          <Route path='/board' exact component={Board} />
-          <Route path='/create-task' exact component={CreateTask} />
-          <Route path='/profile' exact component={TestProfile} />
-          <Redirect path='*' to='/home' />
-        </Switch>
-      </div>
+      <Switch>
+        <Route path='/home' exact component={Home} />
+        <Route path='/board' exact component={Board} />
+        <Route path='/create-task' exact component={CreateTask} />
+        <Route path='/profile' exact component={TestProfile} />
+        <Redirect path='*' to='/home' />
+      </Switch>
     </div>
   );
 };
