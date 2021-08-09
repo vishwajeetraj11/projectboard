@@ -13,7 +13,7 @@ interface Props {
 }
 
 
-export const IssueRow = ({ task, onChangePriority, onChangeStatus }: Props) => {
+export const TaskRow = ({ task, onChangePriority, onChangeStatus }: Props) => {
   let priorityIcon = (
     <PriorityIcon
       priority={task.priority} />

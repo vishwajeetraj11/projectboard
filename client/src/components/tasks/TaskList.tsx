@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import { connectMenu } from 'react-contextmenu';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 // import { loadIssues, updateIssuePriority, updateIssueStatus } from 'store/actions/issueActions';
 import { Task } from 'shared/types';
-import { AppDispatch, RootState } from '../store/store';
-import IssueContextMenu from './menus/TaskContextMenu';
-import { IssueRow } from './TaskRow';
+import { RootState } from '../../store/store';
+import IssueContextMenu from '../menus/TaskContextMenu';
+import { TaskRow } from './TaskRow';
 
 const ConnectedMenu = connectMenu('ISSUE_CONTEXT_MENU')(IssueContextMenu);
 export const TaskList = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  // const dispatch = useDispatch<AppDispatch>();
   const allTasks = useSelector((state: RootState) => state.taskList.tasks);
 
   let tasks = [...allTasks.backlog, ...allTasks.todo, ...allTasks.in_progress, ...allTasks.done, ...allTasks.cancelled];
@@ -33,8 +33,8 @@ export const TaskList = () => {
     // dispatch(loadIssues());
   }, []);
 
-  var issueRows = tasks.map((task, idx) => (
-    <IssueRow
+  const taskRows = tasks.map((task, idx) => (
+    <TaskRow
       task={task}
       onChangePriority={handleIssuePriorityChange}
       onChangeStatus={handleIssueStatusChange}
@@ -42,7 +42,7 @@ export const TaskList = () => {
   ));
   return (
     <div className='flex flex-col overflow-auto'>
-      {React.Children.toArray(issueRows)}
+      {React.Children.toArray(taskRows)}
       <ConnectedMenu />
     </div>
   );

@@ -1,6 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { LeftSideBar } from 'components/LeftSideBar';
-import { TaskList } from 'components/TaskList';
+import { TaskList } from 'components/tasks/TaskList';
 import { TopFilter } from 'components/TopFilter';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
