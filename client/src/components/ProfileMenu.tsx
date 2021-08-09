@@ -40,6 +40,7 @@ export const ProfileMenu = ({ isOpen, className, onDismiss }: Props) => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
         className={classes}
+        style={{ left: '-140px' }}
       >
         <div className='flex items-center h-8 px-3 hover:bg-gray-100'>View profile</div>
         <div className='flex items-center h-8 px-3 hover:bg-gray-100 '>Settings</div>
