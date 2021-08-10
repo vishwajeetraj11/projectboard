@@ -1,10 +1,13 @@
 import { ReactComponent as AddIcon } from 'assets/icons/add.svg';
-import { ReactComponent as ArchiveIcon } from 'assets/icons/archive.svg';
+import { ReactComponent as CancelIcon } from 'assets/icons/cancel.svg';
+import { ReactComponent as BacklogIcon } from 'assets/icons/circle-dot.svg';
+import { ReactComponent as TodoIcon } from 'assets/icons/circle.svg';
+import { ReactComponent as DoneIcon } from 'assets/icons/done.svg';
+import { ReactComponent as InProgressIcon } from 'assets/icons/half-circle.svg';
 import { ReactComponent as HelpIcon } from 'assets/icons/help.svg';
 import { ReactComponent as InboxIcon } from 'assets/icons/inbox.svg';
 import { ReactComponent as IssueIcon } from 'assets/icons/issue.svg';
 import { ReactComponent as MenuIcon } from 'assets/icons/menu.svg';
-import { ReactComponent as ProjectIcon } from 'assets/icons/project.svg';
 import { ReactComponent as ViewIcon } from 'assets/icons/view.svg';
 import classNames from 'classnames';
 import HelpModal from 'components/HelpModal';
@@ -12,12 +15,13 @@ import InviteBox from 'components/InviteBox';
 import { SearchBox } from 'components/SearchBox';
 import { useClickOutside } from 'hooks/useClickOutside';
 import React, { RefObject, useEffect, useRef, useState } from 'react';
-import { FiCircle } from 'react-icons/fi';
+import { CgBoard } from "react-icons/cg";
 import { MdKeyboardArrowDown as ExpandMore } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { Avatar } from './Avatar';
 import { ItemGroup } from './ItemGroup';
 import { ProfileMenu } from './ProfileMenu';
+
 interface Props {
   // Show menu (for small screen only)
   showMenu: boolean;
@@ -87,7 +91,7 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
           <Link to='/create-task'
             className='inline-flex items-center px-2 py-2 mt-3 bg-white border border-gray-300 rounded hover:bg-gray-100 focus:outline-none h-7'
           >
-            <AddIcon className='mr-2.5 w-3.5 h-3.5' /> New Issue
+            <AddIcon className='mr-2.5 w-3.5 h-3.5' /> New Task
           </Link>
         </div>
 
@@ -97,7 +101,7 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
           {/* actions */}
           <Link to='/' className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>
             <InboxIcon className='w-3.5 h-3.5 mr-4 text-sm text-gray-500 group-hover:text-gray-600' />
-            <span>Inbox</span>
+            <span>Notifications</span>
           </Link>
           <Link to='/tasks' className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>
             <IssueIcon className='w-3.5 h-3.5 mr-4 text-gray-500 group-hover:text-gray-600' />
@@ -107,35 +111,41 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
             <ViewIcon className='w-3.5 h-3.5 mr-4 text-gray-500 group-hover:text-gray-600' />
             <span>Views</span>
           </Link>
+          <Link to='/board' className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>
+            <CgBoard className='w-3.5 h-3.5 mr-4 text-gray-500 group-hover:text-gray-600' />
+            <span>Board</span>
+          </Link>
 
           {/* Teams */}
           <h3 className='px-2 mt-5 text-xs text-gray-500'
-          >Your teams</h3>
+          >Your Tasks</h3>
 
-          <ItemGroup title='Github'>
+          <ItemGroup title='Status'>
             <Link to='/' className='flex items-center pl-8 rounded cursor-pointer group h-7 hover:bg-gray-100'>
-              <FiCircle className='w-3.5 h-3.5 mr-2 text-gray-500 group-hover:text-gray-600' />
-              <span>Issues</span>
+              {/* <FiCircle className='w-3.5 h-3.5 mr-2 text-gray-500 group-hover:text-gray-600' /> */}
+              <TodoIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' />
+              <span>To Do</span>
             </Link>
             <Link to='/' className='flex items-center pl-8 rounded cursor-pointer h-7 hover:bg-gray-100'>
-              <span className='w-3 h-3 mr-2' ></span>
+              {/* <span className='w-3 h-3 mr-2' ></span> */}
+              <BacklogIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' />
               <span>Backlog</span>
             </Link>
             <Link to='/' className='flex items-center pl-8 rounded cursor-pointer h-7 hover:bg-gray-100'>
-              <span className='w-3 h-3 mr-2' ></span>
-              <span>All</span>
+              {/* <span className='w-3 h-3 mr-2' ></span> */}
+              <InProgressIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' />
+              <span>In Progress</span>
             </Link>
-            <Link to='/board' className='flex items-center pl-8 rounded cursor-pointer h-7 hover:bg-gray-100'>
-              <span className='w-3 h-3 mr-2' ></span>
-              <span>Board</span>
+
+            <Link to='/' className='flex items-center pl-8 rounded cursor-pointer group h-7 hover:bg-gray-100'>
+              {/* <ArchiveIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' /> */}
+              <DoneIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' />
+              <span>Done</span>
             </Link>
             <Link to='/' className='flex items-center pl-8 rounded cursor-pointer group h-7 hover:bg-gray-100'>
-              <ProjectIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' />
-              <span>Projects</span>
-            </Link>
-            <Link to='/' className='flex items-center pl-8 rounded cursor-pointer group h-7 hover:bg-gray-100'>
-              <ArchiveIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' />
-              <span>Archives</span>
+              {/* <ArchiveIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' /> */}
+              <CancelIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' />
+              <span>Cancelled</span>
             </Link>
           </ItemGroup>
 

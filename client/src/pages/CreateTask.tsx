@@ -11,7 +11,6 @@ import { PriorityMenu } from 'components/menus/PriorityMenu';
 import { StatusMenu } from 'components/menus/StatusMenu';
 import { PriorityIcon } from 'components/PriorityIcon';
 import { StatusIcon } from 'components/StatusIcon';
-import { Toggle } from 'components/Toggle';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 // import { useDispatch } from 'react-redux';
@@ -183,9 +182,6 @@ export const CreateTask = ({ }: Props) => {
           <div className='flex items-center justify-between flex-shrink-0 px-4 pt-3'>
             <button className='focus:outline-none'><AttachmentIcon /></button>
             <div className='flex items-center'>
-              {/* <input type='checkbox' /> */}
-              <Toggle />
-              <span className='ml-2 font-normal' >Create more</span>
               <button
                 className='px-3 ml-2 text-white bg-indigo-600 rounded hover:bg-indigo-700 h-7 focus:outline-none'
                 onClick={handleSubmit}
