@@ -43,7 +43,7 @@ const getPriorityString = (priority: string) => {
   }
 };
 
-export const CreateTask = ({ }: Props) => {
+export const CreateTask: React.FC<Props> = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   const [title, setTitle] = useState('');
