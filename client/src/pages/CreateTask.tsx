@@ -17,10 +17,10 @@ import { Link } from 'react-router-dom';
 import Editor from "rich-markdown-editor";
 import { Label } from 'shared/types';
 import { MarkdownStyles } from 'styled/Markdown';
+import { showInfo, showWarning } from '../components/Notification';
 // import { AppDispatch } from 'store';
 // import { createIssue } from 'store/actions/issueActions';
 import { DEFAULT_LABLES, Priority, Status } from '../shared/constants';
-import { showInfo, showWarning } from '../shared/utils/Notification';
 
 interface Props {
 
@@ -64,21 +64,13 @@ export const CreateTask = ({ }: Props) => {
       showWarning('Please enter a title before submiting', 'Title required');
       return;
     }
-    // dispatch(createIssue({
-    //     title: title,
-    //     id: undefined,
-    //     priority: priority,
-    //     status: status,
-    //     description: description
-    // }));
-
     const body = {
       title,
       priority,
       status,
       label: label.name,
       description,
-      // startDate,
+      startDate,
       dueDate
     };
     const token = await getAccessTokenSilently();
@@ -91,9 +83,6 @@ export const CreateTask = ({ }: Props) => {
         Authorization: `Bearer ${token}`,
       },
     });
-
-    console.log(data);
-
     setTitle('');
     setDescription('');
     setPriority(Priority.NO_PRIORITY);

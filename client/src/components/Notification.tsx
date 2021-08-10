@@ -34,3 +34,21 @@ export const showInfo = (msg: string, title: string = '') => {
     position: 'bottom-right'
   });
 };
+
+
+export const showError = (msg: string, title: string = '') => {
+  //TODO: make notification showing from bottom
+  let content = (
+    <div className='flex flex-col'>
+      {title !== '' && <div className={'font-medium text-sm w-full text-gray-700 flex items-center'}>
+        <span className='flex items-center justify-center w-4 h-4 bg-gray-200 rounded-full'>
+          <svg width="14" height="14" viewBox="0 0 14 14"><path fillRule="evenodd" clipRule="evenodd" d="M7 14C10.866 14 14 10.866 14 7C14 3.13401 10.866 0 7 0C3.13401 0 0 3.13401 0 7C0 10.866 3.13401 14 7 14ZM5.03033 3.96967C4.73744 3.67678 4.26256 3.67678 3.96967 3.96967C3.67678 4.26256 3.67678 4.73744 3.96967 5.03033L5.93934 7L3.96967 8.96967C3.67678 9.26256 3.67678 9.73744 3.96967 10.0303C4.26256 10.3232 4.73744 10.3232 5.03033 10.0303L7 8.06066L8.96967 10.0303C9.26256 10.3232 9.73744 10.3232 10.0303 10.0303C10.3232 9.73744 10.3232 9.26256 10.0303 8.96967L8.06066 7L10.0303 5.03033C10.3232 4.73744 10.3232 4.26256 10.0303 3.96967C9.73744 3.67678 9.26256 3.67678 8.96967 3.96967L7 5.93934L5.03033 3.96967Z" stroke="none" fill="#e74c3c"></path></svg>
+        </span>
+        <span className='ml-2'>{title}</span></div>}
+      <div className='w-full mt-2 text-xs font-normal text-gray-500'>{msg}</div>
+    </div>
+  );
+  toast(content, {
+    position: 'bottom-right'
+  });
+};

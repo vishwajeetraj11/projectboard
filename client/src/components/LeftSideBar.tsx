@@ -107,10 +107,10 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
             <IssueIcon className='w-3.5 h-3.5 mr-4 text-gray-500 group-hover:text-gray-600' />
             <span>Tasks</span>
           </Link>
-          <Link to='/' className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>
+          {/* <Link to='/' className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>
             <ViewIcon className='w-3.5 h-3.5 mr-4 text-gray-500 group-hover:text-gray-600' />
             <span>Views</span>
-          </Link>
+          </Link> */}
           <Link to='/board' className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>
             <CgBoard className='w-3.5 h-3.5 mr-4 text-gray-500 group-hover:text-gray-600' />
             <span>Board</span>
@@ -155,13 +155,13 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
           {/* bottom group */}
           <div className='px-2 pb-2 text-gray-500 mt-7'>
             <button
-              className='inline-flex focus:outline-none'
+              className='flex items-center focus:outline-none'
               onClick={() => setShowInviteModal(true)}
             ><AddIcon className='w-3 mr-2' /> Invite people</button>
             <button
-              className='inline-flex mt-1 focus:outline-none'
+              className='flex items-center mt-1 focus:outline-none'
               onClick={() => setShowHelpModal(true)}
-            ><HelpIcon className='w-3 mr-2' /> Help & Feedback</button>
+            ><HelpIcon className='w-3 mr-2 mt-0.5' /> Help & Feedback</button>
           </div>
         </div>
       </div>
