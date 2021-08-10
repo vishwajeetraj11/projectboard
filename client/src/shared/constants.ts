@@ -16,12 +16,12 @@ export const Status = {
   CANCELED: 'canceled',
 };
 
-// export const Labels = {
-//   BUG: 'Bug',
-//   FEATURE: 'FEATURE',
-//   IMPROVEMENT: 'IMPROVEMENT',
-//   NO_LABEL: 'NO_LABEL'
-// };
+export const Labels = {
+  BUG: 'Bug',
+  FEATURE: 'Feature',
+  IMPROVEMENT: 'Improvement',
+  NO_LABEL: 'No Label'
+};
 
 export const DEFAULT_LABLES: Array<Label> = [
   { id: '1', name: 'Bug', color: '#eb5757' },

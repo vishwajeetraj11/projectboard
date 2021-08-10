@@ -3,6 +3,7 @@ import { StatusMenu } from 'components/menus/StatusMenu';
 import { PriorityIcon } from 'components/PriorityIcon';
 import { StatusIcon } from 'components/StatusIcon';
 import { ContextMenuTrigger } from 'react-contextmenu';
+import { DEFAULT_LABLES, Labels } from 'shared/constants';
 import { Task } from 'shared/types';
 import { formatDate } from 'shared/utils/formatDate';
 
@@ -21,6 +22,21 @@ export const TaskRow = ({ task, onChangePriority, onChangeStatus }: Props) => {
   const statusIcon = (
     <StatusIcon status={task.status} />
   );
+
+  const getLabelObj = (label: string) => {
+    switch (label) {
+      case Labels.NO_LABEL:
+        return DEFAULT_LABLES[3];
+      case Labels.IMPROVEMENT:
+        return DEFAULT_LABLES[2];
+      case Labels.FEATURE:
+        return DEFAULT_LABLES[1];
+      case Labels.BUG:
+        return DEFAULT_LABLES[0];
+    }
+  };
+
+  const labelObj = getLabelObj(task.label);
 
   // let avatar = task.author && task.author.avatar
   //   ? <img src={task.author.avatar} className='w-4.5 h-4.5 rounded-full overflow-hidden' alt={`User - ${task.author.email}`} />
@@ -62,6 +78,10 @@ export const TaskRow = ({ task, onChangePriority, onChangeStatus }: Props) => {
         </div>
         <div className='flex-wrap flex-shrink ml-2 overflow-hidden font-medium line-clamp-1 overflow-ellipsis'>{task.title.substr(0, 100) || ''}</div>
         <div className='flex flex-grow ml-2'></div>
+        {labelObj?.name !== 'No Label' && <div className='select-none flex items-center px-3 py-0.5 text-gray-500 focus:outline-none hover:text-gray-800 hover:bg-gray-100 cursor-pointer border-solid border-gray-100 border-2 rounded-xl mr-3'>
+          <div className='w-2 h-2 rounded-full mr-2' style={{ background: labelObj?.color }}>&nbsp;</div>
+          <div className='text-xs'>{labelObj?.name}</div>
+        </div>}
         <div className='flex-shrink-0 hidden w-max ml-2 mr-3 font-normal sm:block'>{formatDate(task.startDate)}</div>
         {/* <div className='flex-shrink-0 ml-auto'>{avatar}</div> */}
       </div>
