@@ -52,21 +52,10 @@ export function MenuTitle({ icon, label }: MenuItemProp) {
 export default function IssueContextMenu() {
   return (
     <ContextMenu id='ISSUE_CONTEXT_MENU' className='bg-white rounded shadow-modal'>
-      <SubMenu
-        title={<MenuTitle icon='status' label='Status' />}
-        className='bg-white rounded shadow-modal'
-      >
-        <MenuItemEle icon='todo' label='Todo' />
-        <MenuItemEle icon='backlog' label='Backlog' />
-        <MenuItemEle icon='done' label='Done' />
-      </SubMenu>
+      <MenuItemEle icon='status' label='Status' />
       <MenuItemEle icon='asignee' label='Assignee' />
       <MenuItemEle icon='label' label='Labels' />
       <MenuItemEle icon='due-date' label='Set due date...' />
-      <MenuItemEle icon='sub-issue' label='Add sub-issue...' />
-      <MenuItemEle icon='parent-issue' label='Set parent issue...' />
-      <MenuItemEle icon='relationship' label='Relations' />
-      <MenuItemEle icon='dupplication' label='Dupplicate...' />
       <MenuItemEle icon='delete' label='Delete' />
     </ContextMenu>
   );
