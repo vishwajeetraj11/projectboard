@@ -1,5 +1,8 @@
-import { LoginButton } from 'components/auth/LoginButton';
-import { LogoutButton } from 'components/auth/Logout';
+import { Cards } from 'components/landing/cards';
+import { Faq } from 'components/landing/faq';
+import { Footer } from 'components/landing/footer';
+import { Main } from 'components/landing/main';
+import { Nav } from 'components/landing/nav';
 import React from 'react';
 
 interface Props {
@@ -9,11 +12,12 @@ interface Props {
 export const Landing: React.FC<Props> = () => {
   return (
     <>
-      <LoginButton />
-      <LogoutButton />
-      <div>
-        Landing
-      </div>
+      <Nav />
+      <Main />
+      <Cards />
+      <Faq />
+      <Footer />
+
     </>
   )
     ;

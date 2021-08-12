@@ -1,5 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
+import { LogoutButton } from 'components/auth/Logout';
 import React, { Suspense } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -25,6 +26,7 @@ export const Projects: React.FC<Props> = () => {
 
   return (
     <div>
+      <LogoutButton />
       <Link to='/create-project'>Create A Projects</Link>
       <div className='flex justify-center'>
         <button onClick={() => toggleProjectsActive(projectsType.MyProjects)}>My Projects</button>
