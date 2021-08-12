@@ -35,6 +35,10 @@ export const projectsType = {
   Shared: "SHARED_PROJECTS", // The projects that is shared with the loggedIn user (i.e. projects in which loggedin user is just a member.)
 };
 
+export const topFilterType = {
+  INVITE: "INVITE"
+};;
+
 // export const DropdownMenus = {
 //   PRIORITY: 'priority',
 //   STATUS: 'status',

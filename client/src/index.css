@@ -67,3 +67,11 @@ body {
     animation:s3 1s infinite linear;
   }
   @keyframes s3 {to{transform: rotate(1turn)}}
+
+.member-grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 0.2fr;
+	@media only screen and (max-width: 600px) {
+        grid-template-columns: 1fr  1fr 0.2fr;
+	}
+}

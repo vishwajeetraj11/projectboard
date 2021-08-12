@@ -11,27 +11,31 @@ import { showError } from 'components/Notification';
 // import { Tasks } from 'pages/Tasks';
 // import { TestProfile } from 'pages/TestProfile';
 import React, { useEffect, useState } from 'react';
+import { Redirect, useHistory, useLocation, withRouter } from 'react-router-dom';
 import { AuthenticatedRoutes } from 'routes/AuthenticatedRoutes';
 import { UnauthenticatedRoutes } from 'routes/Unauthenticated';
 import { baseURL, endpoints } from 'shared/urls';
-import { history } from 'shared/utils/history';
+import { RouteComponentProps } from "react-router";
+// import { history } from 'shared/utils/history';
 
-// interface Props extends RouteComponentProps<{}> {
-
-// }
 interface Props {
 
 }
 
-export const Routes: React.FC<Props> = (props) => {
+// interface Props extends RouteComponentProps<{}> {
+
+// }
+export const Routes: React.FC<Props> = () => {
   const [authenticated, setAuthenticated] = useState(false);
-  const { user: userAith0, getAccessTokenSilently, isLoading } = useAuth0();
+  const { user: userAith0, isAuthenticated, getAccessTokenSilently, isLoading } = useAuth0();
   const [user, setUser] = useState();
+  const location = useLocation();
+  const history = useHistory();
 
   useEffect(() => {
-    if (!userAith0) { history.push('/'); return; }
+    // if (!isAuthenticated) { history.push('/'); return; }
 
-    if (userAith0 && !(window.location.pathname === '/edit-profile')) {
+    if (isAuthenticated && !(location.pathname === '/edit-profile')) {
       (async () => {
         try {
           const token = await getAccessTokenSilently();
@@ -46,7 +50,9 @@ export const Routes: React.FC<Props> = (props) => {
           const firstName = data?.user?.firstName;
           const lastName = data?.user?.lastName;
           if (!username || !firstName || !lastName) {
-            window.location.replace('/edit-profile');
+            history.push('/edit-profile');
+            // if (!(window.location.pathname === '/edit-profile'))
+            // <Redirect to='/edit-profile' />;
           } else {
             setAuthenticated(true);
             setUser(data.user);
@@ -56,7 +62,7 @@ export const Routes: React.FC<Props> = (props) => {
         }
       })();
     }
-  }, [userAith0, getAccessTokenSilently, authenticated]);
+  }, [userAith0, getAccessTokenSilently]);
 
   if (isLoading) return <Loader fullScreen />;
 

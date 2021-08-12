@@ -7,20 +7,24 @@ import { TaskFilterModal } from './modals/TaskFilterModal';
 import { ViewOptionMenu } from './menus/ViewOptionMenu';
 import { RootState } from 'store/store';
 import { useSelector } from 'react-redux';
+import { topFilterType } from 'shared/constants';
 
 interface Props {
   /* Top title */
   title: string;
   onOpenMenu?: () => void;
+  type?: string;
 }
 
-export const TopFilter = ({ title, onOpenMenu }: Props) => {
+export const TopFilter = ({ title, onOpenMenu, type }: Props) => {
   const [showFilter, setShowFilter] = useState(false);
   const [showViewOption, setShowViewOption] = useState(false);
 
   const tasks = useSelector((state: RootState) => state.taskList.tasks);
   const totaltasks = tasks.backlog.length + tasks.todo.length
     + tasks.done.length + tasks.in_progress.length + tasks.cancelled.length;
+
+  const onInvitePage = type === topFilterType.INVITE;
 
   return (
     <>
@@ -33,24 +37,24 @@ export const TopFilter = ({ title, onOpenMenu }: Props) => {
           ><MenuIcon className='w-3.5 text-gray-500 hover:text-gray-800' /></button>
 
           <div className='p-1 font-semibold cursor-default hover:bg-gray-100'>{title}</div>
-          <span>{totaltasks}</span>
-          <button
+          {!onInvitePage && <span>{totaltasks}</span>}
+          {!onInvitePage && <button
             className='px-1 py-0.5 ml-3 border border-gray-300 border-dashed rounded text-gray-500 hover:border-gray-400 focus:outline-none hover:text-gray-800'
             onClick={() => setShowFilter(!showFilter)}
-          >+ Filter</button>
+          >+ Filter</button>}
         </div>
 
         {/* right section */}
-        <div className='flex items-center'>
+        {!onInvitePage && <div className='flex items-center'>
           <div className='p-2 rounded hover:bg-gray-100'
             onClick={() => setShowViewOption(true)}
           >
             <BiSortUp size={14} />
           </div>
-        </div>
+        </div>}
       </div>
-      <ViewOptionMenu isOpen={showViewOption} onDismiss={() => setShowViewOption(false)} />
-      <TaskFilterModal isOpen={showFilter} onDismiss={() => setShowFilter(false)} />
+      {!onInvitePage && <><ViewOptionMenu isOpen={showViewOption} onDismiss={() => setShowViewOption(false)} />
+        <TaskFilterModal isOpen={showFilter} onDismiss={() => setShowFilter(false)} /></>}
     </>
   );
 };
