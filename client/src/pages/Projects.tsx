@@ -1,20 +1,13 @@
-import { useAuth0 } from '@auth0/auth0-react';
-import axios from 'axios';
 import { LogoutButton } from 'components/auth/Logout';
-import React, { Suspense } from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { baseURL, endpoints } from 'shared/urls';
-
+import { useState } from 'react';
+import { ProjectsList } from 'components/projects/ProjectList';
+import { projectsType } from 'shared/constants';
 interface Props {
 
 }
 
-const projectsType = {
-  MyProjects: "MY_PROJECT", // The projects that the loggedIn user created (i.e. projects in which loggedin user is admin.)
-  Shared: "SHARED_PROJECTS", // The projects that is shared with the loggedIn user (i.e. projects in which loggedin user is just a member.)
-};
 
 export const Projects: React.FC<Props> = () => {
   const [activeProjects, setActiveProjects] = useState(projectsType.MyProjects);
@@ -25,57 +18,27 @@ export const Projects: React.FC<Props> = () => {
   };
 
   return (
-    <div>
-      <Link to='/create-project'>Create A Projects</Link>
-      <div className='flex justify-center'>
-        <button onClick={() => toggleProjectsActive(projectsType.MyProjects)}>My Projects</button>
-        <button onClick={() => toggleProjectsActive(projectsType.Shared)}>Shared Projects</button>
+    <section className='p-4 lg:p-0 w-full min-h-screen max-w-screen-lg mx-auto bg-white'>
+      {/* Nav */}
+      <div className='py-5 lg:py-10 sm:px-4 lg:px-0 flex items-center justify-between'>
+        <h2>Product Board</h2>
+        <LogoutButton />
       </div>
-      <div>
-        {activeProjects === projectsType.MyProjects && <MyProjects />}
-        {activeProjects === projectsType.Shared && <SharedProjects />}
+      <div className='bg-gray-100 w-full rounded-sm'>
+        <Link to='/create-project'>
+          <p className='text-md py-3 text-center font-semibold text-gray-500'>
+            + Create A Project
+          </p>
+        </Link>
       </div>
-    </div>
-  );
-};
-
-const MyProjects: React.FC<Props> = () => {
-  // TODO: Make req. fetch projects from backend
-  const [projects, setProjects] = useState([]);
-  const { getAccessTokenSilently } = useAuth0();
-  useEffect(() => {
-    (async () => {
-      try {
-        const token = await getAccessTokenSilently();
-        const { data } = await axios({
-          url: `${baseURL}${endpoints.getMyProjects}`,
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setProjects(data.projects);
-      } catch (e) {
-        console.log(e);
-      }
-    })();
-  }, []);
-  return (
-    <div>
-      <h1 className='mt-10'> My projects</h1>
-      <LogoutButton />
-      <Suspense fallback={<div>Loading...</div>}>
-        {React.Children.toArray(projects.map((project: any) => (
-          <div>{JSON.stringify(project, undefined, 2)}</div>
-        )))}
-      </Suspense>
-    </div>
-  );
-};
-const SharedProjects: React.FC<Props> = () => {
-  return (
-    <div>
-
-    </div>
+      <div className='flex justify-between w-full mt-4 bg-gray-100'>
+        <button className={`w-6/12 rounded-sm py-3 font-medium text-xs ${activeProjects === projectsType.MyProjects ? 'bg-indigo-600 text-white' : ''}`} onClick={() => toggleProjectsActive(projectsType.MyProjects)}>My Projects</button>
+        <button className={`w-6/12 rounded-sm py-3 font-medium text-xs ${activeProjects === projectsType.Shared ? 'bg-indigo-600 text-white' : ''}`} onClick={() => toggleProjectsActive(projectsType.Shared)}>Shared Projects</button>
+      </div>
+      <div className='mt-4'>
+        {activeProjects === projectsType.MyProjects && <ProjectsList type={projectsType.MyProjects} />}
+        {activeProjects === projectsType.Shared && <ProjectsList type={projectsType.Shared} />}
+      </div>
+    </section>
   );
 };

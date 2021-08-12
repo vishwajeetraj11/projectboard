@@ -30,6 +30,11 @@ export const DEFAULT_LABLES: Array<Label> = [
   { id: '4', name: 'No Label', color: '#999999' },
 ];
 
+export const projectsType = {
+  MyProjects: "MY_PROJECT", // The projects that the loggedIn user created (i.e. projects in which loggedin user is admin.)
+  Shared: "SHARED_PROJECTS", // The projects that is shared with the loggedIn user (i.e. projects in which loggedin user is just a member.)
+};
+
 // export const DropdownMenus = {
 //   PRIORITY: 'priority',
 //   STATUS: 'status',
