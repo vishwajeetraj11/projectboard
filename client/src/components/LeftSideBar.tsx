@@ -162,6 +162,10 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
               className='flex items-center focus:outline-none'
               onClick={() => setShowInviteModal(true)}
             ><AddIcon className='w-3 mr-2' /> Invite people</button>
+            <Link
+              to={`/projects/${projectData.project._id}/invite`}
+              className='flex items-center focus:outline-none'
+            ><AddIcon className='w-3 mr-2' /> Invite people</Link>
             <button
               className='flex items-center mt-1 focus:outline-none'
               onClick={() => setShowHelpModal(true)}

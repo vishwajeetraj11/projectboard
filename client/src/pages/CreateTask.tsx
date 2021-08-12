@@ -99,7 +99,7 @@ export const CreateTask: React.FC<Props> = ({ match, history }) => {
     <>
       <LeftSideBar showMenu={showMenu} onCloseMenu={() => setShowMenu(false)} />
       <div className='flex flex-col flex-grow'>
-        <div id='issue-modal' className='flex flex-col w-full py-4 flex-1'>
+        <div className='flex flex-col w-full py-4 flex-1'>
           {/* header */}
           <div className='flex items-center justify-between flex-shrink-0 px-4'>
             <div className='flex items-center'>
