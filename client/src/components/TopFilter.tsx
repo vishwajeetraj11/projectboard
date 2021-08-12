@@ -5,6 +5,8 @@ import { BiSortUp } from 'react-icons/bi';
 // import { RootState } from 'store';
 import { TaskFilterModal } from './modals/TaskFilterModal';
 import { ViewOptionMenu } from './menus/ViewOptionMenu';
+import { RootState } from 'store/store';
+import { useSelector } from 'react-redux';
 
 interface Props {
   /* Top title */
@@ -16,9 +18,9 @@ export const TopFilter = ({ title, onOpenMenu }: Props) => {
   const [showFilter, setShowFilter] = useState(false);
   const [showViewOption, setShowViewOption] = useState(false);
 
-  // const issues = useSelector((state: RootState) => state.issues);
-  // const totalIssues = issues.backlog.length + issues.todo.length
-  //     + issues.done.length + issues.inProgress.length + issues.canceled.length;
+  const tasks = useSelector((state: RootState) => state.taskList.tasks);
+  const totaltasks = tasks.backlog.length + tasks.todo.length
+    + tasks.done.length + tasks.in_progress.length + tasks.cancelled.length;
 
   return (
     <>
@@ -31,8 +33,7 @@ export const TopFilter = ({ title, onOpenMenu }: Props) => {
           ><MenuIcon className='w-3.5 text-gray-500 hover:text-gray-800' /></button>
 
           <div className='p-1 font-semibold cursor-default hover:bg-gray-100'>{title}</div>
-          {/* <span>{totalIssues}</span> */}
-          <span>30</span>
+          <span>{totaltasks}</span>
           <button
             className='px-1 py-0.5 ml-3 border border-gray-300 border-dashed rounded text-gray-500 hover:border-gray-400 focus:outline-none hover:text-gray-800'
             onClick={() => setShowFilter(!showFilter)}

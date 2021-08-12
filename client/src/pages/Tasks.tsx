@@ -29,7 +29,7 @@ export const Tasks: React.FC<Props> = ({ match }) => {
     <>
       <LeftSideBar showMenu={showMenu} onCloseMenu={() => setShowMenu(false)} />
       <div className='flex flex-col flex-grow'>
-        <TopFilter onOpenMenu={() => setShowMenu(!showMenu)} title='All issues' />
+        <TopFilter onOpenMenu={() => setShowMenu(!showMenu)} title='All Tasks' />
         <TaskList />
       </div>
     </>
