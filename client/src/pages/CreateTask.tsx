@@ -12,17 +12,21 @@ import { StatusMenu } from 'components/menus/StatusMenu';
 import { PriorityIcon } from 'components/PriorityIcon';
 import { StatusIcon } from 'components/StatusIcon';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
 // import { useDispatch } from 'react-redux';
 import Editor from "rich-markdown-editor";
 import { Label } from 'shared/types';
+import { baseURL, endpoints } from 'shared/urls';
+import { RootState } from 'store/store';
 import { MarkdownStyles } from 'styled/Markdown';
 import { showInfo, showWarning } from '../components/Notification';
 // import { AppDispatch } from 'store';
 // import { createIssue } from 'store/actions/issueActions';
 import { DEFAULT_LABLES, Priority, Status } from '../shared/constants';
 
-interface Props {
+interface RouteParams { id: string; }
+interface Props extends RouteComponentProps<RouteParams> {
 
 }
 
@@ -43,7 +47,7 @@ const getPriorityString = (priority: string) => {
   }
 };
 
-export const CreateTask: React.FC<Props> = () => {
+export const CreateTask: React.FC<Props> = ({ match, history }) => {
   const [showMenu, setShowMenu] = useState(false);
 
   const [title, setTitle] = useState('');
@@ -55,9 +59,9 @@ export const CreateTask: React.FC<Props> = () => {
   const [dueDate, setDate] = useState('');
   const [startDate, setStartDate] = useState(new Date());
 
-  const { getAccessTokenSilently } = useAuth0();
+  const { projectData } = useSelector((state: RootState) => state.currentProject);
 
-  // const dispatch = useDispatch<AppDispatch>();
+  const { getAccessTokenSilently } = useAuth0();
 
   const handleSubmit = async () => {
     if (title === "") {
@@ -76,7 +80,7 @@ export const CreateTask: React.FC<Props> = () => {
     const token = await getAccessTokenSilently();
 
     const { data } = await axios({
-      url: '/api/v1/tasks',
+      url: `${baseURL}${endpoints.projects}/${match.params.id}${endpoints.tasks}`,
       method: 'POST',
       data: body,
       headers: {
@@ -88,6 +92,7 @@ export const CreateTask: React.FC<Props> = () => {
     setPriority(Priority.NO_PRIORITY);
     setStatus(Status.BACKLOG);
     showInfo('You created new issue.', 'Issue created');
+    history.push(`/projects/${projectData.project._id}/tasks`);
   };
 
   return (

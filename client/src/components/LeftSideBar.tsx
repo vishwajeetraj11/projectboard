@@ -17,7 +17,9 @@ import { useClickOutside } from 'hooks/useClickOutside';
 import React, { RefObject, useEffect, useRef, useState } from 'react';
 import { CgBoard } from "react-icons/cg";
 import { MdKeyboardArrowDown as ExpandMore } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { RootState } from 'store/store';
 import { Avatar } from './Avatar';
 import { ItemGroup } from './ItemGroup';
 import { ProfileMenu } from './ProfileMenu';
@@ -33,6 +35,8 @@ interface Props {
 
 
 export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
+
+  const { projectData } = useSelector((state: RootState) => state.currentProject);
 
   const ref = useRef<HTMLDivElement>() as RefObject<HTMLDivElement>;
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -88,7 +92,7 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
           </div>
 
           {/* Create issue btn */}
-          <Link to='/create-task'
+          <Link to={`/projects/${projectData.project._id}/create-task`}
             className='inline-flex items-center px-2 py-2 mt-3 bg-white border border-gray-300 rounded hover:bg-gray-100 focus:outline-none h-7'
           >
             <AddIcon className='mr-2.5 w-3.5 h-3.5' /> New Task
@@ -99,11 +103,11 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
         <div className='flex flex-col flex-shrink flex-grow overflow-y-auto mb-0.5 px-4'>
           <SearchBox className='mt-5' />
           {/* actions */}
-          <Link to='/' className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>
+          <Link to={`/projects/${projectData.project._id}/notifications`} className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>
             <InboxIcon className='w-3.5 h-3.5 mr-4 text-sm text-gray-500 group-hover:text-gray-600' />
             <span>Notifications</span>
           </Link>
-          <Link to='/tasks' className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>
+          <Link to={`/projects/${projectData.project._id}/tasks`} className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>
             <IssueIcon className='w-3.5 h-3.5 mr-4 text-gray-500 group-hover:text-gray-600' />
             <span>Tasks</span>
           </Link>
@@ -111,7 +115,7 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
             <ViewIcon className='w-3.5 h-3.5 mr-4 text-gray-500 group-hover:text-gray-600' />
             <span>Views</span>
           </Link> */}
-          <Link to='/board' className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>
+          <Link to={`/projects/${projectData.project._id}/board`} className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>
             <CgBoard className='w-3.5 h-3.5 mr-4 text-gray-500 group-hover:text-gray-600' />
             <span>Board</span>
           </Link>

@@ -5,13 +5,13 @@ import { baseURL, endpoints } from 'shared/urls';
 import { GET_TASKS_FAIL, GET_TASKS_REQUEST, GET_TASKS_SUCCESS } from 'store/contants/taskConstants';
 import { AppDispatch } from 'store/store';
 
-type TgetAllTasks = (token: string) => void;
+type TgetAllTasks = (token: string, projectId: string) => void;
 
-export const getAllTasks: TgetAllTasks = (token) => async (dispatch: AppDispatch) => {
+export const getAllTasks: TgetAllTasks = (token, projectId) => async (dispatch: AppDispatch) => {
   try {
     dispatch({ type: GET_TASKS_REQUEST });
     const { data } = await axios({
-      url: `${baseURL}${endpoints.tasks}`,
+      url: `${baseURL}${endpoints.projects}/${projectId}${endpoints.tasks}`,
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,

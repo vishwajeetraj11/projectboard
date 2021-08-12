@@ -6,5 +6,5 @@ export const endpoints = {
   profile: '/users/profile',
   projects: '/projects',
   getMyProjects: '/projects?scope=admin',
-  getSharedProjects: '/projects?scope=shared'
+  getSharedProjects: '/projects?scope=shared',
 };

@@ -4,12 +4,16 @@ import { TaskList } from 'components/tasks/TaskList';
 import { TopFilter } from 'components/TopFilter';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { RouteComponentProps } from 'react-router-dom';
 import { getAllTasks } from 'store/actions/taskActions';
-interface Props {
+
+interface RouteParams { id: string; }
+interface Props extends RouteComponentProps<RouteParams> {
 
 }
 
-export const Tasks: React.FC<Props> = () => {
+
+export const Tasks: React.FC<Props> = ({ match }) => {
   const [showMenu, setShowMenu] = useState(false);
   const dispatch = useDispatch();
   const { getAccessTokenSilently } = useAuth0();
@@ -17,9 +21,9 @@ export const Tasks: React.FC<Props> = () => {
   useEffect(() => {
     (async () => {
       const token = await getAccessTokenSilently();
-      dispatch(getAllTasks(token));
+      dispatch(getAllTasks(token, match.params.id));
     })();
-  }, [dispatch, getAccessTokenSilently]);
+  }, [dispatch, getAccessTokenSilently, match.params.id]);
 
   return (
     <>
