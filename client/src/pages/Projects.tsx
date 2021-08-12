@@ -1,5 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
+import { LogoutButton } from 'components/auth/Logout';
 import React, { Suspense } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -62,6 +63,7 @@ const MyProjects: React.FC<Props> = () => {
   return (
     <div>
       <h1 className='mt-10'> My projects</h1>
+      <LogoutButton />
       <Suspense fallback={<div>Loading...</div>}>
         {React.Children.toArray(projects.map((project: any) => (
           <div>{JSON.stringify(project, undefined, 2)}</div>

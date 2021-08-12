@@ -46,7 +46,7 @@ export const Routes: React.FC<Props> = (props) => {
         }
       })();
     }
-  }, []);
+  }, [user, getAccessTokenSilently]);
 
   return (
     <>
