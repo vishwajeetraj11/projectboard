@@ -9,11 +9,11 @@ export type Issue = {
 };
 
 
-export type User = {
-  id?: string;
-  name?: string;
-  avatar?: string;
-};
+// export type User = {
+//   id?: string;
+//   name?: string;
+//   avatar?: string;
+// };
 
 export type Label = {
   id: string;
@@ -41,5 +41,34 @@ export interface Task {
     _id: string,
     email: string;
   };
+  updatedAt: Date;
+}
+
+export interface User {
+  _id: string;
+  email: string;
+  email_verified: boolean;
+  firstName: string;
+  lastName: string;
+  photo: string;
+  username: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface Project {
+  _id: string;
+  title: string;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export interface Member {
+  access: string;
+  _id: string;
+  project: Project;
+  user: User;
+  createdAt: Date;
   updatedAt: Date;
 }

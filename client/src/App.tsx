@@ -12,8 +12,7 @@ const slideUp = cssTransition({
 });
 
 export const App = () => {
-  const { isLoading } = useAuth0();
-  if (isLoading) return <Loader fullScreen />;
+
   return (
     <div className="App">
       <Routes />

@@ -17,8 +17,9 @@ export const AuthenticatedRoutes: React.FC<Props> = () => {
         <Route path='/projects' exact component={Projects} />
         <Route path='/create-project' exact component={CreateProject} />
         <Route path='/projects/:id/tasks' exact component={Tasks} />
-        <Route path='/board' exact component={Board} />
-        <Route path='/create-task' exact component={CreateTask} />
+        {/* <Route path='/projects/:id/tasks/:id' exact component={} /> */}
+        <Route path='/projects/:id/board' exact component={Board} />
+        <Route path='/projects/:id/create-task' exact component={CreateTask} />
         <Route path='/profile' exact component={TestProfile} />
         <Redirect path='*' to='/projects' />
       </Switch>
