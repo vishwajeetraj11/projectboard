@@ -8,27 +8,17 @@ interface Props {
 
 export const Main: React.FC<Props> = () => {
     return (
-        <section className="text-blueGray-700 ">
-        <div className="container flex flex-col items-center px-5 py-16 mx-auto md:flex-row lg:px-28">
-          <div className="flex flex-col items-start mb-16 text-left lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 md:mb-0">
-            <h2 className="mb-8 text-xs font-semibold tracking-widest text-black uppercase title-font"> Your tagline </h2>
-            <h1 className="mb-8 text-2xl font-black tracking-tighter text-black md:text-5xl title-font"> ProductBoard </h1>
-            <p className="mb-8 text-base leading-relaxed text-left text-blueGray-600 "> WT offers you a a wide selection swapable sections for your landing page. </p>
-            <div className="flex flex-col justify-center lg:flex-row">
-              <button className="flex items-center px-6 py-2 mt-auto font-semibold text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-lg hover:bg-blue-700 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2"> Show me </button>
-              <p className="mt-2 text-sm text-left text-blueGray-600 md:ml-6 md:mt-0"> Be super productive. <br className="hidden lg:block" />
-                <a href="#" className="inline-flex items-center font-semibold text-blue-600 md:mb-2 lg:mb-0 hover:text-black " title="read more"> Read more about it » </a>
-              </p>
-            </div>
+        <section className="dark:bg-coolGray-800 dark:text-coolGray-100">
+          <div className="container mx-auto flex flex-col items-center px-4 py-16 mb-8 text-center md:py-24 md:px-10 lg:px-32 xl:max-w-3xl">
+            <h1 className="max-w-8xl text-7xl font-black mx-0 mt-0 mb-5 sm:text-5xl">ProductBoard
+            </h1>
+            <p className="px-8 mt-4 mb-8 text-lg text-gray-500">Cupiditate minima voluptate temporibus quia? Architecto beatae esse ab amet vero eaque explicabo!</p>
+            <button className="px-8 py-3 mb-20 text-lg bg-primary text-white font-semibold rounded dark:bg-violet-400 dark:text-coolGray-900">Get started</button>
           </div>
-          <div className="w-full lg:w-5/6 lg:max-w-lg md:w-1/2">
-            <img className="object-cover object-center rounded-lg " alt="hero" src="https://images.unsplash.com/photo-1507099985932-87a4520ed1d5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" />
+          <div>
+            <img src="https://images.unsplash.com/photo-1507099985932-87a4520ed1d5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80" alt="" className="w-3/6 mx-auto mb-12 mt-8 rounded-lg shadow-md lg:-mt-40"></img>
           </div>
-        </div>
-      </section>
-        
-
-
+        </section>
     )
 }
 
