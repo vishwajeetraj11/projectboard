@@ -17,6 +17,7 @@ export const TasksBoard = () => {
   // dispatch
   const dispatch = useDispatch<AppDispatch>();
   const onDragEnd = ({ source, destination, draggableId }: DropResult, provided: ResponderProvided) => {
+    if (source.droppableId === destination?.droppableId) return;
     if (!source || !destination)
       return;
     dispatch(changeStatusOfTask(draggableId, source.droppableId, destination.droppableId, source.index, destination.index));
