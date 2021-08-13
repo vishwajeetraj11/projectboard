@@ -1,9 +1,10 @@
-import { Cards } from 'components/landing/Cards';
-import { Faq } from 'components/landing/Faq';
-import { Footer } from 'components/landing/Footer';
-import { Link } from 'components/landing/Link';
-import { Main } from 'components/landing/Main';
-import { Nav } from 'components/landing/Nav';
+
+import { Link } from '@material-ui/core';
+import { Cards } from 'components/landing/cards';
+import { Faq } from 'components/landing/faq';
+import { Footer } from 'components/landing/footer';
+import { Main } from 'components/landing/main';
+import { Nav } from 'components/landing/nav';
 import React from 'react';
 
 interface Props {

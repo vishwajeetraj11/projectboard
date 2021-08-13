@@ -1,6 +1,6 @@
 import { Task } from 'shared/types';
 // import { Task } from "../../shared/types";
-import { GET_TASKS_FAIL, GET_TASKS_REQUEST, GET_TASKS_SUCCESS } from "../contants/taskConstants";
+import { CHANGE_STATUS_OF_TASK_SUCCESS, GET_TASKS_FAIL, GET_TASKS_REQUEST, GET_TASKS_SUCCESS } from "../contants/taskConstants";
 
 const INITIAL_STATE = {
   loading: false,
@@ -38,6 +38,11 @@ export const taskListReducer = (state = INITIAL_STATE, action: any) => {
         loading: false,
         success: false,
         error: payload
+      };
+    case CHANGE_STATUS_OF_TASK_SUCCESS:
+      return {
+        ...state,
+        tasks: payload
       };
     default:
       break;

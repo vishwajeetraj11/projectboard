@@ -11,12 +11,10 @@ import { showError } from 'components/Notification';
 // import { Tasks } from 'pages/Tasks';
 // import { TestProfile } from 'pages/TestProfile';
 import React, { useEffect, useState } from 'react';
-import { Redirect, useHistory, useLocation, withRouter } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { AuthenticatedRoutes } from 'routes/AuthenticatedRoutes';
 import { UnauthenticatedRoutes } from 'routes/Unauthenticated';
 import { baseURL, endpoints } from 'shared/urls';
-import { RouteComponentProps } from "react-router";
-// import { history } from 'shared/utils/history';
 
 interface Props {
 
@@ -51,8 +49,6 @@ export const Routes: React.FC<Props> = () => {
           const lastName = data?.user?.lastName;
           if (!username || !firstName || !lastName) {
             history.push('/edit-profile');
-            // if (!(window.location.pathname === '/edit-profile'))
-            // <Redirect to='/edit-profile' />;
           } else {
             setAuthenticated(true);
             setUser(data.user);
