@@ -33,6 +33,7 @@ export const PriorityMenu = ({ button, className, onSelect }: Props) => {
   const anchorRef = useRef<HTMLDivElement>(null);
 
   const handleSelect = (priority: string) => {
+    console.log(priority);
     if (onSelect) {
       onSelect(priority);
       setOpen(false);

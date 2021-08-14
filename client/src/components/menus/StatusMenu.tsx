@@ -1,25 +1,14 @@
-import { makeStyles } from '@material-ui/core';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import MenuList from '@material-ui/core/MenuList';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
-import { ReactComponent as CancelIcon } from 'assets/icons/cancel.svg';
-import { ReactComponent as BacklogIcon } from 'assets/icons/circle-dot.svg';
-import { ReactComponent as TodoIcon } from 'assets/icons/circle.svg';
-import { ReactComponent as DoneIcon } from 'assets/icons/done.svg';
-import { ReactComponent as InProgressIcon } from 'assets/icons/half-circle.svg';
-import { default as React, ReactNode, useEffect, useRef, useState } from 'react';
+import CancelIcon from 'assets/icons/cancel.svg';
+import BacklogIcon from 'assets/icons/circle-dot.svg';
+import TodoIcon from 'assets/icons/circle.svg';
+import DoneIcon from 'assets/icons/done.svg';
+import InProgressIcon from 'assets/icons/half-circle.svg';
+import { Portal } from 'components/Portal';
+import React, { ReactNode, useState } from 'react';
+import { ContextMenuTrigger } from 'react-contextmenu';
 import { Status } from '../../shared/constants';
+import { Menu } from './Menu';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  paper: {
-    marginRight: theme.spacing(2),
-  },
-}));
 
 interface Props {
   id: string;
@@ -28,90 +17,52 @@ interface Props {
   onSelect?: (item: any) => void;
 }
 export const StatusMenu = ({ id, button, className, onSelect }: Props) => {
-  let statusOpts = [
+  const [keyword, setKeyword] = useState('');
+  const handleSelect = (status: string) => {
+    if (onSelect) onSelect(status);
+  };
+
+  let statuses = [
     [BacklogIcon, Status.BACKLOG, 'Backlog'],
     [TodoIcon, Status.TODO, 'Todo'],
     [InProgressIcon, Status.IN_PROGRESS, 'In Progress'],
     [DoneIcon, Status.DONE, 'Done'],
-    [CancelIcon, Status.CANCELED, 'Canceled']
+    [CancelIcon, Status.CANCELED, 'Cancelled']
   ];
-  const classes = useStyles();
-  const [open, setOpen] = useState(false);
-  const anchorRef = useRef<HTMLDivElement>(null);
-
-  const handleSelect = (status: string) => {
-    if (onSelect) {
-      onSelect(status);
-      setOpen(false);
-    }
-  };
-  const options = statusOpts.map(([Icon, label, status]) => {
-    return (
-      <div className='flex items-center h-8 px-3 text-gray-500 focus:outline-none hover:text-gray-800 hover:bg-gray-100 cursor-pointer'
-        onClick={() => handleSelect(label as string)}
-      >
-        <Icon className='mr-3' /> <span>{status}</span>
-      </div>
-    );
-  });
-  const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
-
-  const handleClose = (event: any) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-
-    setOpen(false);
-  };
-
-  function handleListKeyDown(e: any) {
-    if (e.key === 'Tab') {
-      e.preventDefault();
-      setOpen(false);
-    }
+  if (keyword !== '') {
+    let normalizedKeyword = keyword.toLowerCase().trim();
+    statuses = statuses.filter(([icon, id, l]) => l.toLowerCase().indexOf(normalizedKeyword) !== -1);
   }
 
-  // return focus to the button when we transitioned from !open -> open
-  const prevOpen = React.useRef(open);
-  useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.current && anchorRef.current.focus();
-    }
-
-    prevOpen.current = open;
-  }, [open]);
+  let options = statuses.map(([icon, id, label]) => {
+    return (
+      <Menu.Item
+        onClick={() => handleSelect(id)}
+      >
+        <img src={icon} className='w-3.5 h-3.5 mr-3' alt={'Status Icon'} />
+        <div className='flex-1 overflow-hidden'>{label}</div>
+      </Menu.Item>
+    );
+  });
 
   return (
-    <div className={classes.root}>
-      <div
-        ref={anchorRef}
-        aria-controls={open ? 'menu-list-grow' : undefined}
-        aria-haspopup="true"
-        onClick={handleToggle}
-      >
+    <>
+      <ContextMenuTrigger id={id} holdToDisplay={1}>
         {button}
-      </div>
-      <Popper className='z-10' open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-        {({ TransitionProps, placement }) => (
-          <Grow
-            {...TransitionProps}
-            style={{
-              transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
-              boxShadow: '0 5px 10px rgba(0,0,0,0.07)',
-            }}
-          >
-            <Paper>
-              <ClickAwayListener onClickAway={handleClose}>
-                <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                  {React.Children.toArray(options)}
-                </MenuList>
-              </ClickAwayListener>
-            </Paper>
-          </Grow>
-        )}
-      </Popper>
-    </div>
+      </ContextMenuTrigger>
+
+      <Portal>
+        <Menu
+          id={id}
+          size='normal'
+          filterKeyword={true}
+          className={className}
+          searchPlaceholder='Set status...'
+          onKeywordChange={(kw) => setKeyword(kw)}
+        >
+          {React.Children.toArray(options)}
+        </Menu>
+      </Portal>
+    </>
   );
 };

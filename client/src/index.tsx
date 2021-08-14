@@ -10,17 +10,15 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <StylesProvider injectFirst>
-      <Provider store={store}>
-        <BrowserRouter>
-          <Auth0ProviderWithHistory>
-            <App />
-          </Auth0ProviderWithHistory>
-        </BrowserRouter>
-      </Provider>
-    </StylesProvider>
-  </React.StrictMode>,
+  <StylesProvider injectFirst>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Auth0ProviderWithHistory>
+          <App />
+        </Auth0ProviderWithHistory>
+      </BrowserRouter>
+    </Provider>
+  </StylesProvider>,
   document.getElementById('root')
 );
 

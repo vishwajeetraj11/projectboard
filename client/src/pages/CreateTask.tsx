@@ -6,7 +6,7 @@ import { ReactComponent as GitIssueIcon } from 'assets/icons/git-issue.svg';
 import { ReactComponent as LabelIcon } from 'assets/icons/label.svg';
 import axios from 'axios';
 import { LeftSideBar } from 'components/LeftSideBar';
-import LabelMenu from 'components/menus/LabelMenu';
+import { LabelMenu } from 'components/menus/LabelMenu';
 import { PriorityMenu } from 'components/menus/PriorityMenu';
 import { StatusMenu } from 'components/menus/StatusMenu';
 import { PriorityIcon } from 'components/PriorityIcon';
@@ -117,7 +117,7 @@ export const CreateTask: React.FC<Props> = ({ match, history }) => {
           </div>
           <div className='flex flex-col flex-1 pb-3.5 overflow-y-auto'>
 
-            {/* Issue title */}
+            {/* Task title */}
             <div className='flex items-center w-full mt-1.5 px-4'>
               <StatusMenu
                 id='status-menu'
@@ -134,7 +134,7 @@ export const CreateTask: React.FC<Props> = ({ match, history }) => {
               />
             </div>
 
-            {/* Issue description editor */}
+            {/* Task description editor */}
             <div className='flex w-full px-4'>
               <MarkdownStyles>
                 <Editor
@@ -150,9 +150,10 @@ export const CreateTask: React.FC<Props> = ({ match, history }) => {
 
           </div>
 
-          {/* Issue labels & priority */}
+          {/* Task labels & priority */}
           <div className='flex items-center px-4 pb-3 mt-1 border-b border-gray-200'>
             <PriorityMenu
+              // id='priority-menu'
               button={<button
                 className='inline-flex items-center h-6 px-2 text-gray-500 bg-gray-200 border-none rounded focus:outline-none hover:bg-gray-100 hover:text-gray-700'
               >

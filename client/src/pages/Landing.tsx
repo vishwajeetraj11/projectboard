@@ -1,10 +1,9 @@
-
-import { Link } from '@material-ui/core';
 import { Cards } from 'components/landing/cards';
 import { Faq } from 'components/landing/faq';
 import { Footer } from 'components/landing/footer';
 import { Main } from 'components/landing/main';
 import { Nav } from 'components/landing/nav';
+import { Support } from 'components/landing/Support';
 import React from 'react';
 
 interface Props {
@@ -18,11 +17,8 @@ export const Landing: React.FC<Props> = () => {
       <Main />
       <Cards />
       <Faq />
-      <Link />
+      <Support />
       <Footer />
-
-
     </>
-  )
-    ;
+  );
 };

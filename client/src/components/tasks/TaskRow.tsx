@@ -59,7 +59,6 @@ export const TaskRow = ({ task, onChangePriority, onChangeStatus }: Props) => {
         </div> */}
         <div className='flex-shrink-0 ml-2'>
           <PriorityMenu
-            // id={'r-priority-' + task._id}
             button={(
               <div className='flex-shrink-0 ml-2'>
                 <PriorityIcon
