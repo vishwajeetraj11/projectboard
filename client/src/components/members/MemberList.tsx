@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Loader } from 'components/Loader';
 import { MemberRow } from 'components/members/MemberRow';
 import { MembersColHeader } from 'components/members/MembersColHeader';
+import { showError, showInfo, showWarning } from 'components/Notification';
 import React, { useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import { Member } from 'shared/types';
@@ -24,6 +25,29 @@ export const MemberList: React.FC<Props> = () => {
   const { getAccessTokenSilently } = useAuth0();
   const match = useRouteMatch<MatchParams>();
   const isMobile = useMediaQuery('(max-width:600px)');
+
+  // Delete Member API states
+  const [deleteMemberLoading, setDeleteMemberLoading] = useState(false);
+
+  const onDeleteMember = async (memberId: string) => {
+    try {
+      setDeleteMemberLoading(true);
+      showWarning('', 'Deleting Member...');
+      const token = await getAccessTokenSilently();
+      await axios({
+        url: `${baseURL}${endpoints.projects}/${match.params.id}${endpoints.members}/${memberId}`,
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      showInfo('', 'Member Deleted Successfully.');
+    } catch (e) {
+      showError(e?.response?.data?.message, 'Error Deleting Member.');
+    } finally {
+      setDeleteMemberLoading(false);
+    }
+  };
 
   useEffect(() => {
     (async () => {
@@ -50,7 +74,7 @@ export const MemberList: React.FC<Props> = () => {
     <>
       {members.length !== 0 && <MembersColHeader isMobile={isMobile} />}
       {loading ? <div className='w-full flex items-center justify-center' style={{ height: "50vh" }}><Loader /></div> : error ? <p>{error}</p> : React.Children.toArray(members.map((member: Member) => (
-        <MemberRow isMobile={isMobile} member={member} />
+        <MemberRow onDeleteMember={onDeleteMember} disableDeleteButton={deleteMemberLoading} isMobile={isMobile} member={member} />
       )))}
     </>
   );
