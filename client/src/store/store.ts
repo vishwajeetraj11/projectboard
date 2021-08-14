@@ -3,12 +3,13 @@ import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from "redux-devtools-extension";
 import ReduxThunk from 'redux-thunk';
 import { projectReducer } from 'store/reducers/projectReducer';
-import { taskListReducer } from './reducers/taskReducer';
+import { taskDeleteReducer, taskListReducer } from './reducers/taskReducer';
 
 
 let rootReducer = combineReducers({
   taskList: taskListReducer,
   currentProject: projectReducer,
+  taskDelete: taskDeleteReducer
 });
 const middlewares = [ReduxThunk];
 

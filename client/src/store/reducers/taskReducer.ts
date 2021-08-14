@@ -1,6 +1,6 @@
 import { Task } from 'shared/types';
 // import { Task } from "../../shared/types";
-import { CHANGE_STATUS_OF_TASK_SUCCESS, GET_TASKS_FAIL, GET_TASKS_REQUEST, GET_TASKS_SUCCESS } from "../contants/taskConstants";
+import { CHANGE_STATUS_OF_TASK_SUCCESS, DELETE_TASK_FAIL, DELETE_TASK_REQUEST, DELETE_TASK_SUCCESS, GET_TASKS_FAIL, GET_TASKS_REQUEST, GET_TASKS_SUCCESS } from "../contants/taskConstants";
 
 const INITIAL_STATE = {
   loading: false,
@@ -48,4 +48,23 @@ export const taskListReducer = (state = INITIAL_STATE, action: any) => {
       break;
   }
   return state;
+};
+
+const INITIAL_DELETE_STATE = {
+  loading: false,
+  error: false,
+  success: false,
+};
+
+export const taskDeleteReducer = (state = INITIAL_DELETE_STATE, action: any) => {
+  switch (action.type) {
+    case DELETE_TASK_REQUEST:
+      return { ...state, loading: true };
+    case DELETE_TASK_SUCCESS:
+      return { ...state, loading: false, success: true };
+    case DELETE_TASK_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
 };

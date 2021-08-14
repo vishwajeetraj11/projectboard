@@ -51,7 +51,7 @@ export const TaskRow = ({ task, onChangePriority, onChangeStatus }: Props) => {
   };
   return (
     <ContextMenuTrigger
-      id="ISSUE_CONTEXT_MENU"
+      id={task._id}
     >
       <div key={task._id} className='inline-flex items-center flex-grow flex-shrink w-full min-w-0 pl-2 pr-8 text-sm border-b border-gray-100 hover:bg-gray-100 h-11' id={task._id}>
         {/* <div className='flex-shrink-0 hidden ml-2 sm:block'>
