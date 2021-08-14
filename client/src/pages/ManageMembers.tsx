@@ -21,7 +21,7 @@ interface Props extends RouteComponentProps<RouteParams> {
 }
 
 
-export const Invite: React.FC<Props> = ({ match }) => {
+export const ManageMembers: React.FC<Props> = ({ match }) => {
   const isMobile = useMediaQuery('(max-width:600px)');
   const [showMenu, setShowMenu] = useState(false);
   const [loading, setLoading] = useState(false);
