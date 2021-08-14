@@ -30,7 +30,7 @@ export const ProjectsList: React.FC<Props> = ({ type }) => {
         console.log(e);
       }
     })();
-  }, []);
+  }, [getAccessTokenSilently, type]);
   return (
     <div>
       {React.Children.toArray(projectsData.map((project: any) => (

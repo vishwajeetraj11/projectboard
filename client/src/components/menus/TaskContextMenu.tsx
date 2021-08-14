@@ -14,14 +14,12 @@ import { ReactComponent as RelationshipIcon } from 'assets/icons/relationship.sv
 import axios from 'axios';
 import { showError, showWarning, showInfo } from 'components/Notification';
 import { useState } from 'react';
-import { useEffect } from 'react';
 import { ContextMenu, MenuItem } from 'react-contextmenu';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useRouteMatch } from 'react-router-dom';
+import { useRouteMatch } from 'react-router-dom';
 import { Status } from 'shared/constants';
 import { Task } from 'shared/types';
 import { baseURL, endpoints } from 'shared/urls';
-import { deleteTask } from 'store/actions/taskActions';
 import { GET_TASKS_SUCCESS } from 'store/contants/taskConstants';
 import { RootState } from 'store/store';
 
