@@ -79,7 +79,7 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
 
             {/* User avatar  */}
             <div className='relative'>
-              <div className='flex items-center justify-center p-2 rounded cursor-pointer hover:bg-gray-100'
+              <div className='flex items-center justify-center p-2 rounded cursor-pointer hover:bg-gray-100 select-none'
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
               >
                 <Avatar name='Tuan Nguyen' online={true} />
@@ -161,7 +161,7 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
               className='flex items-center focus:outline-none'
             ><AddIcon className='w-3 mr-2' /> Manage Members</Link>
             <button
-              className='flex items-center mt-1 focus:outline-none'
+              className='flex items-center mt-1 focus:outline-none cursor-pointer'
               onClick={() => setShowHelpModal(true)}
             ><HelpIcon className='w-3 mr-2 mt-0.5' /> Help & Feedback</button>
           </div>

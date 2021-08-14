@@ -31,7 +31,7 @@ export const ManageMembers: React.FC<Props> = () => {
       <LeftSideBar showMenu={showMenu} onCloseMenu={() => setShowMenu(false)} />
       <div className='flex flex-col flex-grow'>
         <div className='flex flex-col w-full flex-1'>
-          <TopFilter onOpenMenu={() => setShowMenu(!showMenu)} title='Invite' type={topFilterType.INVITE} />
+          <TopFilter onOpenMenu={() => setShowMenu(!showMenu)} title='Manage Members' type={topFilterType.INVITE} />
           <div className='flex flex-col p-5 pl-10 flex-1'>
             <div>
               <h2 className='font-semibold text-xl mb-2'>Project Title: {projectData.project.title}</h2>

@@ -105,9 +105,9 @@ export const CreateTask: React.FC<Props> = ({ match, history }) => {
             <div className='flex items-center'>
               <span className="inline-flex items-center p-1 text-gray-400 bg-gray-100 rounded">
                 <GitIssueIcon className='w-3 mr-1' />
-                <span>GIT</span>
+                <span>{projectData.project.title}</span>
               </span>
-              <span className='ml-2 font-normal text-gray-700'>› New Issue</span>
+              <span className='ml-2 font-normal text-gray-700'>› New Task</span>
             </div>
             <div className='flex items-center'>
               <Link to='/'
@@ -128,7 +128,7 @@ export const CreateTask: React.FC<Props> = ({ match, history }) => {
               />
               <input
                 className="w-full ml-1.5 text-lg font-semibold placeholder-gray-400 border-none h-7 focus:outline-none"
-                placeholder='Issue title'
+                placeholder='Task title'
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
@@ -173,13 +173,12 @@ export const CreateTask: React.FC<Props> = ({ match, history }) => {
               </button>} />
           </div>
           {/* Footer */}
-          <div className='flex items-center justify-between flex-shrink-0 px-4 pt-3'>
-            <button className='focus:outline-none'><AttachmentIcon /></button>
-            <div className='flex items-center'>
+          <div className='flex items-center justify-between flex-shrink-0 px-4 pt-3 w-full'>
+            <div className='flex items-center w-full'>
               <button
-                className='px-3 ml-2 text-white bg-indigo-600 rounded hover:bg-indigo-700 h-7 focus:outline-none'
+                className='px-3 ml-2 text-white bg-indigo-600 rounded hover:bg-indigo-700 h-7 focus:outline-none ml-auto'
                 onClick={handleSubmit}
-              >Save Issue
+              >Save Task
               </button>
             </div>
           </div>
