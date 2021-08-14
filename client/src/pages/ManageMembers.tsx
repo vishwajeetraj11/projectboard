@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import { topFilterType, userType } from 'shared/constants';
 import { RootState } from 'store/store';
-import { MemberList } from 'components/members/Invite';
+import { MemberList } from 'components/members/MemberList';
 import { AddMembers } from 'components/members/AddMembers';
 
 interface RouteParams { id: string; }
@@ -39,7 +39,7 @@ export const ManageMembers: React.FC<Props> = () => {
             <h2 className='text-md'>Manage Members</h2>
             <div className='flex items-center my-4'>
               <Button className='w-6/12' color='primary' variant={activeUsers === userType.MEMBER ? 'contained' : 'outlined'} onClick={() => toggleUsersActive(userType.MEMBER)}>Members</Button>
-              <Button className='w-6/12' color='primary' variant={activeUsers === userType.USER ? 'contained' : 'outlined'} onClick={() => toggleUsersActive(userType.USER)}>Invite</Button>
+              <Button className='w-6/12' color='primary' variant={activeUsers === userType.USER ? 'contained' : 'outlined'} onClick={() => toggleUsersActive(userType.USER)}>Add Members</Button>
             </div>
             {activeUsers === userType.MEMBER && <MemberList />}
             {activeUsers === userType.USER && <AddMembers />}

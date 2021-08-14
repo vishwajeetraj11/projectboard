@@ -14,7 +14,7 @@ export const MemberRow: React.FC<Props> = ({ member, isMobile }) => {
       <p>{member.user.firstName} {member.user.lastName}</p>
       <p>{member.access}</p>
       {!isMobile && <p>{member.user.email}</p>}
-      <Button className='flex items-center justify-center'><HighlightOffOutlinedIcon className='h-5 w-5 text-red-500' /></Button>
+      {!(member.access === 'admin') && <Button className='flex items-center justify-center'><HighlightOffOutlinedIcon className='h-5 w-5 text-red-500' /></Button>}
     </div>
   );
 };

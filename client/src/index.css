@@ -71,7 +71,15 @@ body {
 .member-grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 0.2fr;
-	@media only screen and (max-width: 600px) {
+    min-height: 30px;
+    align-items: center;
+    background-color: #fafafa;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+@media only screen and (max-width: 600px) {
+    .member-grid-container {
         grid-template-columns: 1fr  1fr 0.2fr;
-	}
+    }
 }
