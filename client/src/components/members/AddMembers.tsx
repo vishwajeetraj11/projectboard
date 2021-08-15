@@ -28,6 +28,7 @@ export const AddMembers: React.FC<Props> = () => {
   const { getAccessTokenSilently } = useAuth0();
   const isMobile = useMediaQuery('(max-width:600px)');
   const match = useRouteMatch<MatchParams>();
+  const [error, setError] = useState(false);
 
   // Add Member API Call States
   const [addMemberLoading, setAddMemberLoading] = useState(false);
@@ -76,7 +77,7 @@ export const AddMembers: React.FC<Props> = () => {
               setUsers(data.users);
               resetForm();
             } catch (e) {
-              console.log(e);
+              setError(e?.response?.data?.message);
             } finally {
               setSubmitting(false);
             }
@@ -94,6 +95,7 @@ export const AddMembers: React.FC<Props> = () => {
               </Button>
             </div>
             {errors.searchTerm && <FormHelperText><span className='text-red-600'>{errors.searchTerm}</span></FormHelperText>}
+            {error && <p className='text-red-600 mt-2'>{error}</p>}
           </form>
         )}
       </Formik>
