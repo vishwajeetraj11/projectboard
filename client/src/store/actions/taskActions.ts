@@ -45,8 +45,8 @@ export const getAllTasks: TgetAllTasks = (token, projectId) => async (dispatch: 
     dispatch({ type: GET_TASKS_SUCCESS, payload: tasks });
 
   } catch (e) {
-    console.log(e.response.data);
-    dispatch({ type: GET_TASKS_FAIL });
+    console.log(e?.response?.data?.message);
+    dispatch({ type: GET_TASKS_FAIL, payload: e?.response?.data?.message });
   }
 };
 

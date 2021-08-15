@@ -12,24 +12,24 @@ export const TaskList = () => {
   const allTasks = useSelector((state: RootState) => state.taskList.tasks);
 
   let tasks = [...allTasks.backlog, ...allTasks.todo, ...allTasks.in_progress, ...allTasks.done, ...allTasks.cancelled];
-  // sort issues by id
-  // issues = issues.sort((a, b) => {
+  // sort tasks by order
+  // tasks = tasks.sort((a, b) => {
   //     let aId = parseInt(a.id.split('-')[1]);
   //     let bId = parseInt(b.id.split('-')[1]);
   //     return aId - bId;
   // });
 
-  const handleIssueStatusChange = (task: Task, status: string) => {
+  const handleTaskStatusChange = (task: Task, status: string) => {
 
-    // dispatch(updateIssueStatus(issue, status));
+    // dispatch(updateTaskStatus(task, status));
   };
 
-  const handleIssuePriorityChange = (task: Task, priority: string) => {
-    // dispatch(updateIssuePriority(issue, priority));
+  const handleTaskPriorityChange = (task: Task, priority: string) => {
+    // dispatch(updateTaskPriority(task, priority));
   };
 
   useEffect(() => {
-    // dispatch(loadIssues());
+    // dispatch(loadTasks());
   }, []);
 
   const taskRows = tasks.map((task, idx) => {
@@ -38,16 +38,16 @@ export const TaskList = () => {
       <>
         <TaskRow
           task={task}
-          onChangePriority={handleIssuePriorityChange}
-          onChangeStatus={handleIssueStatusChange}
+          onChangePriority={handleTaskPriorityChange}
+          onChangeStatus={handleTaskStatusChange}
         />
         <ConnectedMenu />
       </>
     );
   });
   return (
-    <div className='flex flex-col overflow-auto'>
-      {React.Children.toArray(taskRows)}
+    <div className={`flex flex-col overflow-auto ${!taskRows.length ? 'flex-1' : ''}`}>
+      {taskRows.length === 0 ? <div className='flex-1 flex items-center justify-center'>No Tasks Yet</div> : React.Children.toArray(taskRows)}
     </div>
   );
 };

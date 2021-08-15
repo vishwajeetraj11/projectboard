@@ -83,6 +83,7 @@ export const TaskRow = ({ task, onChangePriority, onChangeStatus }: Props) => {
         </div>}
         <div className='flex-shrink-0 hidden w-max ml-2 mr-3 font-normal sm:block'>{formatDate(task.startDate)}</div>
         {/* <div className='flex-shrink-0 ml-auto'>{avatar}</div> */}
+        {/* <div>{`${task?.assignee?.user?.username}`}</div> */}
       </div>
     </ContextMenuTrigger>
   );

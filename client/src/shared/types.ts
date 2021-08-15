@@ -37,10 +37,8 @@ export interface Task {
   description: string,
   startDate: Date | null | undefined;
   dueDate: Date | null | undefined;
-  author: {
-    _id: string,
-    email: string;
-  };
+  author: Member,
+  assignee: Member,
   updatedAt: Date;
 }
 
