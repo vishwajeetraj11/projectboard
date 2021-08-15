@@ -6,7 +6,7 @@ import { CHANGE_STATUS_OF_TASK_FAIL, CHANGE_STATUS_OF_TASK_REQUEST, CHANGE_STATU
 import { AppDispatch, RootState } from 'store/store';
 
 type TgetAllTasks = (token: string, projectId: string) => void;
-type TchangeStatusOfTask = (taskId: string, srcStatus: string, destStatus: string, srcPos: number, destPos: number) => void;
+type TchangeStatusOfTask = (taskId: string, srcStatus: string, destStatus: string, srcPos: number, destPos: number, projectId: string, token: string) => void;
 
 export const getAllTasks: TgetAllTasks = (token, projectId) => async (dispatch: AppDispatch) => {
   try {
@@ -50,17 +50,8 @@ export const getAllTasks: TgetAllTasks = (token, projectId) => async (dispatch: 
   }
 };
 
-export const changeStatusOfTask: TchangeStatusOfTask = (taskId, srcStatus, destStatus, srcPos, destPos) => async (dispatch: AppDispatch, getState: () => RootState) => {
+export const changeStatusOfTask: TchangeStatusOfTask = (taskId, srcStatus, destStatus, srcPos, destPos, projectId, token) => async (dispatch: AppDispatch, getState: () => RootState) => {
   try {
-    // dispatch({
-    //   type: CHANGE_STATUS_OF_TASK_REQUEST,
-    // });
-
-    // dispatch({
-    //   type: CHANGE_STATUS_OF_TASK_SUCCESS,
-    //   payload: {}
-    // });
-
     const { taskList } = getState();
     let tasks = { ...taskList.tasks };
     let sourceArray: Array<Task> = [...taskList.tasks[srcStatus]];
@@ -72,6 +63,21 @@ export const changeStatusOfTask: TchangeStatusOfTask = (taskId, srcStatus, destS
 
     tasks[srcStatus] = sourceArray;
     tasks[destStatus] = destinationArray;
+
+    // Task with updated Status
+    await axios({
+      url: `${baseURL}${endpoints.projects}/${projectId}${endpoints.tasks}/${taskId}/update`,
+      method: "PATCH",
+      data: {
+        destinationIndex: destPos,
+        sourceIndex: srcPos,
+        sourceStatus: srcStatus,
+        destinationStatus: destStatus
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     dispatch({
       type: CHANGE_STATUS_OF_TASK_SUCCESS,
