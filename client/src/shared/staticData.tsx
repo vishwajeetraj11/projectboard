@@ -17,7 +17,7 @@ export const features = [
       ),
       title: 'Sign Up',
       description:
-        'Signing up to OS Resume is even more convenient than usual. Use one of the most common networks used by professionals (Github, Facebook or your Google account) or simply skip this step and enter your name and email address. We keep your data strictly confidential.',
+        'Signing up to OS Resume is even more cnetwme and email address. We keep your data strictly confidential.',
       // description: 'Pick one of our free resume templates that fits your description. Beautiful layouts, pick your favorite.',
     },
     {
@@ -39,7 +39,7 @@ export const features = [
       ),
       title: 'Fill the Template',
       description:
-        'Choose one of the templates. Add your personal info and choose and edit the necessary sections. You will find the relevent forms in the Sidebars. Every Sidebar will open a drawer where you will have options to create/update/delete/rearrange information.',
+        'Choose one of will find the relevent forms in the Sidebars. Every Sidebar wiete/rearrange information.',
     },
     {
       id: '3',
@@ -58,7 +58,7 @@ export const features = [
       ),
       title: 'Export your Resume',
       description:
-        'Export your Resume to PDF. PDF will provide you with the best and most consistent visual formatting It is saved at every checkpoint (create/update/delete/rearrange information).',
+        'Export your Resume to PDF. PDF  and most consistent visuaupdate/delete/rearrange information).',
     },
     {
       id: '4',
@@ -78,7 +78,7 @@ export const features = [
       ),
       title: 'Sign Up',
       description:
-        'Signing up to OS Resume is even more convenient than usual. Use one of the most common networks used by professionals (Github, Facebook or your Google account) or simply skip this step and enter your name and email address. We keep your data strictly confidential.',
+        'Signing up ip this step and enter your name and email address. We keep your data strictly confidential.',
       // description: 'Pick one of our free resume templates that fits your description. Beautiful layouts, pick your favorite.',
     },
     {
@@ -100,7 +100,7 @@ export const features = [
       ),
       title: 'Fill the Template',
       description:
-        'Choose one of the templates. Add your personal info and choose and edit the necessary sections. You will find the relevent forms in the Sidebars. Every Sidebar will open a drawer where you will have options to create/update/delete/rearrange information.',
+        'Choose one of the temppen a drawer where you will have options to create/update/delete/rearrange information.',
     },
     {
       id: '6',
@@ -119,7 +119,7 @@ export const features = [
       ),
       title: 'Export your Resume',
       description:
-        'Export your Resume to PDF. PDF will provide you with the best and most consistent visual formatting It is saved at every checkpoint (create/update/delete/rearrange information).',
+        'Export your Resume to PDF is saved at every checkpoint (create/update/delete/rearrange information).',
     },
   ];
 
