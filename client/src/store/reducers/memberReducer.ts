@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   loading: false,
   error: false,
   success: false,
-  member: [] as Array<Member>
+  members: [] as Array<Member>
 };
 
 export const memberListReducer = (state = INITIAL_STATE, action: any) => {

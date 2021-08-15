@@ -4,13 +4,10 @@ import MenuList from '@material-ui/core/MenuList';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import { makeStyles } from '@material-ui/core/styles';
-import { ReactComponent as NoPriorityIcon } from 'assets/icons/dots.svg';
-import { ReactComponent as UrgentPriorityIcon } from 'assets/icons/rounded-claim.svg';
-import { ReactComponent as MediumPriorityIcon } from 'assets/icons/signal-medium.svg';
-import { ReactComponent as HighPriorityIcon } from 'assets/icons/signal-strong.svg';
-import { ReactComponent as LowPriorityIcon } from 'assets/icons/signal-weak.svg';
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
-import { Priority } from 'shared/constants';
+import { useSelector } from 'react-redux';
+import { Member } from 'shared/types';
+import { RootState } from 'store/store';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,34 +21,29 @@ const useStyles = makeStyles((theme) => ({
 interface Props {
   button: ReactNode;
   className?: string;
-  onSelect?: (item: string) => void;
+  onSelect?: (item: Member) => void;
 }
 
-export const PriorityMenu = ({ button, className, onSelect }: Props) => {
+export const AssigneeMenu = ({ button, className, onSelect }: Props) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const anchorRef = useRef<HTMLDivElement>(null);
 
-  const handleSelect = (priority: string) => {
+  const handleSelect = (member: Member) => {
     if (onSelect) {
-      onSelect(priority);
+      onSelect(member);
       setOpen(false);
     }
   };
-  let statusOpts = [
-    [NoPriorityIcon, 'No priority', Priority.NO_PRIORITY],
-    [UrgentPriorityIcon, 'Urgent', Priority.URGENT],
-    [HighPriorityIcon, 'High', Priority.HIGH],
-    [MediumPriorityIcon, 'Medium', Priority.MEDIUM],
-    [LowPriorityIcon, 'Low', Priority.LOW]
-  ];
 
-  const options = statusOpts.map(([Icon, label, priority]) => {
+  const { members } = useSelector((state: RootState) => state.memberList);
+
+  const options = members.map((member: Member) => {
     return (
       <div className='flex items-center h-8 px-3 text-gray-500 focus:outline-none hover:text-gray-800 hover:bg-gray-100 cursor-pointer'
-        onClick={() => handleSelect(priority as string)}
+        onClick={() => handleSelect(member)}
       >
-        <Icon className='mr-3' /> <span>{label}</span>
+        <span>{`${member.user.firstName} ${member.user.lastName}`}</span>
       </div>
     );
   });
@@ -117,6 +109,6 @@ export const PriorityMenu = ({ button, className, onSelect }: Props) => {
   );
 };
 
-PriorityMenu.defaultProps = {
+AssigneeMenu.defaultProps = {
   filterKeyword: false
 };
