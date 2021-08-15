@@ -2,6 +2,7 @@ import { StatusIcon } from 'components/StatusIcon';
 import React from 'react';
 import { Droppable, DroppableProvided } from 'react-beautiful-dnd';
 import { GoPlus as AddIcon } from 'react-icons/go';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import { Task } from 'shared/types';
 import { BoardItem } from './BoardItem';
 
@@ -9,6 +10,9 @@ interface Props {
   status: string;
   title: string;
   tasks: Array<Task> | undefined;
+}
+interface MatchParams {
+  id: string;
 }
 
 export const IssueCol = ({ title, status, tasks }: Props) => {
@@ -19,8 +23,13 @@ export const IssueCol = ({ title, status, tasks }: Props) => {
     <BoardItem task={task} index={idx} />
   ));
 
+  const history = useHistory();
+  const match = useRouteMatch<MatchParams>();
+
   const onAddClick = () => {
-    console.log(status);
+    history.push(`/projects/${match.params.id}/create-task`, {
+      status,
+    });
   };
 
   return (

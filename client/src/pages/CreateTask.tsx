@@ -19,7 +19,7 @@ import { Label, Member } from 'shared/types';
 import { baseURL, endpoints } from 'shared/urls';
 import { RootState } from 'store/store';
 import { MarkdownStyles } from 'styled/Markdown';
-import { showInfo, showWarning } from '../components/Notification';
+import { showError, showInfo, showWarning } from '../components/Notification';
 import { DEFAULT_LABLES, Priority, Status } from '../shared/constants';
 import { DatePicker, MuiPickersUtilsProvider, } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
@@ -48,13 +48,12 @@ const getPriorityString = (priority: string) => {
   }
 };
 
-export const CreateTask: React.FC<Props> = ({ match, history }) => {
+export const CreateTask: React.FC<Props> = ({ match, history, location }) => {
   const [showMenu, setShowMenu] = useState(false);
-
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState(Priority.NO_PRIORITY);
-  const [status, setStatus] = useState(Status.BACKLOG);
+  const [status, setStatus] = useState(location?.state?.status || Status.BACKLOG);
   const [label, setLabel] = useState(DEFAULT_LABLES[3]);
   const [assignee, setAssignee] = useState<Member>();
   const [dueDate, setDueDate] = useState<MaterialUiPickersDate>(() => {
@@ -99,16 +98,20 @@ export const CreateTask: React.FC<Props> = ({ match, history }) => {
       startDate,
       dueDate
     };
-    const token = await getAccessTokenSilently();
+    try {
+      const token = await getAccessTokenSilently();
 
-    await axios({
-      url: `${baseURL}${endpoints.projects}/${match.params.id}${endpoints.tasks}`,
-      method: 'POST',
-      data: body,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+      await axios({
+        url: `${baseURL}${endpoints.projects}/${match.params.id}${endpoints.tasks}`,
+        method: 'POST',
+        data: body,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (e) {
+      showError("", 'Error Creating Task.');
+    }
     setTitle('');
     setDescription('');
     setPriority(Priority.NO_PRIORITY);
