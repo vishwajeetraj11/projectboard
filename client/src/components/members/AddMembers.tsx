@@ -38,7 +38,7 @@ export const AddMembers: React.FC<Props> = () => {
       setAddMemberLoading(true);
       showWarning('', 'Adding Member...');
       const token = await getAccessTokenSilently();
-      const { data } = await axios({
+      await axios({
         url: `${baseURL}${endpoints.projects}/${match.params.id}${endpoints.members}/${userId}`,
         method: 'POST',
         headers: {
@@ -66,6 +66,7 @@ export const AddMembers: React.FC<Props> = () => {
         onSubmit={(values, { setSubmitting, resetForm }) => {
           setTimeout(async () => {
             try {
+              setError(false);
               const token = await getAccessTokenSilently();
               const { data } = await axios({
                 url: `${baseURL}${endpoints.users}?keyword=${encodeURIComponent(values.searchTerm)}`,

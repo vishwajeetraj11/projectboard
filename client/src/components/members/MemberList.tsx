@@ -74,7 +74,13 @@ export const MemberList: React.FC<Props> = () => {
     <>
       {members.length !== 0 && <MembersColHeader isMobile={isMobile} />}
       {loading ? <div className='w-full flex items-center justify-center' style={{ height: "50vh" }}><Loader /></div> : error ? <p>{error}</p> : React.Children.toArray(members.map((member: Member) => (
-        <MemberRow onDeleteMember={onDeleteMember} disableDeleteButton={deleteMemberLoading} isMobile={isMobile} member={member} />
+        <MemberRow
+          onDeleteMember={onDeleteMember}
+          disableDeleteButton={deleteMemberLoading}
+          isMobile={isMobile}
+          member={member}
+          setMembers={setMembers}
+        />
       )))}
     </>
   );
