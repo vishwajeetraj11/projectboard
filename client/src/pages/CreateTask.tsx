@@ -1,12 +1,12 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { ReactComponent as AttachmentIcon } from 'assets/icons/attachment.svg';
 import { ReactComponent as OwnerIcon } from 'assets/icons/avatar.svg';
 import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
 import { ReactComponent as GitIssueIcon } from 'assets/icons/git-issue.svg';
 import { ReactComponent as LabelIcon } from 'assets/icons/label.svg';
 import axios from 'axios';
 import { LeftSideBar } from 'components/LeftSideBar';
-import LabelMenu from 'components/menus/LabelMenu';
+import { AssigneeMenu } from 'components/menus/AssigneeMenu';
+import { LabelMenu } from 'components/menus/LabelMenu';
 import { PriorityMenu } from 'components/menus/PriorityMenu';
 import { StatusMenu } from 'components/menus/StatusMenu';
 import { PriorityIcon } from 'components/PriorityIcon';
@@ -14,16 +14,17 @@ import { StatusIcon } from 'components/StatusIcon';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-// import { useDispatch } from 'react-redux';
 import Editor from "rich-markdown-editor";
-import { Label } from 'shared/types';
+import { Label, Member } from 'shared/types';
 import { baseURL, endpoints } from 'shared/urls';
 import { RootState } from 'store/store';
 import { MarkdownStyles } from 'styled/Markdown';
 import { showInfo, showWarning } from '../components/Notification';
-// import { AppDispatch } from 'store';
-// import { createIssue } from 'store/actions/issueActions';
 import { DEFAULT_LABLES, Priority, Status } from '../shared/constants';
+import { DatePicker, MuiPickersUtilsProvider, } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import { formatDate } from 'shared/utils/formatDate';
+import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
 
 interface RouteParams { id: string; }
 interface Props extends RouteComponentProps<RouteParams> {
@@ -55,13 +56,33 @@ export const CreateTask: React.FC<Props> = ({ match, history }) => {
   const [priority, setPriority] = useState(Priority.NO_PRIORITY);
   const [status, setStatus] = useState(Status.BACKLOG);
   const [label, setLabel] = useState(DEFAULT_LABLES[3]);
-  const [assignee, setAssignee] = useState('');
-  const [dueDate, setDate] = useState('');
-  const [startDate, setStartDate] = useState(new Date());
+  const [assignee, setAssignee] = useState<Member>();
+  const [dueDate, setDueDate] = useState<MaterialUiPickersDate>(() => {
+    const date = new Date();
+    const newDate = new Date(Number(date));
+    newDate.setDate(date.getDate() + 10);
+    return newDate;
+  });
+  const [startDate, setStartDate] = useState<MaterialUiPickersDate>(new Date());
+
+  // Date Pickers
+  const [isOpenStartDate, setIsOpenStartDate] = useState(false);
+  const [isOpenDueDate, setIsOpenDueDate] = useState(false);
 
   const { projectData } = useSelector((state: RootState) => state.currentProject);
 
   const { getAccessTokenSilently } = useAuth0();
+
+  const onAssigneeSelect = (member: Member) => {
+    setAssignee(member);
+  };
+
+  const onStartDatePick = () => {
+    setIsOpenStartDate(true);
+  };
+  const onDueDatePick = () => {
+    setIsOpenDueDate(true);
+  };
 
   const handleSubmit = async () => {
     if (title === "") {
@@ -73,13 +94,14 @@ export const CreateTask: React.FC<Props> = ({ match, history }) => {
       priority,
       status,
       label: label.name,
+      assignee: assignee?._id,
       description,
       startDate,
       dueDate
     };
     const token = await getAccessTokenSilently();
 
-    const { data } = await axios({
+    await axios({
       url: `${baseURL}${endpoints.projects}/${match.params.id}${endpoints.tasks}`,
       method: 'POST',
       data: body,
@@ -105,9 +127,9 @@ export const CreateTask: React.FC<Props> = ({ match, history }) => {
             <div className='flex items-center'>
               <span className="inline-flex items-center p-1 text-gray-400 bg-gray-100 rounded">
                 <GitIssueIcon className='w-3 mr-1' />
-                <span>GIT</span>
+                <span>{projectData.project.title}</span>
               </span>
-              <span className='ml-2 font-normal text-gray-700'>› New Issue</span>
+              <span className='ml-2 font-normal text-gray-700'>› New Task</span>
             </div>
             <div className='flex items-center'>
               <Link to='/'
@@ -117,7 +139,7 @@ export const CreateTask: React.FC<Props> = ({ match, history }) => {
           </div>
           <div className='flex flex-col flex-1 pb-3.5 overflow-y-auto'>
 
-            {/* Issue title */}
+            {/* Task title */}
             <div className='flex items-center w-full mt-1.5 px-4'>
               <StatusMenu
                 id='status-menu'
@@ -128,21 +150,21 @@ export const CreateTask: React.FC<Props> = ({ match, history }) => {
               />
               <input
                 className="w-full ml-1.5 text-lg font-semibold placeholder-gray-400 border-none h-7 focus:outline-none"
-                placeholder='Issue title'
+                placeholder='Task title'
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
             </div>
 
-            {/* Issue description editor */}
-            <div className='flex w-full px-4'>
+            {/* Task description editor */}
+            <div className='flex px-4'>
               <MarkdownStyles>
                 <Editor
                   autoFocus
                   id='editor'
                   defaultValue={description}
                   onChange={(value) => setDescription(value())}
-                  className='w-full mt-4 ml-5 font-normal border-none appearance-none min-h-12 text-md focus:outline-none'
+                  className='mt-4 ml-5 font-normal border-none appearance-none min-h-12 text-md focus:outline-none'
                   placeholder='Add description...'
                 />
               </MarkdownStyles>
@@ -150,36 +172,72 @@ export const CreateTask: React.FC<Props> = ({ match, history }) => {
 
           </div>
 
-          {/* Issue labels & priority */}
-          <div className='flex items-center px-4 pb-3 mt-1 border-b border-gray-200'>
+          {/* Task labels & priority */}
+          <div className='flex items-center px-4 pb-3 mt-1 border-b border-gray-200 flex-wrap'>
             <PriorityMenu
+              // id='priority-menu'
               button={<button
-                className='inline-flex items-center h-6 px-2 text-gray-500 bg-gray-200 border-none rounded focus:outline-none hover:bg-gray-100 hover:text-gray-700'
+                className='mt-2 inline-flex items-center h-6 px-2 text-gray-500 bg-gray-200 border-none rounded focus:outline-none hover:bg-gray-100 hover:text-gray-700 mr-2'
               >
                 <PriorityIcon priority={priority} className='mr-2' />
                 <span>{getPriorityString(priority)}</span>
               </button>}
               onSelect={(val) => setPriority(val)}
             />
-            <button className='inline-flex items-center h-6 px-2 ml-2 text-gray-500 bg-gray-200 border-none rounded focus:outline-none hover:bg-gray-100 hover:text-gray-700'>
-              <OwnerIcon className='w-3.5 h-3.5 mr-2' />
-              <span>Assignee</span>
-            </button>
+
+            <AssigneeMenu
+              button={<button className='mt-2 inline-flex items-center h-6 px-2 mr-2 text-gray-500 bg-gray-200 border-none rounded focus:outline-none hover:bg-gray-100 hover:text-gray-700'>
+                {!assignee ? <><OwnerIcon className='w-3.5 h-3.5 mr-2' />
+                  <span>Assignee</span></> : <><OwnerIcon className='w-3.5 h-3.5 mr-2' />
+                  <span>{`${assignee.user.firstName} ${assignee.user.lastName}`}</span></>}
+              </button>}
+              onSelect={onAssigneeSelect}
+            />
+
             <LabelMenu
               id='label-menu'
               onSelect={(label: Label) => setLabel(label)}
-              button={<button className='inline-flex items-center h-6 px-2 ml-2 text-gray-500 bg-gray-200 border-none rounded focus:outline-none hover:bg-gray-100 hover:text-gray-700'>
+              button={<button className='mt-2 inline-flex items-center h-6 px-2 mr-2 text-gray-500 bg-gray-200 border-none rounded focus:outline-none hover:bg-gray-100 hover:text-gray-700'>
                 {label.name === 'No Label' ? <><LabelIcon className='w-3.5 h-3.5  mr-2' /> <span>No Label</span> </> : <><div className="w-2.5 h-2.5 rounded-full mr-2" style={{ background: label.color }}></div> <span>{label.name}</span> </>}
               </button>} />
+
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <DatePicker
+                disablePast
+                open={isOpenStartDate}
+                onOpen={() => setIsOpenStartDate(true)}
+                onClose={() => setIsOpenStartDate(false)}
+                TextFieldComponent={() => null}
+                variant='dialog'
+                onChange={(date: MaterialUiPickersDate) => setStartDate(date)}
+                value={startDate}
+              />
+              <button onClick={onStartDatePick} className='mt-2 inline-flex items-center h-6 px-2 mr-2 text-gray-500 bg-gray-200 border-none rounded focus:outline-none hover:bg-gray-100 hover:text-gray-700'>
+                {startDate ? `Start Date: ${formatDate(startDate)}` : "Start Date"}
+              </button>
+              <DatePicker
+                disablePast
+                open={isOpenDueDate}
+                onOpen={() => setIsOpenDueDate(true)}
+                onClose={() => setIsOpenDueDate(false)}
+                TextFieldComponent={() => null}
+                variant='dialog'
+                onChange={(date: MaterialUiPickersDate) => setDueDate(date)}
+                value={dueDate}
+              />
+              <button onClick={onDueDatePick} className='mt-2 inline-flex items-center h-6 px-2 mr-2 text-gray-500 bg-gray-200 border-none rounded focus:outline-none hover:bg-gray-100 hover:text-gray-700'>
+                {dueDate ? `Due Date: ${formatDate(dueDate)}` : "Due Date"}
+              </button>
+            </MuiPickersUtilsProvider>
+
           </div>
           {/* Footer */}
-          <div className='flex items-center justify-between flex-shrink-0 px-4 pt-3'>
-            <button className='focus:outline-none'><AttachmentIcon /></button>
-            <div className='flex items-center'>
+          <div className='flex items-center justify-between flex-shrink-0 px-4 pt-3 w-full'>
+            <div className='flex items-center w-full'>
               <button
-                className='px-3 ml-2 text-white bg-indigo-600 rounded hover:bg-indigo-700 h-7 focus:outline-none'
+                className='px-3 ml-2 text-white bg-indigo-600 rounded hover:bg-indigo-700 h-7 focus:outline-none ml-auto'
                 onClick={handleSubmit}
-              >Save Issue
+              >Save Task
               </button>
             </div>
           </div>

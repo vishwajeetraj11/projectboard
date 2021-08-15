@@ -13,7 +13,7 @@ export const Status = {
   TODO: 'todo',
   IN_PROGRESS: 'in_progress',
   DONE: 'done',
-  CANCELED: 'canceled',
+  CANCELED: 'cancelled',
 };
 
 export const Labels = {
@@ -37,6 +37,12 @@ export const projectsType = {
 
 export const topFilterType = {
   INVITE: "INVITE"
+};
+
+// On Invite Page either to show uninvited Members and Members of Project
+export const userType = {
+  MEMBER: 'MEMBER',
+  USER: 'USER'
 };;
 
 // export const DropdownMenus = {

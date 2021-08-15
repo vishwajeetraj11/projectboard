@@ -11,7 +11,6 @@ import { ReactComponent as MenuIcon } from 'assets/icons/menu.svg';
 import { ReactComponent as ViewIcon } from 'assets/icons/view.svg';
 import classNames from 'classnames';
 import HelpModal from 'components/HelpModal';
-import InviteBox from 'components/InviteBox';
 import { SearchBox } from 'components/SearchBox';
 import { useClickOutside } from 'hooks/useClickOutside';
 import React, { RefObject, useEffect, useRef, useState } from 'react';
@@ -40,7 +39,6 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
 
   const ref = useRef<HTMLDivElement>() as RefObject<HTMLDivElement>;
   const [showProfileMenu, setShowProfileMenu] = useState(false);
-  const [showInviteModal, setShowInviteModal] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
 
   let classes = classNames(
@@ -81,7 +79,7 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
 
             {/* User avatar  */}
             <div className='relative'>
-              <div className='flex items-center justify-center p-2 rounded cursor-pointer hover:bg-gray-100'
+              <div className='flex items-center justify-center p-2 rounded cursor-pointer hover:bg-gray-100 select-none'
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
               >
                 <Avatar name='Tuan Nguyen' online={true} />
@@ -158,16 +156,12 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
 
           {/* bottom group */}
           <div className='px-2 pb-2 text-gray-500 mt-7'>
-            <button
-              className='flex items-center focus:outline-none'
-              onClick={() => setShowInviteModal(true)}
-            ><AddIcon className='w-3 mr-2' /> Invite people</button>
             <Link
-              to={`/projects/${projectData.project._id}/invite`}
+              to={`/projects/${projectData.project._id}/members`}
               className='flex items-center focus:outline-none'
-            ><AddIcon className='w-3 mr-2' /> Invite people</Link>
+            ><AddIcon className='w-3 mr-2' /> Manage Members</Link>
             <button
-              className='flex items-center mt-1 focus:outline-none'
+              className='flex items-center mt-1 focus:outline-none cursor-pointer'
               onClick={() => setShowHelpModal(true)}
             ><HelpIcon className='w-3 mr-2 mt-0.5' /> Help & Feedback</button>
           </div>
@@ -175,7 +169,6 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
       </div>
       {/* Modals */}
       {<HelpModal isOpen={showHelpModal} onDismiss={() => setShowHelpModal(false)} />}
-      {<InviteBox isOpen={showInviteModal} onDismiss={() => setShowInviteModal(false)} />}
     </>
   );
 };

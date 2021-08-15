@@ -5,6 +5,7 @@ import { TopFilter } from 'components/TopFilter';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
+import { getAllMembers } from 'store/actions/memberActions';
 import { getAllTasks } from 'store/actions/taskActions';
 
 interface RouteParams { id: string; }
@@ -22,6 +23,7 @@ export const Tasks: React.FC<Props> = ({ match }) => {
     (async () => {
       const token = await getAccessTokenSilently();
       dispatch(getAllTasks(token, match.params.id));
+      dispatch(getAllMembers(token, match.params.id));
     })();
   }, [dispatch, getAccessTokenSilently, match.params.id]);
 

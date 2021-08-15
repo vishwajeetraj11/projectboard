@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 
 export const formatDate = (date?: Date | undefined | null): string => {
+  if (date === undefined) return 'No Date';
   return dayjs(date).format('MMM DD');
 };
 

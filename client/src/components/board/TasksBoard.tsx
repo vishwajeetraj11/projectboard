@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { DragDropContext, DropResult, ResponderProvided } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
-// import { loadIssues, updateIssueStatusAndPos } from 'store/actions/issueActions';
 import { Status } from 'shared/constants';
+import { changeStatusOfTask } from 'store/actions/taskActions';
 import { AppDispatch, RootState } from '../../store/store';
 import { IssueCol } from './BoardColumn';
 
@@ -17,10 +17,10 @@ export const TasksBoard = () => {
   // dispatch
   const dispatch = useDispatch<AppDispatch>();
   const onDragEnd = ({ source, destination, draggableId }: DropResult, provided: ResponderProvided) => {
-    console.log({ source, destination, draggableId });
+    if (source.droppableId === destination?.droppableId) return;
     if (!source || !destination)
       return;
-    // dispatch(updateIssueStatusAndPos('', source.droppableId, destination.droppableId, source.index, destination.index));
+    dispatch(changeStatusOfTask(draggableId, source.droppableId, destination.droppableId, source.index, destination.index));
   };
 
   // load data
