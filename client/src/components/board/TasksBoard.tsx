@@ -4,6 +4,7 @@ import { DragDropContext, DropResult, ResponderProvided } from 'react-beautiful-
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router-dom';
 import { Status } from 'shared/constants';
+import { Task } from 'shared/types';
 import { changeStatusOfTask } from 'store/actions/taskActions';
 import { AppDispatch, RootState } from '../../store/store';
 import { IssueCol } from './BoardColumn';
@@ -12,11 +13,13 @@ interface MatchParams {
 }
 
 export const TasksBoard = () => {
-  const backlogTasks = useSelector((state: RootState) => state.taskList?.tasks.backlog);
-  const todoTasks = useSelector((state: RootState) => state.taskList?.tasks.todo);
-  const inProgressTasks = useSelector((state: RootState) => state.taskList?.tasks?.in_progress);
-  const doneTasks = useSelector((state: RootState) => state.taskList?.tasks?.done);
-  const canceledTasks = useSelector((state: RootState) => state.taskList?.tasks?.cancelled);
+  const backlogTasks: Array<Task> = useSelector((state: RootState) => state.taskList?.tasks.backlog);
+  const todoTasks: Array<Task> = useSelector((state: RootState) => state.taskList?.tasks.todo);
+  const inProgressTasks: Array<Task> = useSelector((state: RootState) => state.taskList?.tasks?.in_progress);
+  const doneTasks: Array<Task> = useSelector((state: RootState) => state.taskList?.tasks?.done);
+  const canceledTasks: Array<Task> = useSelector((state: RootState) => state.taskList?.tasks?.cancelled);
+
+  // const todoSorted: Array<Task> = todoTasks.sort((prev: Task, next: Task) => prev.order - next.order);
 
   const match = useRouteMatch<MatchParams>();
   const { getAccessTokenSilently } = useAuth0();

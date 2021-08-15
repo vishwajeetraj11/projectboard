@@ -1,8 +1,8 @@
-import { Cards } from 'components/landing/Cards';
-import { Faq } from 'components/landing/Faq';
-import { Footer } from 'components/landing/Footer';
-import { Main } from 'components/landing/Main';
-import { Nav } from 'components/landing/Nav';
+import { Cards } from 'components/landing/cards';
+import { Faq } from 'components/landing/faq';
+import { Footer } from 'components/landing/footer';
+import { Main } from 'components/landing/main';
+import { Nav } from 'components/landing/nav';
 import { Support } from 'components/landing/Support';
 import React from 'react';
 

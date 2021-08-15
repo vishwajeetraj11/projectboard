@@ -2,10 +2,10 @@ import classNames from 'classnames';
 import { PriorityMenu } from 'components/menus/PriorityMenu';
 import { PriorityIcon } from 'components/PriorityIcon';
 import { Draggable, DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { Task } from 'shared/types';
 // import { updateIssuePriority } from 'store/actions/issueActions';
-import { AppDispatch } from '../../store/store';
+// import { AppDispatch } from '../../store/store';
 
 interface Props {
   task: Task;
@@ -21,7 +21,7 @@ export const BoardItem = ({ task, index }: Props) => {
     </span>
   );
 
-  const dispatch = useDispatch<AppDispatch>();
+  // const dispatch = useDispatch<AppDispatch>();
   const updatePriority = (priority: string) => {
     // dispatch(updateIssuePriority(task, priority));
   };

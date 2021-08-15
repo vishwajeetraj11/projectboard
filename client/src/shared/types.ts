@@ -34,6 +34,7 @@ export interface Task {
   priority: string,
   label: string,
   status: string,
+  order: number,
   description: string,
   startDate: Date | null | undefined;
   dueDate: Date | null | undefined;
