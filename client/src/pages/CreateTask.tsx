@@ -57,7 +57,12 @@ export const CreateTask: React.FC<Props> = ({ match, history }) => {
   const [status, setStatus] = useState(Status.BACKLOG);
   const [label, setLabel] = useState(DEFAULT_LABLES[3]);
   const [assignee, setAssignee] = useState<Member>();
-  const [dueDate, setDueDate] = useState<MaterialUiPickersDate>(new Date());
+  const [dueDate, setDueDate] = useState<MaterialUiPickersDate>(() => {
+    const date = new Date();
+    const newDate = new Date(Number(date));
+    newDate.setDate(date.getDate() + 10);
+    return newDate;
+  });
   const [startDate, setStartDate] = useState<MaterialUiPickersDate>(new Date());
 
   // Date Pickers
@@ -172,7 +177,7 @@ export const CreateTask: React.FC<Props> = ({ match, history }) => {
             <PriorityMenu
               // id='priority-menu'
               button={<button
-                className='inline-flex items-center h-6 px-2 text-gray-500 bg-gray-200 border-none rounded focus:outline-none hover:bg-gray-100 hover:text-gray-700'
+                className='mt-2 inline-flex items-center h-6 px-2 text-gray-500 bg-gray-200 border-none rounded focus:outline-none hover:bg-gray-100 hover:text-gray-700 mr-2'
               >
                 <PriorityIcon priority={priority} className='mr-2' />
                 <span>{getPriorityString(priority)}</span>
@@ -181,7 +186,7 @@ export const CreateTask: React.FC<Props> = ({ match, history }) => {
             />
 
             <AssigneeMenu
-              button={<button className='inline-flex items-center h-6 px-2 ml-2 text-gray-500 bg-gray-200 border-none rounded focus:outline-none hover:bg-gray-100 hover:text-gray-700'>
+              button={<button className='mt-2 inline-flex items-center h-6 px-2 mr-2 text-gray-500 bg-gray-200 border-none rounded focus:outline-none hover:bg-gray-100 hover:text-gray-700'>
                 {!assignee ? <><OwnerIcon className='w-3.5 h-3.5 mr-2' />
                   <span>Assignee</span></> : <><OwnerIcon className='w-3.5 h-3.5 mr-2' />
                   <span>{`${assignee.user.firstName} ${assignee.user.lastName}`}</span></>}
@@ -192,12 +197,13 @@ export const CreateTask: React.FC<Props> = ({ match, history }) => {
             <LabelMenu
               id='label-menu'
               onSelect={(label: Label) => setLabel(label)}
-              button={<button className='inline-flex items-center h-6 px-2 ml-2 text-gray-500 bg-gray-200 border-none rounded focus:outline-none hover:bg-gray-100 hover:text-gray-700'>
+              button={<button className='mt-2 inline-flex items-center h-6 px-2 mr-2 text-gray-500 bg-gray-200 border-none rounded focus:outline-none hover:bg-gray-100 hover:text-gray-700'>
                 {label.name === 'No Label' ? <><LabelIcon className='w-3.5 h-3.5  mr-2' /> <span>No Label</span> </> : <><div className="w-2.5 h-2.5 rounded-full mr-2" style={{ background: label.color }}></div> <span>{label.name}</span> </>}
               </button>} />
 
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <DatePicker
+                disablePast
                 open={isOpenStartDate}
                 onOpen={() => setIsOpenStartDate(true)}
                 onClose={() => setIsOpenStartDate(false)}
@@ -206,10 +212,11 @@ export const CreateTask: React.FC<Props> = ({ match, history }) => {
                 onChange={(date: MaterialUiPickersDate) => setStartDate(date)}
                 value={startDate}
               />
-              <button onClick={onStartDatePick} className='inline-flex items-center h-6 px-2 ml-2 text-gray-500 bg-gray-200 border-none rounded focus:outline-none hover:bg-gray-100 hover:text-gray-700'>
+              <button onClick={onStartDatePick} className='mt-2 inline-flex items-center h-6 px-2 mr-2 text-gray-500 bg-gray-200 border-none rounded focus:outline-none hover:bg-gray-100 hover:text-gray-700'>
                 {startDate ? `Start Date: ${formatDate(startDate)}` : "Start Date"}
               </button>
               <DatePicker
+                disablePast
                 open={isOpenDueDate}
                 onOpen={() => setIsOpenDueDate(true)}
                 onClose={() => setIsOpenDueDate(false)}
@@ -218,7 +225,7 @@ export const CreateTask: React.FC<Props> = ({ match, history }) => {
                 onChange={(date: MaterialUiPickersDate) => setDueDate(date)}
                 value={dueDate}
               />
-              <button onClick={onDueDatePick} className='inline-flex items-center h-6 px-2 ml-2 text-gray-500 bg-gray-200 border-none rounded focus:outline-none hover:bg-gray-100 hover:text-gray-700'>
+              <button onClick={onDueDatePick} className='mt-2 inline-flex items-center h-6 px-2 mr-2 text-gray-500 bg-gray-200 border-none rounded focus:outline-none hover:bg-gray-100 hover:text-gray-700'>
                 {dueDate ? `Due Date: ${formatDate(dueDate)}` : "Due Date"}
               </button>
             </MuiPickersUtilsProvider>
