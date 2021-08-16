@@ -4,13 +4,15 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import ReduxThunk from 'redux-thunk';
 import { memberListReducer } from 'store/reducers/memberReducer';
 import { projectReducer } from 'store/reducers/projectReducer';
+import { userProfileReducer } from 'store/reducers/userReducer';
 import { taskListReducer } from './reducers/taskReducer';
 
 
 let rootReducer = combineReducers({
   taskList: taskListReducer,
   currentProject: projectReducer,
-  memberList: memberListReducer
+  memberList: memberListReducer,
+  userProfile: userProfileReducer
 });
 const middlewares = [ReduxThunk];
 

@@ -2,11 +2,12 @@ import axios from 'axios';
 import { Status } from 'shared/constants';
 import { Task } from 'shared/types';
 import { baseURL, endpoints } from 'shared/urls';
-import { CHANGE_STATUS_OF_TASK_FAIL, CHANGE_STATUS_OF_TASK_REQUEST, CHANGE_STATUS_OF_TASK_SUCCESS, GET_TASKS_FAIL, GET_TASKS_REQUEST, GET_TASKS_SUCCESS } from 'store/contants/taskConstants';
+import { CHANGE_STATUS_OF_TASK_SUCCESS, GET_TASKS_FAIL, GET_TASKS_REQUEST, GET_TASKS_SUCCESS } from 'store/contants/taskConstants';
 import { AppDispatch, RootState } from 'store/store';
-
+import socket from 'shared/utils/socket';
 type TgetAllTasks = (token: string, projectId: string) => void;
 type TchangeStatusOfTask = (taskId: string, srcStatus: string, destStatus: string, srcPos: number, destPos: number, projectId: string, token: string) => void;
+type TupdateBoardAfterSocketEvent = (task: Task) => void;
 
 export const getAllTasks: TgetAllTasks = (token, projectId) => async (dispatch: AppDispatch) => {
   try {
@@ -52,7 +53,7 @@ export const getAllTasks: TgetAllTasks = (token, projectId) => async (dispatch: 
 
 export const changeStatusOfTask: TchangeStatusOfTask = (taskId, srcStatus, destStatus, srcPos, destPos, projectId, token) => async (dispatch: AppDispatch, getState: () => RootState) => {
   try {
-    const { taskList } = getState();
+    const { taskList, userProfile } = getState();
     let tasks = { ...taskList.tasks };
     let sourceArray: Array<Task> = [...taskList.tasks[srcStatus]];
     let destinationArray: Array<Task> = [...taskList.tasks[destStatus]];
@@ -65,7 +66,7 @@ export const changeStatusOfTask: TchangeStatusOfTask = (taskId, srcStatus, destS
     tasks[destStatus] = destinationArray;
 
     // Task with updated Status
-    await axios({
+    const { data: updatedTask } = await axios({
       url: `${baseURL}${endpoints.projects}/${projectId}${endpoints.tasks}/${taskId}/update`,
       method: "PATCH",
       data: {
@@ -77,6 +78,11 @@ export const changeStatusOfTask: TchangeStatusOfTask = (taskId, srcStatus, destS
       headers: {
         Authorization: `Bearer ${token}`,
       },
+    });
+
+    socket.emit('board_task_status_change', {
+      user: userProfile.user,
+      updatedTask,
     });
 
     dispatch({
@@ -92,3 +98,46 @@ export const changeStatusOfTask: TchangeStatusOfTask = (taskId, srcStatus, destS
   }
 };
 
+export const updateBoardAfterSocketEvent: TupdateBoardAfterSocketEvent = (updatedTask) => async (dispatch: AppDispatch, getState: () => RootState) => {
+  try {
+    const { taskList } = getState();
+    let tasks = { ...taskList.tasks };
+    let allTasks = [...tasks.backlog, ...tasks.todo, ...tasks.in_progress, ...tasks.done, ...tasks.cancelled];
+
+    allTasks = allTasks.map((task: Task) => task._id === updatedTask._id ? updatedTask : task);
+
+    const updatedTasks = {
+      todo: [] as Array<Task>,
+      backlog: [] as Array<Task>,
+      in_progress: [] as Array<Task>,
+      done: [] as Array<Task>,
+      cancelled: [] as Array<Task>
+    };
+
+    allTasks.forEach((task: Task) => {
+      switch (task.status) {
+        case Status.BACKLOG:
+          return updatedTasks.backlog.push(task);
+        case Status.CANCELED:
+          return updatedTasks.cancelled.push(task);
+        case Status.DONE:
+          return updatedTasks.done.push(task);
+        case Status.IN_PROGRESS:
+          return updatedTasks.in_progress.push(task);
+        case Status.TODO:
+          return updatedTasks.todo.push(task);
+      }
+    });
+
+    dispatch({
+      type: CHANGE_STATUS_OF_TASK_SUCCESS,
+      payload: updatedTasks
+    });
+  } catch (e) {
+    // dispatch({
+    //   type: CHANGE_STATUS_OF_TASK_FAIL,
+    //   payload: e.response.data.message
+    // });
+    console.log(e);
+  }
+};

@@ -11,11 +11,13 @@ import { showError } from 'components/Notification';
 // import { Tasks } from 'pages/Tasks';
 // import { TestProfile } from 'pages/TestProfile';
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { AuthenticatedRoutes } from 'routes/AuthenticatedRoutes';
 import { UnauthenticatedRoutes } from 'routes/Unauthenticated';
 import { baseURL, endpoints } from 'shared/urls';
-
+import socket from 'shared/utils/socket';
+import { setUserProfile } from 'store/actions/userActions';
 interface Props {
 
 }
@@ -23,12 +25,16 @@ interface Props {
 // interface Props extends RouteComponentProps<{}> {
 
 // }
+
+
 export const Routes: React.FC<Props> = () => {
   const [authenticated, setAuthenticated] = useState(false);
   const { user: userAith0, isAuthenticated, getAccessTokenSilently, isLoading } = useAuth0();
-  const [user, setUser] = useState();
+  // const [user, setUser] = useState();
   const location = useLocation();
   const history = useHistory();
+  const dispatch = useDispatch();
+
 
   useEffect(() => {
     // if (!isAuthenticated) { history.push('/'); return; }
@@ -50,8 +56,11 @@ export const Routes: React.FC<Props> = () => {
           if (!username || !firstName || !lastName) {
             history.push('/edit-profile');
           } else {
+            socket.emit('user-loggedIn', { user: data.user });
+            socket.emit('join-session', socket.id);
+            dispatch(setUserProfile(data.user));
             setAuthenticated(true);
-            setUser(data.user);
+            // setUser(data.user);
           }
         } catch (e) {
           showError('Could not fetch your profile. Please try again sometime later.', 'Profile Error');
