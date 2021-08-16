@@ -1,6 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { Button, TextField } from '@material-ui/core';
 import axios from 'axios';
+import { LogoutButton } from 'components/auth/Logout';
 import { Formik } from 'formik';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
@@ -26,113 +27,119 @@ export const EditProfile: React.FC<Props> = ({ setAuthenticated }) => {
   const { getAccessTokenSilently } = useAuth0();
 
   return (
-    <div>
-      <Formik
-        initialValues={{
-          username: '',
-          firstName: '',
-          lastName: '',
-          photo: ''
-        }}
-        validateOnChange={false}
-        validateOnBlur={false}
-        validateOnMount={false}
-        validationSchema={ValidationSchema}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
-          setTimeout(async () => {
-            try {
-              const token = await getAccessTokenSilently();
-              const { data } = await axios({
-                url: `${baseURL}${endpoints.profile}`,
-                method: 'PATCH',
-                data: values,
-                headers: {
-                  Authorization: `Bearer ${token}`,
+    <section className='p-4 lg:p-0 w-full min-h-screen max-w-screen-lg mx-auto bg-white'>
+      <div className='p-y lg:py-10 sm:px-4 lg:px-0 flex items-center justify-between'>
+        <h2>Product Board</h2>
+        <LogoutButton />
+      </div>
+      <div>
+        <Formik
+          initialValues={{
+            username: '',
+            firstName: '',
+            lastName: '',
+            photo: ''
+          }}
+          validateOnChange={false}
+          validateOnBlur={false}
+          validateOnMount={false}
+          validationSchema={ValidationSchema}
+          onSubmit={(values, { setSubmitting, resetForm }) => {
+            setTimeout(async () => {
+              try {
+                const token = await getAccessTokenSilently();
+                const { data } = await axios({
+                  url: `${baseURL}${endpoints.profile}`,
+                  method: 'PATCH',
+                  data: values,
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  }
+                });
+                if (data.updatedUser.username) {
+                  setAuthenticated(true);
                 }
-              });
-              if (data.updatedUser.username) {
-                setAuthenticated(true);
+              } catch (error) {
+                console.log(error);
               }
-            } catch (error) {
-              console.log(error);
-            }
 
-            setSubmitting(false);
-          }, 400);
-        }}
-      >
-        {({ values, errors, handleChange, handleBlur, handleSubmit, setFieldValue, isSubmitting }) => (
-          <form className="pb-10" onSubmit={handleSubmit}>
-            <div className="">
-              <div className="flex align-center justify-between">
-                <h3 className="text-lg font-medium mt-6">Complete Your Profile.</h3>
+              setSubmitting(false);
+            }, 400);
+          }}
+        >
+          {({ values, errors, handleChange, handleBlur, handleSubmit, setFieldValue, isSubmitting }) => (
+            <form className="pb-10" onSubmit={handleSubmit}>
+              <div className="">
+                <div className="flex align-center justify-between">
+                  <h3 className="text-lg font-medium mt-6">Complete Your Profile.</h3>
+                </div>
+                <TextField
+                  id="username"
+                  className="mt-6"
+                  rows={1}
+                  variant="outlined"
+                  fullWidth
+                  inputProps={{
+                    style: {
+                      boxShadow: 'none'
+                    }
+                  }}
+                  multiline
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  label="Enter Username"
+                  value={values.username}
+                  error={!!errors.username}
+                  helperText={errors.username}
+                />
+                <TextField
+                  id="firstName"
+                  className="mt-10"
+                  rows={1}
+                  multiline
+                  variant="outlined"
+                  fullWidth
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  label="Enter First Name"
+                  inputProps={{
+                    style: {
+                      boxShadow: 'none'
+                    }
+                  }}
+                  value={values.firstName}
+                  error={!!errors.firstName}
+                  helperText={errors.firstName}
+                />
+                <TextField
+                  id="lastName"
+                  className="mt-10"
+                  rows={1}
+                  variant="outlined"
+                  fullWidth
+                  multiline
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  inputProps={{
+                    style: {
+                      boxShadow: 'none'
+                    }
+                  }}
+                  label="Enter Last Name"
+                  value={values.lastName}
+                  error={!!errors.lastName}
+                  helperText={errors.lastName}
+                />
+
               </div>
-              <TextField
-                id="username"
-                className="mt-6"
-                rows={1}
-                variant="outlined"
-                fullWidth
-                inputProps={{
-                  style: {
-                    boxShadow: 'none'
-                  }
-                }}
-                multiline
-                onBlur={handleBlur}
-                onChange={handleChange}
-                label="Enter Username"
-                value={values.username}
-                error={!!errors.username}
-                helperText={errors.username}
-              />
-              <TextField
-                id="firstName"
-                className="mt-10"
-                rows={1}
-                multiline
-                variant="outlined"
-                fullWidth
-                onBlur={handleBlur}
-                onChange={handleChange}
-                label="Enter First Name"
-                inputProps={{
-                  style: {
-                    boxShadow: 'none'
-                  }
-                }}
-                value={values.firstName}
-                error={!!errors.firstName}
-                helperText={errors.firstName}
-              />
-              <TextField
-                id="lastName"
-                className="mt-10"
-                rows={1}
-                variant="outlined"
-                fullWidth
-                multiline
-                onBlur={handleBlur}
-                onChange={handleChange}
-                inputProps={{
-                  style: {
-                    boxShadow: 'none'
-                  }
-                }}
-                label="Enter Last Name"
-                value={values.lastName}
-                error={!!errors.lastName}
-                helperText={errors.lastName}
-              />
-
-            </div>
-            {/* <Divider className="mt-8 -ml-10" /> */}
-            <Button className="mt-6" variant="contained" color="primary" type="submit" disabled={isSubmitting}>
-              <p className='tracking-widest'>Submit</p>
-            </Button>
-          </form>
-        )}
-      </Formik>
-    </div>
+              {/* <Divider className="mt-8 -ml-10" /> */}
+              <Button className="mt-6" variant="contained" color="primary" type="submit" disabled={isSubmitting}>
+                <p className='tracking-widest'>Submit</p>
+              </Button>
+            </form>
+          )}
+        </Formik>
+      </div>
+    </section>
   );
 };

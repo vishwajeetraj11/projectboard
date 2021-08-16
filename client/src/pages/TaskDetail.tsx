@@ -13,7 +13,7 @@ export const TaskDetail: React.FC<Props> = () => {
             <LeftSideBar showMenu={showMenu} onCloseMenu={() => setShowMenu(false)} />
             <div className='flex flex-col flex-1 overflow-hidden'>
                 <TopFilter onOpenMenu={() => setShowMenu(!showMenu)} title='Task Detail' />
-                <main className="flex flex-col overflow-auto flex-shrink-0 place-items-stretch flex-grow box-border">
+                <main className="flex flex-col flex-shrink-0 place-items-stretch flex-grow box-border">
                     <div className="overflow-hidden flex flex-initial flex-row absolute inset-0 flex-initial m-0 p-0">
                         <div className="flex flex-col flex-initial flex-grow-2 min-w-0">
                             <header className="flex flex-shrink-0 align-center max-w-full">
