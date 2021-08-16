@@ -8,6 +8,6 @@ export const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: 'Inter',
+    fontFamily: 'Inter UI',
   },
 });
