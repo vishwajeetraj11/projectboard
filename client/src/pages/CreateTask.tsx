@@ -25,28 +25,12 @@ import { DatePicker, MuiPickersUtilsProvider, } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { formatDate } from 'shared/utils/formatDate';
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
+import { getPriorityString } from 'shared/utils/common';
 
 interface RouteParams { id: string; }
 interface Props extends RouteComponentProps<RouteParams> {
 
 }
-
-const getPriorityString = (priority: string) => {
-  switch (priority) {
-    case Priority.NO_PRIORITY:
-      return 'Priority';
-    case Priority.HIGH:
-      return 'High';
-    case Priority.MEDIUM:
-      return 'Medium';
-    case Priority.LOW:
-      return 'Low';
-    case Priority.URGENT:
-      return 'Urgent';
-    default:
-      return 'Priority';
-  }
-};
 
 export const CreateTask: React.FC<Props> = ({ match, history, location }) => {
   const [showMenu, setShowMenu] = useState(false);

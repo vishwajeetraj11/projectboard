@@ -1,5 +1,5 @@
 import { LeftSideBar } from 'components/LeftSideBar';
-import { Link, useParams, useRouteMatch } from 'react-router-dom';
+import { Link, useHistory, useParams, useRouteMatch } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
 import { ReactComponent as MenuIcon } from 'assets/icons/menu.svg';
@@ -13,6 +13,7 @@ import Editor from "rich-markdown-editor";
 import { ReactComponent as DeleteIcon } from 'assets/icons/delete.svg';
 import { getTaskDetail } from 'store/actions/taskActions';
 import { useAuth0 } from '@auth0/auth0-react';
+import { GET_TASK_DETAIL_CLEAR } from 'store/contants/taskConstants';
 interface Props {
 
 }
@@ -28,15 +29,21 @@ export const TaskDetail: React.FC<Props> = () => {
     const dispatch = useDispatch();
     const { getAccessTokenSilently } = useAuth0();
     const params = useParams<URLParams>();
+    const history = useHistory();
 
     const { projectData } = useSelector((state: RootState) => state.currentProject);
-    const { task } = useSelector((state: RootState) => state.taskDetail);
+    const { task, loading } = useSelector((state: RootState) => state.taskDetail);
 
     useEffect(() => {
         (async () => {
             const token = await getAccessTokenSilently();
             dispatch(getTaskDetail(token, params.projectId, params.taskId));
         })();
+        return () => {
+            dispatch({
+                type: GET_TASK_DETAIL_CLEAR
+            });
+        };
     }, []);
 
     return (
@@ -54,7 +61,7 @@ export const TaskDetail: React.FC<Props> = () => {
                                 <MenuIcon className='w-3.5 text-gray-500 hover:text-gray-800' />
                             </button>
                             <div className='flex items-center justify-end p-2'>
-                                <Link to='/'
+                                <Link to={`/projects/${params.projectId}/tasks`}
                                     className='inline-flex items-center justify-center ml-2 text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700 hidden lg:flex'
                                 >
                                     <CloseIcon className='w-4' />
@@ -64,32 +71,34 @@ export const TaskDetail: React.FC<Props> = () => {
                                 </button>
                             </div>
                         </div>
-                        {/* Project Title and current task title */}
-                        <div className='px-5 border-b border-gray-200 mt-5 pb-3 flex justify-between items-center'>
-                            <p className='font-medium w-10/12 text-gray-700'>{`› ${projectData.project.title}`}</p>
-                            <div className='flex'>
-                                <button className='inline-flex items-center justify-center text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'><EditIcon /></button>
-                                <button className='ml-3 inline-flex items-center justify-center text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'><DeleteIcon /></button>
-                                {!readOnlyMarkdown && <><button className='inline-flex items-center justify-center px-2 transition-all ml-2 text-gray-500 hover:bg-gray-100 rouned hover:text-gray-700'>Cancel</button>
-                                    <button className='inline-flex items-center justify-center px-2 transition-all border border-gray-200 rounded-md ml-2 text-gray-500 hover:bg-gray-100 rouned hover:text-gray-700'>Save</button></>}
+                        {loading ? <div>Loading</div> : <>
+                            {/* Project Title and current task title */}
+                            <div className='px-5 border-b border-gray-200 mt-5 pb-3 flex justify-between items-center'>
+                                <p className='font-medium w-10/12 text-gray-700'>{`› ${projectData.project.title}`}</p>
+                                <div className='flex'>
+                                    <button className='inline-flex items-center justify-center text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'><EditIcon /></button>
+                                    <button className='ml-3 inline-flex items-center justify-center text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'><DeleteIcon /></button>
+                                    {!readOnlyMarkdown && <><button className='inline-flex items-center justify-center px-2 transition-all ml-2 text-gray-500 hover:bg-gray-100 rouned hover:text-gray-700'>Cancel</button>
+                                        <button className='inline-flex items-center justify-center px-2 transition-all border border-gray-200 rounded-md ml-2 text-gray-500 hover:bg-gray-100 rouned hover:text-gray-700'>Save</button></>}
+                                </div>
                             </div>
-                        </div>
-                        {/* Markdown Description */}
-                        <div className='mt-5 pb-3'>
-                            <p className='px-5 text-lg font-semibold mt-4 mb-3 text-gray-700'>{task.title}</p>
-                            <div className='flex'>
-                                <MarkdownStyles taskDetail>
-                                    <Editor
-                                        autoFocus
-                                        id='editor'
-                                        readOnly={readOnlyMarkdown}
-                                        value={task.description}
-                                        className='mt-4 ml-5 font-normal border-none appearance-none min-h-12 text-md focus:outline-none'
-                                        placeholder='Add description...'
-                                    />
-                                </MarkdownStyles>
+                            {/* Markdown Description */}
+                            <div className='mt-5 pb-3'>
+                                <p className='px-5 text-lg font-semibold mt-4 mb-3 text-gray-700'>{task.title}</p>
+                                <div className='flex'>
+                                    <MarkdownStyles taskDetail>
+                                        <Editor
+                                            autoFocus
+                                            id='editor'
+                                            readOnly={readOnlyMarkdown}
+                                            value={task.description}
+                                            className='mt-4 ml-5 font-normal border-none appearance-none min-h-12 text-md focus:outline-none'
+                                            placeholder='Add description...'
+                                        />
+                                    </MarkdownStyles>
+                                </div>
                             </div>
-                        </div>
+                        </>}
                     </div>
                 </div>
                 <RightSideBar showMenu={showMenuRight} onCloseMenu={() => setShowMenuRight(false)} />

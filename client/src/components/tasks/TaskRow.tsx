@@ -3,11 +3,11 @@ import { StatusMenu } from 'components/menus/StatusMenu';
 import { PriorityIcon } from 'components/PriorityIcon';
 import { StatusIcon } from 'components/StatusIcon';
 import { ContextMenuTrigger } from 'react-contextmenu';
-import { DEFAULT_LABLES, Labels } from 'shared/constants';
 import { Task } from 'shared/types';
 import { formatDate } from 'shared/utils/formatDate';
 import { Link } from "react-router-dom";
 import { useRouteMatch } from 'react-router-dom';
+import { getLabelObj } from 'shared/utils/common';
 
 interface Props {
   task: Task;
@@ -25,19 +25,6 @@ export const TaskRow = ({ task, onChangePriority, onChangeStatus }: Props) => {
   const statusIcon = (
     <StatusIcon status={task.status} />
   );
-
-  const getLabelObj = (label: string) => {
-    switch (label) {
-      case Labels.NO_LABEL:
-        return DEFAULT_LABLES[3];
-      case Labels.IMPROVEMENT:
-        return DEFAULT_LABLES[2];
-      case Labels.FEATURE:
-        return DEFAULT_LABLES[1];
-      case Labels.BUG:
-        return DEFAULT_LABLES[0];
-    }
-  };
 
   const labelObj = getLabelObj(task.label);
 

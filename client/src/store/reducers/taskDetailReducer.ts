@@ -34,7 +34,7 @@ export const taskDetailReducer = (state = INITIAL_STATE, action: any) => {
       };
     case GET_TASK_DETAIL_CLEAR:
       return {
-        ...state,
+        ...INITIAL_STATE
       };
     default:
       break;
