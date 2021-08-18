@@ -32,10 +32,10 @@ interface Props {
 export const RightSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
 
   const ref = useRef<HTMLDivElement>() as RefObject<HTMLDivElement>;
-  const { task, loading, success, error } = useSelector((state: RootState) => state.taskDetail);
+  const { task } = useSelector((state: RootState) => state.taskDetail);
 
   let classes = classNames(
-    `absolute lg:static inset-0 transform duration-300 lg:relative lg:translate-x-0 bg-white flex flex-col flex-shrink-0 w-72 font-sans text-sm text-gray-700 border-l border-gray-100 lg:shadow-none justify-items-start`,
+    `absolute lg:static inset-0 transform duration-300 lg:relative lg:translate-x-0 bg-white flex flex-col flex-shrink-0 w-80 font-sans text-sm text-gray-700 border-l border-gray-100 lg:shadow-none justify-items-start`,
     {
       '-translate-x-full ease-out shadow-none': !showMenu,
       'translate-x-0 ease-in shadow-xl': showMenu
@@ -65,9 +65,6 @@ export const RightSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
   useEffect(() => {
     setTimeout(() => ready = true, 300);
   });
-  if (loading) {
-    return <div>Loading</div>;
-  }
 
   return (
     <>

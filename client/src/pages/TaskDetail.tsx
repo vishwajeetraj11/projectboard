@@ -14,6 +14,7 @@ import { ReactComponent as DeleteIcon } from 'assets/icons/delete.svg';
 import { getTaskDetail } from 'store/actions/taskActions';
 import { useAuth0 } from '@auth0/auth0-react';
 import { GET_TASK_DETAIL_CLEAR } from 'store/contants/taskConstants';
+import CircularProgress from '@material-ui/core/CircularProgress';
 interface Props {
 
 }
@@ -71,7 +72,7 @@ export const TaskDetail: React.FC<Props> = () => {
                                 </button>
                             </div>
                         </div>
-                        {loading ? <div>Loading</div> : <>
+                        {loading ? <div className='flex items-center justify-center flex-1'><CircularProgress color="primary" /></div> : <>
                             {/* Project Title and current task title */}
                             <div className='px-5 border-b border-gray-200 mt-5 pb-3 flex justify-between items-center'>
                                 <p className='font-medium w-10/12 text-gray-700'>{`› ${projectData.project.title}`}</p>

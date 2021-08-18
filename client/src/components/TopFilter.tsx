@@ -1,9 +1,6 @@
-import React from 'react';
 import { ReactComponent as MenuIcon } from 'assets/icons/menu.svg';
 import { useState } from 'react';
-import { BiSortUp } from 'react-icons/bi';
 import { TaskFilterModal } from './modals/TaskFilterModal';
-import { ViewOptionMenu } from './menus/ViewOptionMenu';
 import { RootState } from 'store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { topFilterType } from 'shared/constants';
@@ -20,7 +17,6 @@ interface Props {
 
 export const TopFilter = ({ title, onOpenMenu, type }: Props) => {
   const [showFilter, setShowFilter] = useState(false);
-  const [showViewOption, setShowViewOption] = useState(false);
   const dispatch = useDispatch();
 
   const tasks = useSelector((state: RootState) => state.taskList.tasks);
@@ -54,16 +50,9 @@ export const TopFilter = ({ title, onOpenMenu, type }: Props) => {
           >+ Filter</button>}
         </div>
 
-        {/* right section */}
-        {!onInvitePage && <div className='flex items-center'>
-          <div className='p-2 rounded hover:bg-gray-100'
-            onClick={() => setShowViewOption(true)}
-          >
-            <BiSortUp size={14} />
-          </div>
-        </div>}
+
       </div>
-      {!onInvitePage && <><ViewOptionMenu isOpen={showViewOption} onDismiss={() => setShowViewOption(false)} />
+      {!onInvitePage && <>
         <TaskFilterModal isOpen={showFilter} onDismiss={() => setShowFilter(false)} /></>}
     </>
   );
