@@ -2,10 +2,11 @@ import axios from 'axios';
 import { Status } from 'shared/constants';
 import { Task } from 'shared/types';
 import { baseURL, endpoints } from 'shared/urls';
-import { CHANGE_STATUS_OF_TASK_SUCCESS, GET_TASKS_FAIL, GET_TASKS_REQUEST, GET_TASKS_SUCCESS } from 'store/contants/taskConstants';
+import { CHANGE_STATUS_OF_TASK_SUCCESS, GET_TASKS_FAIL, GET_TASKS_REQUEST, GET_TASKS_SUCCESS, GET_TASK_DETAIL_FAIL, GET_TASK_DETAIL_REQUEST, GET_TASK_DETAIL_SUCCESS } from 'store/contants/taskConstants';
 import { AppDispatch, RootState } from 'store/store';
 import socket from 'shared/utils/socket';
 type TgetAllTasks = (token: string, projectId: string) => void;
+type TgetTaskDetail = (token: string, projectId: string, taskId: string) => void;
 type TchangeStatusOfTask = (taskId: string, srcStatus: string, destStatus: string, srcPos: number, destPos: number, projectId: string, token: string) => void;
 type TupdateBoardAfterSocketEvent = (task: Task) => void;
 
@@ -139,5 +140,24 @@ export const updateBoardAfterSocketEvent: TupdateBoardAfterSocketEvent = (update
     //   payload: e.response.data.message
     // });
     console.log(e);
+  }
+};
+
+
+export const getTaskDetail: TgetTaskDetail = (token, projectId, taskId) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch({ type: GET_TASK_DETAIL_REQUEST });
+    const { data } = await axios({
+      url: `${baseURL}${endpoints.projects}/${projectId}${endpoints.tasks}/${taskId}`,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    dispatch({ type: GET_TASK_DETAIL_SUCCESS, payload: data.task });
+
+  } catch (e) {
+    dispatch({ type: GET_TASK_DETAIL_FAIL, payload: e?.response?.data?.message });
   }
 };
