@@ -6,6 +6,7 @@ interface mds {
 
 export const MarkdownStyles = styled.div<mds>`
 width: 100%;
+overflow-x: hidden;
 overflow-y: auto;
 height: ${(props) => props.taskDetail ? '70vh' : '60vh'};
 padding: 7px;

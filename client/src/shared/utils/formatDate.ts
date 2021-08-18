@@ -91,7 +91,7 @@ export const getParsedDate = (timestamp: string | Date, options?: any): string =
     timeString += (() => {
       let _hr: any = datetime.getHours();
       if (_options.timeFormat12hr) {
-        if (_hr == 0)
+        if (_hr === 0)
           _hr = 12;
         else if (_hr > 12)
           _hr = _hr - 12;

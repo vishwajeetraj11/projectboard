@@ -2,7 +2,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Transition } from '@headlessui/react';
 import classnames from 'classnames';
 import { useClickOutside } from 'hooks/useClickOutside';
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface Props {
   isOpen: boolean;
@@ -23,8 +23,8 @@ export const ProfileMenu = ({ isOpen, className, onDismiss }: Props) => {
     }
   });
 
-  // Not sure why we need this? 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     setTimeout(() => ready = true, 300);
   });
 

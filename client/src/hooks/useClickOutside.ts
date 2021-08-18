@@ -13,6 +13,7 @@ export const useClickOutside = (
         callback(event);
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [callback, ref]
   );
   useEffect(() => {

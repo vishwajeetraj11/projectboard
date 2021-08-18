@@ -7,7 +7,6 @@ import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { baseURL, endpoints } from 'shared/urls';
 import * as Yup from 'yup';
-import { history } from '../shared/utils/history';
 
 interface Props extends RouteComponentProps<{}> {
 
@@ -41,7 +40,7 @@ export const CreateProject: React.FC<Props> = () => {
             setTimeout(async () => {
               try {
                 const token = await getAccessTokenSilently();
-                const { data } = await axios({
+                await axios({
                   url: `${baseURL}${endpoints.projects}`,
                   method: 'POST',
                   data: values,

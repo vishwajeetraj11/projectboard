@@ -8,7 +8,7 @@ import { ReactComponent as HelpIcon } from 'assets/icons/help.svg';
 import { ReactComponent as InboxIcon } from 'assets/icons/inbox.svg';
 import { ReactComponent as IssueIcon } from 'assets/icons/issue.svg';
 import { ReactComponent as MenuIcon } from 'assets/icons/menu.svg';
-import { ReactComponent as ViewIcon } from 'assets/icons/view.svg';
+// import { ReactComponent as ViewIcon } from 'assets/icons/view.svg';
 import classNames from 'classnames';
 import HelpModal from 'components/HelpModal';
 import { SearchBox } from 'components/SearchBox';
@@ -55,8 +55,8 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
       onCloseMenu();
   });
 
-  //FIXME: why we need add some delay here?
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     setTimeout(() => ready = true, 300);
   });
 

@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import { getLabelObj, getPriorityString, getStatusText } from 'shared/utils/common';
 import { RootState } from 'store/store';
 import { LabelMenu } from 'components/menus/LabelMenu';
-import { Label } from 'shared/types';
+// import { Label } from 'shared/types';
 import { ReactComponent as LabelIcon } from 'assets/icons/label.svg';
 import { DatePicker, MuiPickersUtilsProvider, } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
@@ -61,8 +61,8 @@ export const RightSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
       onCloseMenu();
   });
 
-  //FIXME: why we need add some delay here?
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     setTimeout(() => ready = true, 300);
   });
 
@@ -161,7 +161,7 @@ export const RightSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
                   TextFieldComponent={() => null}
                   variant='dialog'
                   onChange={(date: MaterialUiPickersDate) => setDueDate(date)}
-                  value={task.dueDate}
+                  value={dueDate}
                 />
                 <button onClick={onDueDatePick} className='inline-flex items-center h-6 px-2 mr-2 text-gray-500 border-none rounded focus:outline-none hover:bg-gray-100 hover:text-gray-700'>
                   {task.dueDate ? `${formatDate(task.dueDate)}` : "Due Date"}

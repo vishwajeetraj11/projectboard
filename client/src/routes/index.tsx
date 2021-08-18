@@ -67,7 +67,7 @@ export const Routes: React.FC<Props> = () => {
         }
       })();
     }
-  }, [userAith0, getAccessTokenSilently]);
+  }, [userAith0, getAccessTokenSilently, isAuthenticated, location.pathname, history, dispatch]);
 
   if (isLoading) return <Loader fullScreen />;
 

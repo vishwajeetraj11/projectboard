@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { Member } from 'shared/types';
 import { baseURL, endpoints } from 'shared/urls';
 import { GET_MEMBERS_FAIL, GET_MEMBERS_REQUEST, GET_MEMBERS_SUCCESS } from 'store/contants/memberConstants';
 import { AppDispatch } from 'store/store';

@@ -1,5 +1,5 @@
 import { LeftSideBar } from 'components/LeftSideBar';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
 import { ReactComponent as MenuIcon } from 'assets/icons/menu.svg';
@@ -30,10 +30,9 @@ export const TaskDetail: React.FC<Props> = () => {
     const dispatch = useDispatch();
     const { getAccessTokenSilently } = useAuth0();
     const params = useParams<URLParams>();
-    const history = useHistory();
 
     const { projectData } = useSelector((state: RootState) => state.currentProject);
-    const { task, loading } = useSelector((state: RootState) => state.taskDetail);
+    const { task, loading, error } = useSelector((state: RootState) => state.taskDetail);
 
     useEffect(() => {
         (async () => {
@@ -45,12 +44,16 @@ export const TaskDetail: React.FC<Props> = () => {
                 type: GET_TASK_DETAIL_CLEAR
             });
         };
-    }, []);
+    }, [params.projectId, params.taskId, getAccessTokenSilently, dispatch]);
+
+    const onEdit = () => {
+        setReadOnlyMarkdown(false);
+    };
 
     return (
         <div className='flex w-screen h-screen overflow-y-hidden'>
             <LeftSideBar showMenu={showMenuLeft} onCloseMenu={() => setShowMenuLeft(false)} />
-            <div className='flex flex-row flex-1 overflow-hidden'>
+            <div className='flex flex-row flex-1'>
                 <div className='p-0 lg:p-4 flex flex-1'>
                     <div className='flex flex-1 flex-col shadow-modal modal-shadow rounded-md'>
                         {/* Top Close Box */}
@@ -72,15 +75,14 @@ export const TaskDetail: React.FC<Props> = () => {
                                 </button>
                             </div>
                         </div>
-                        {loading ? <div className='flex items-center justify-center flex-1'><CircularProgress color="primary" /></div> : <>
+                        {loading ? <div className='flex items-center justify-center flex-1'><CircularProgress color="primary" /></div> : error ? <div className='flex items-center justify-center flex-1'>{error}</div> : <>
                             {/* Project Title and current task title */}
                             <div className='px-5 border-b border-gray-200 mt-5 pb-3 flex justify-between items-center'>
                                 <p className='font-medium w-10/12 text-gray-700'>{`› ${projectData.project.title}`}</p>
                                 <div className='flex'>
-                                    <button className='inline-flex items-center justify-center text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'><EditIcon /></button>
-                                    <button className='ml-3 inline-flex items-center justify-center text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'><DeleteIcon /></button>
-                                    {!readOnlyMarkdown && <><button className='inline-flex items-center justify-center px-2 transition-all ml-2 text-gray-500 hover:bg-gray-100 rouned hover:text-gray-700'>Cancel</button>
-                                        <button className='inline-flex items-center justify-center px-2 transition-all border border-gray-200 rounded-md ml-2 text-gray-500 hover:bg-gray-100 rouned hover:text-gray-700'>Save</button></>}
+                                    {readOnlyMarkdown && <><button onClick={onEdit} className='inline-flex items-center justify-center text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'><EditIcon /></button><button className='ml-3 inline-flex items-center justify-center text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'><DeleteIcon /></button></>}
+                                    {!readOnlyMarkdown && <><button className='inline-flex items-center justify-center px-2 py-1 transition-all rounded-md ml-2 text-gray-500 hover:bg-gray-100 rouned hover:text-gray-700'>Cancel</button>
+                                        <button className='inline-flex items-center justify-center px-2 py-1 transition-all border border-gray-200 rounded-md ml-2 text-gray-500 hover:bg-gray-100 rouned hover:text-gray-700'>Save</button></>}
                                 </div>
                             </div>
                             {/* Markdown Description */}
@@ -92,6 +94,7 @@ export const TaskDetail: React.FC<Props> = () => {
                                             autoFocus
                                             id='editor'
                                             readOnly={readOnlyMarkdown}
+                                            defaultValue={task.description}
                                             value={task.description}
                                             className='mt-4 ml-5 font-normal border-none appearance-none min-h-12 text-md focus:outline-none'
                                             placeholder='Add description...'

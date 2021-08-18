@@ -7,7 +7,6 @@ import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { baseURL, endpoints } from 'shared/urls';
 import * as Yup from 'yup';
-import { history } from '../shared/utils/history';
 
 // interface Props {
 

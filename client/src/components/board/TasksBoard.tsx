@@ -44,7 +44,7 @@ export const TasksBoard = () => {
   useEffect(() => {
     // dispatch(loadIssues());
     socket.on('board_update', ({ updatedTask }: any) => dispatch(updateBoardAfterSocketEvent(updatedTask.task)));
-  }, []);
+  }, [dispatch]);
 
   return (
     <DragDropContext
