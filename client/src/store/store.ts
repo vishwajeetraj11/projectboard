@@ -2,6 +2,7 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from "redux-devtools-extension";
 import ReduxThunk from 'redux-thunk';
+import { filtersReducer } from 'store/reducers/filtersReducer';
 import { memberListReducer } from 'store/reducers/memberReducer';
 import { projectReducer } from 'store/reducers/projectReducer';
 import { taskDetailReducer } from 'store/reducers/taskDetailReducer';
@@ -14,7 +15,8 @@ let rootReducer = combineReducers({
   currentProject: projectReducer,
   memberList: memberListReducer,
   userProfile: userProfileReducer,
-  taskDetail: taskDetailReducer
+  taskDetail: taskDetailReducer,
+  filters: filtersReducer
 });
 const middlewares = [ReduxThunk];
 
