@@ -1,9 +1,20 @@
-import { ReactComponent as SearchIcon } from 'assets/icons/search.svg';
+// import { ReactComponent as SearchIcon } from 'assets/icons/search.svg';
+import { ReactComponent as CancelIcon } from 'assets/icons/cancel.svg';
+import { ReactComponent as BacklogIcon } from 'assets/icons/circle-dot.svg';
+import { ReactComponent as TodoIcon } from 'assets/icons/circle.svg';
+import { ReactComponent as DoneIcon } from 'assets/icons/done.svg';
+import { ReactComponent as InProgressIcon } from 'assets/icons/half-circle.svg';
+
 import Modal from 'components/Modal';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Status } from 'shared/constants';
+import { addFilterItem } from 'store/actions/filterActions';
 
 interface SearchOptionProps {
   name: string;
+  onClick: () => void;
+  Icon: any;
 }
 
 interface Props {
@@ -12,10 +23,10 @@ interface Props {
 }
 
 
-function SearchOption({ name }: SearchOptionProps) {
+function SearchOption({ name,onClick,Icon }: SearchOptionProps) {
   return (
-    <div className='flex items-center px-4 py-5 font-normal text-gray-700 border-l-2 border-transparent cursor-default text-14 hover:text-gray-800 hover:border-indigo-700 hover:bg-gray-100'>
-      <SearchIcon className='w-4 h-4 mr-4 ' />
+    <div onClick={onClick} className='flex items-center px-4 py-5 font-normal text-gray-700 border-l-2 border-transparent cursor-default text-14 hover:text-gray-800 hover:border-indigo-700 hover:bg-gray-100'>
+      {Icon}
       <div className='text-overflow-ellipsis flex-nowrap text-14'>{name}</div>
     </div>
   );
@@ -24,34 +35,32 @@ function SearchOption({ name }: SearchOptionProps) {
 
 export const TaskFilterModal = ({ isOpen, onDismiss }: Props) => {
   const [search, setSearch] = useState('');
-
+  const dispatch = useDispatch();
   const [options, setOptions] = useState([
     {
-      name: 'Filter by content...',
+      name: 'Filter by status: To Do',
+      Icon: <TodoIcon className='w-4 h-4 mr-4 ' />,
+      onClick: () => dispatch(addFilterItem(Status.TODO))
     },
     {
-      name: 'Filter by status...',
+      name: 'Filter by status: Backlog',
+      Icon: <BacklogIcon className='w-4 h-4 mr-4 ' />,
+      onClick: () => dispatch(addFilterItem(Status.TODO))
     },
     {
-      name: 'Filter by priority...',
+      name: 'Filter by status: In Progress',
+      Icon: <InProgressIcon className='w-4 h-4 mr-4 ' />,
+      onClick: () => dispatch(addFilterItem(Status.TODO))
     },
     {
-      name: 'Filter by assignee...',
+      name: 'Filter by status: Done',
+      Icon: <DoneIcon className='w-4 h-4 mr-4 ' />,
+      onClick: () => dispatch(addFilterItem(Status.TODO))
     },
     {
-      name: 'Filter by subscriber...',
-    },
-    {
-      name: 'Filter by creator...',
-    },
-    {
-      name: 'Filter by label...',
-    },
-    {
-      name: 'Filter by due date...',
-    },
-    {
-      name: 'Filter by start date...',
+      name: 'Filter by status: Cancelled',
+      Icon: <CancelIcon className='w-4 h-4 mr-4 ' />,
+      onClick: () => dispatch(addFilterItem(Status.TODO))
     },
   ]);
 
@@ -65,12 +74,12 @@ export const TaskFilterModal = ({ isOpen, onDismiss }: Props) => {
       <div className='flex flex-col w-full'>
         {/* Top search box */}
         <input type='text' value={search} onChange={onSearchChange} className='flex-grow-0 w-full p-4 text-lg border-b border-gray-200 focus:outline-none'
-          placeholder='Filter Issues...'
+          placeholder='Filter Tasks...'
         />
         {/* Search option */}
         <div className='flex flex-col flex-grow w-full overflow-hidden' style={{ height: '338px', overflowY: 'scroll' }}>
           <div className='px-4 mt-1 font-normal text-gray-500'>Filter</div>
-          {React.Children.toArray(options.map((option => <SearchOption name={option.name} />)))}
+          {React.Children.toArray(options.map((option => <SearchOption onClick={option.onClick} name={option.name} Icon={option.Icon} />)))}
         </div>
       </div>
     </Modal>
