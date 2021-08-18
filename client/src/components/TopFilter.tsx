@@ -5,8 +5,11 @@ import { BiSortUp } from 'react-icons/bi';
 import { TaskFilterModal } from './modals/TaskFilterModal';
 import { ViewOptionMenu } from './menus/ViewOptionMenu';
 import { RootState } from 'store/store';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { topFilterType } from 'shared/constants';
+import { getStatusText } from 'shared/utils/common';
+import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
+import { addStatusFilter } from 'store/actions/filterActions';
 
 interface Props {
   /* Top title */
@@ -18,6 +21,7 @@ interface Props {
 export const TopFilter = ({ title, onOpenMenu, type }: Props) => {
   const [showFilter, setShowFilter] = useState(false);
   const [showViewOption, setShowViewOption] = useState(false);
+  const dispatch = useDispatch();
 
   const tasks = useSelector((state: RootState) => state.taskList.tasks);
   const { status } = useSelector((state: RootState) => state.filters);
@@ -38,13 +42,16 @@ export const TopFilter = ({ title, onOpenMenu, type }: Props) => {
 
           <div className='p-1 font-semibold cursor-default hover:bg-gray-100'>{title}</div>
           {!onInvitePage && <span>{totaltasks}</span>}
+          {type === 'all_tasks' && <>
+            {status && <div className='ml-3 capitalize text-gray-700 px-2 py-1 bg-gray-100 hover:bg-gray-50 rounded-md flex items-center'>
+              <p>{getStatusText(status)}</p>
+              <div onClick={() => dispatch(addStatusFilter(''))}><CloseIcon className='ml-1.5 w-3 h-3 cursor-pointer' /></div>
+            </div>}
+          </>}
           {!onInvitePage && <button
             className='px-1 py-0.5 ml-3 border border-gray-300 border-dashed rounded text-gray-500 hover:border-gray-400 focus:outline-none hover:text-gray-800'
             onClick={() => setShowFilter(!showFilter)}
           >+ Filter</button>}
-          {type === 'all_tasks' && <>
-            {status && <div>{status}</div>}
-          </>}
         </div>
 
         {/* right section */}

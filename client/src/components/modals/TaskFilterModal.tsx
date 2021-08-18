@@ -19,7 +19,7 @@ interface SearchOptionProps {
 
 interface Props {
   isOpen: boolean;
-  onDismiss?: () => void;
+  onDismiss: () => void;
 }
 
 
@@ -40,27 +40,27 @@ export const TaskFilterModal = ({ isOpen, onDismiss }: Props) => {
     {
       name: 'Filter by status: To Do',
       Icon: <TodoIcon className='w-4 h-4 mr-4 ' />,
-      onClick: () => dispatch(addStatusFilter(Status.TODO))
+      onClick: () => { dispatch(addStatusFilter(Status.TODO)); onDismiss(); }
     },
     {
       name: 'Filter by status: Backlog',
       Icon: <BacklogIcon className='w-4 h-4 mr-4 ' />,
-      onClick: () => dispatch(addStatusFilter(Status.BACKLOG))
+      onClick: () => { dispatch(addStatusFilter(Status.BACKLOG)); onDismiss(); }
     },
     {
       name: 'Filter by status: In Progress',
       Icon: <InProgressIcon className='w-4 h-4 mr-4 ' />,
-      onClick: () => dispatch(addStatusFilter(Status.IN_PROGRESS))
+      onClick: () => { dispatch(addStatusFilter(Status.IN_PROGRESS)); onDismiss(); }
     },
     {
       name: 'Filter by status: Done',
       Icon: <DoneIcon className='w-4 h-4 mr-4 ' />,
-      onClick: () => dispatch(addStatusFilter(Status.DONE))
+      onClick: () => { dispatch(addStatusFilter(Status.DONE)); onDismiss(); }
     },
     {
       name: 'Filter by status: Cancelled',
       Icon: <CancelIcon className='w-4 h-4 mr-4 ' />,
-      onClick: () => dispatch(addStatusFilter(Status.CANCELED))
+      onClick: () => { dispatch(addStatusFilter(Status.CANCELED)); onDismiss(); }
     },
   ]);
 
