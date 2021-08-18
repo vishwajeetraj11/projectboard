@@ -1,10 +1,14 @@
 import styled from 'styled-components';
 
-export const MarkdownStyles = styled.div`
+interface mds {
+  taskDetail?: boolean;
+}
+
+export const MarkdownStyles = styled.div<mds>`
 width: 100%;
 overflow-x: hidden;
 overflow-y: auto;
-height: 60vh;
+height: ${(props) => props.taskDetail ? '70vh' : '60vh'};
 padding: 7px;
 
 * {

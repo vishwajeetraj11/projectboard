@@ -1,57 +1,98 @@
 import { LeftSideBar } from 'components/LeftSideBar';
-import { TopFilter } from 'components/TopFilter';
-import React, { useState } from 'react';
-
+import { Link, useParams, useRouteMatch } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
+import { ReactComponent as MenuIcon } from 'assets/icons/menu.svg';
+import { RightSideBar } from 'components/RightSideBar';
+import { ReactComponent as RightSideBarIcon } from 'assets/icons/right-sidebar.svg';
+import { ReactComponent as EditIcon } from 'assets/icons/edit.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'store/store';
+import { MarkdownStyles } from 'styled/Markdown';
+import Editor from "rich-markdown-editor";
+import { ReactComponent as DeleteIcon } from 'assets/icons/delete.svg';
+import { getTaskDetail } from 'store/actions/taskActions';
+import { useAuth0 } from '@auth0/auth0-react';
 interface Props {
 
 }
+interface URLParams {
+    taskId: string;
+    projectId: string;
+}
 
 export const TaskDetail: React.FC<Props> = () => {
-    const [showMenu, setShowMenu] = useState(false);
+    const [showMenuLeft, setShowMenuLeft] = useState(false);
+    const [showMenuRight, setShowMenuRight] = useState(false);
+    const [readOnlyMarkdown, setReadOnlyMarkdown] = useState(true);
+    const dispatch = useDispatch();
+    const { getAccessTokenSilently } = useAuth0();
+    const params = useParams<URLParams>();
+
+    const { projectData } = useSelector((state: RootState) => state.currentProject);
+    const { task } = useSelector((state: RootState) => state.taskDetail);
+
+    useEffect(() => {
+        (async () => {
+            const token = await getAccessTokenSilently();
+            dispatch(getTaskDetail(token, params.projectId, params.taskId));
+        })();
+    }, []);
+
     return (
         <div className='flex w-screen h-screen overflow-y-hidden'>
-            <LeftSideBar showMenu={showMenu} onCloseMenu={() => setShowMenu(false)} />
-            <div className='flex flex-col flex-1 overflow-hidden'>
-                <TopFilter onOpenMenu={() => setShowMenu(!showMenu)} title='Task Detail' />
-                <main className="flex flex-col flex-shrink-0 place-items-stretch flex-grow box-border">
-                    <div className="overflow-hidden flex flex-initial flex-row absolute inset-0 flex-initial m-0 p-0">
-                        <div className="flex flex-col flex-initial flex-grow-2 min-w-0">
-                            <header className="flex flex-shrink-0 align-center max-w-full">
-                                Pro-5
-                            </header>
-                            <div className=" flex flex-col flex-grow-1 flex-initial overflow-y-scroll box-border">
-                                <div className="flex flex-col flex-initial flex-grow-1 flex-shrink-0 relative m-auto w-2/3 max-w-screen-md">
-                                    <div className="flex flex-col flex-shrink-0">
-                                        <span className="my-12 mx-0 py-8 px-0 w-full overflow-hidden text-6-xl font-bold leading-6 h-32">
-                                            Productboard
-                                        </span>
-                                        <div className="flex flex-col">
-                                            Data
-                                        </div>
-                                    </div>
-                                    <div className="flex flex-col flex-initial">
-                                        <div></div>
-                                        <div></div>
-                                    </div>
-                                    <div className="mt-8 mb-40 mx-0">
-                                        <div className="flex flex-row flex-initial align-center justify-between">
-                                            <span className="font-normal text-left font-bold text-5xl leading-6">Activity</span>
-                                            <div className="flex flex-initial flex-row flex-grow-1"></div>
-                                            <div className="flex flex-row flex-initial min-w-0">
-                                                <button className="py-4 px-0 text-xl inline-flex align-center justify-center m-0 font-bold flex-shrink-0 ">
-                                                    Subscribe
-                                                </button>
-                                            </div>
-                                            <div></div>
-                                        </div>
-                                    </div>
-                                    <div className="divide-y divide-black"></div>
-                                </div>
+            <LeftSideBar showMenu={showMenuLeft} onCloseMenu={() => setShowMenuLeft(false)} />
+            <div className='flex flex-row flex-1 overflow-hidden'>
+                <div className='p-0 lg:p-4 flex flex-1'>
+                    <div className='flex flex-1 flex-col shadow-modal modal-shadow rounded-md'>
+                        {/* Top Close Box */}
+                        <div className='border-0 lg:border-b border-gray-200 flex justify-between'>
+                            <button
+                                className='flex-shrink-0 h-full px-5 focus:outline-none lg:hidden'
+                                onClick={() => setShowMenuLeft(!showMenuLeft)}
+                            >
+                                <MenuIcon className='w-3.5 text-gray-500 hover:text-gray-800' />
+                            </button>
+                            <div className='flex items-center justify-end p-2'>
+                                <Link to='/'
+                                    className='inline-flex items-center justify-center ml-2 text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700 hidden lg:flex'
+                                >
+                                    <CloseIcon className='w-4' />
+                                </Link>
+                                <button onClick={() => setShowMenuRight(!showMenuRight)} className='flex-shrink-0 h-full p-2 ml-2 focus:outline-none lg:hidden hover:bg-gray-100'>
+                                    <RightSideBarIcon />
+                                </button>
                             </div>
                         </div>
-
+                        {/* Project Title and current task title */}
+                        <div className='px-5 border-b border-gray-200 mt-5 pb-3 flex justify-between items-center'>
+                            <p className='font-medium w-10/12 text-gray-700'>{`› ${projectData.project.title}`}</p>
+                            <div className='flex'>
+                                <button className='inline-flex items-center justify-center text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'><EditIcon /></button>
+                                <button className='ml-3 inline-flex items-center justify-center text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'><DeleteIcon /></button>
+                                {!readOnlyMarkdown && <><button className='inline-flex items-center justify-center px-2 transition-all ml-2 text-gray-500 hover:bg-gray-100 rouned hover:text-gray-700'>Cancel</button>
+                                    <button className='inline-flex items-center justify-center px-2 transition-all border border-gray-200 rounded-md ml-2 text-gray-500 hover:bg-gray-100 rouned hover:text-gray-700'>Save</button></>}
+                            </div>
+                        </div>
+                        {/* Markdown Description */}
+                        <div className='mt-5 pb-3'>
+                            <p className='px-5 text-lg font-semibold mt-4 mb-3 text-gray-700'>{task.title}</p>
+                            <div className='flex'>
+                                <MarkdownStyles taskDetail>
+                                    <Editor
+                                        autoFocus
+                                        id='editor'
+                                        readOnly={readOnlyMarkdown}
+                                        value={task.description}
+                                        className='mt-4 ml-5 font-normal border-none appearance-none min-h-12 text-md focus:outline-none'
+                                        placeholder='Add description...'
+                                    />
+                                </MarkdownStyles>
+                            </div>
+                        </div>
                     </div>
-                </main>
+                </div>
+                <RightSideBar showMenu={showMenuRight} onCloseMenu={() => setShowMenuRight(false)} />
             </div>
         </div>
     );
