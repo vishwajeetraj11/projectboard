@@ -10,9 +10,14 @@ import { TaskRow } from './TaskRow';
 export const TaskList = () => {
   // const dispatch = useDispatch<AppDispatch>();
   const allTasks = useSelector((state: RootState) => state.taskList.tasks);
-  const { filters } = useSelector((state: RootState) => state.filters);
+  const { status } = useSelector((state: RootState) => state.filters);
 
   let tasks = [...allTasks.backlog, ...allTasks.todo, ...allTasks.in_progress, ...allTasks.done, ...allTasks.cancelled];
+
+  if (status) {
+    tasks = tasks.filter((task: Task) => task.status === status);
+  }
+
   // tasks = tasks.filter((task:Task) => task.status !== filters)
   // sort tasks by order
   // tasks = tasks.sort((a, b) => {

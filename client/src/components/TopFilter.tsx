@@ -20,7 +20,7 @@ export const TopFilter = ({ title, onOpenMenu, type }: Props) => {
   const [showViewOption, setShowViewOption] = useState(false);
 
   const tasks = useSelector((state: RootState) => state.taskList.tasks);
-  const { filters } = useSelector((state: RootState) => state.filters);
+  const { status } = useSelector((state: RootState) => state.filters);
   const totaltasks = tasks.backlog.length + tasks.todo.length
     + tasks.done.length + tasks.in_progress.length + tasks.cancelled.length;
 
@@ -42,8 +42,8 @@ export const TopFilter = ({ title, onOpenMenu, type }: Props) => {
             className='px-1 py-0.5 ml-3 border border-gray-300 border-dashed rounded text-gray-500 hover:border-gray-400 focus:outline-none hover:text-gray-800'
             onClick={() => setShowFilter(!showFilter)}
           >+ Filter</button>}
-          {type === 'all_tasks' && <> 
-          {React.Children.toArray(filters.map((filter:string) =>  <p>{filter}</p>))}
+          {type === 'all_tasks' && <>
+            {status && <div>{status}</div>}
           </>}
         </div>
 

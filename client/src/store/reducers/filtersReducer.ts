@@ -1,27 +1,39 @@
-import { ADD_FILTER, CLEAR_FILTER, REMOVE_FILTER } from 'store/contants/filterConstants';
+import { ADD_FILTER_ASSIGNEE, ADD_FILTER_LABEL, ADD_FILTER_PRIORITY, ADD_FILTER_STATUS, CLEAR_ALL_FILTER } from 'store/contants/filterConstants';
 
 const INITIAL_STATE = {
-  filters: [] as Array<string>
+  priority: '',
+  status: '',
+  label: '',
+  assignee: ''
 };
 
 export const filtersReducer = (state = INITIAL_STATE, action: any) => {
   const { type, payload } = action;
 
   switch (type) {
-    case ADD_FILTER:
+    case ADD_FILTER_STATUS:
       return {
         ...state,
-        filters: payload
+        status: payload,
       };
-    case REMOVE_FILTER:
+    case ADD_FILTER_PRIORITY:
       return {
         ...state,
-        filters: payload
+        priority: payload,
       };
-    case CLEAR_FILTER:
+    case ADD_FILTER_LABEL:
       return {
         ...state,
-        filters: []
+        label: payload,
+      };
+    case ADD_FILTER_ASSIGNEE:
+      return {
+        ...state,
+        assignee: payload,
+      };
+    case CLEAR_ALL_FILTER:
+      return {
+        ...INITIAL_STATE,
       };
     default:
       break;

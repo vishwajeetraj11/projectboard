@@ -9,7 +9,7 @@ import Modal from 'components/Modal';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Status } from 'shared/constants';
-import { addFilterItem } from 'store/actions/filterActions';
+import { addStatusFilter } from 'store/actions/filterActions';
 
 interface SearchOptionProps {
   name: string;
@@ -23,7 +23,7 @@ interface Props {
 }
 
 
-function SearchOption({ name,onClick,Icon }: SearchOptionProps) {
+function SearchOption({ name, onClick, Icon }: SearchOptionProps) {
   return (
     <div onClick={onClick} className='flex items-center px-4 py-5 font-normal text-gray-700 border-l-2 border-transparent cursor-default text-14 hover:text-gray-800 hover:border-indigo-700 hover:bg-gray-100'>
       {Icon}
@@ -36,37 +36,36 @@ function SearchOption({ name,onClick,Icon }: SearchOptionProps) {
 export const TaskFilterModal = ({ isOpen, onDismiss }: Props) => {
   const [search, setSearch] = useState('');
   const dispatch = useDispatch();
-  const [options, setOptions] = useState([
+  const [options,] = useState([
     {
       name: 'Filter by status: To Do',
       Icon: <TodoIcon className='w-4 h-4 mr-4 ' />,
-      onClick: () => dispatch(addFilterItem(Status.TODO))
+      onClick: () => dispatch(addStatusFilter(Status.TODO))
     },
     {
       name: 'Filter by status: Backlog',
       Icon: <BacklogIcon className='w-4 h-4 mr-4 ' />,
-      onClick: () => dispatch(addFilterItem(Status.TODO))
+      onClick: () => dispatch(addStatusFilter(Status.BACKLOG))
     },
     {
       name: 'Filter by status: In Progress',
       Icon: <InProgressIcon className='w-4 h-4 mr-4 ' />,
-      onClick: () => dispatch(addFilterItem(Status.TODO))
+      onClick: () => dispatch(addStatusFilter(Status.IN_PROGRESS))
     },
     {
       name: 'Filter by status: Done',
       Icon: <DoneIcon className='w-4 h-4 mr-4 ' />,
-      onClick: () => dispatch(addFilterItem(Status.TODO))
+      onClick: () => dispatch(addStatusFilter(Status.DONE))
     },
     {
       name: 'Filter by status: Cancelled',
       Icon: <CancelIcon className='w-4 h-4 mr-4 ' />,
-      onClick: () => dispatch(addFilterItem(Status.TODO))
+      onClick: () => dispatch(addStatusFilter(Status.CANCELED))
     },
   ]);
 
   const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-
   };
 
   return (
