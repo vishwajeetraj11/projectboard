@@ -1,6 +1,6 @@
 import { LeftSideBar } from 'components/LeftSideBar';
 import { Link, useParams } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
 import { ReactComponent as MenuIcon } from 'assets/icons/menu.svg';
 import { RightSideBar } from 'components/RightSideBar';
@@ -27,27 +27,38 @@ export const TaskDetail: React.FC<Props> = () => {
     const [showMenuLeft, setShowMenuLeft] = useState(false);
     const [showMenuRight, setShowMenuRight] = useState(false);
     const [readOnlyMarkdown, setReadOnlyMarkdown] = useState(true);
+    const { task, loading, error } = useSelector((state: RootState) => state.taskDetail);
     const dispatch = useDispatch();
     const { getAccessTokenSilently } = useAuth0();
     const params = useParams<URLParams>();
 
     const { projectData } = useSelector((state: RootState) => state.currentProject);
-    const { task, loading, error } = useSelector((state: RootState) => state.taskDetail);
+    const [, setDescription] = useState(task.description);
 
+    const getTask = useCallback(async () => {
+        const token = await getAccessTokenSilently();
+        dispatch(getTaskDetail(token, params.projectId, params.taskId));
+    }, [dispatch, getAccessTokenSilently, params.projectId, params.taskId]);
     useEffect(() => {
-        (async () => {
-            const token = await getAccessTokenSilently();
-            dispatch(getTaskDetail(token, params.projectId, params.taskId));
-        })();
+        getTask();
         return () => {
             dispatch({
                 type: GET_TASK_DETAIL_CLEAR
             });
         };
-    }, [params.projectId, params.taskId, getAccessTokenSilently, dispatch]);
+    }, [params.projectId, params.taskId, getAccessTokenSilently, dispatch, getTask]);
+
+    useEffect(() => {
+        if (readOnlyMarkdown) {
+            getTask();
+        }
+    }, [getTask, readOnlyMarkdown]);
 
     const onEdit = () => {
         setReadOnlyMarkdown(false);
+    };
+    const onCancel = () => {
+        setReadOnlyMarkdown(true);
     };
 
     return (
@@ -81,7 +92,7 @@ export const TaskDetail: React.FC<Props> = () => {
                                 <p className='font-medium w-10/12 text-gray-700'>{`› ${projectData.project.title}`}</p>
                                 <div className='flex'>
                                     {readOnlyMarkdown && <><button onClick={onEdit} className='inline-flex items-center justify-center text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'><EditIcon /></button><button className='ml-3 inline-flex items-center justify-center text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'><DeleteIcon /></button></>}
-                                    {!readOnlyMarkdown && <><button className='inline-flex items-center justify-center px-2 py-1 transition-all rounded-md ml-2 text-gray-500 hover:bg-gray-100 rouned hover:text-gray-700'>Cancel</button>
+                                    {!readOnlyMarkdown && <><button onClick={onCancel} className='inline-flex items-center justify-center px-2 py-1 transition-all rounded-md ml-2 text-gray-500 hover:bg-gray-100 rouned hover:text-gray-700'>Cancel</button>
                                         <button className='inline-flex items-center justify-center px-2 py-1 transition-all border border-gray-200 rounded-md ml-2 text-gray-500 hover:bg-gray-100 rouned hover:text-gray-700'>Save</button></>}
                                 </div>
                             </div>
@@ -96,6 +107,7 @@ export const TaskDetail: React.FC<Props> = () => {
                                             readOnly={readOnlyMarkdown}
                                             defaultValue={task.description}
                                             value={task.description}
+                                            onChange={(value) => setDescription(value())}
                                             className='mt-4 ml-5 font-normal border-none appearance-none min-h-12 text-md focus:outline-none'
                                             placeholder='Add description...'
                                         />

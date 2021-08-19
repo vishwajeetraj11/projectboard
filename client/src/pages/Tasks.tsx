@@ -3,10 +3,12 @@ import { LeftSideBar } from 'components/LeftSideBar';
 import { TaskList } from 'components/tasks/TaskList';
 import { TopFilter } from 'components/TopFilter';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
+import socket from 'shared/utils/socket';
 import { getAllMembers } from 'store/actions/memberActions';
 import { getAllTasks } from 'store/actions/taskActions';
+import { RootState } from 'store/store';
 
 interface RouteParams { id: string; }
 interface Props extends RouteComponentProps<RouteParams> {
@@ -18,14 +20,16 @@ export const Tasks: React.FC<Props> = ({ match }) => {
   const [showMenu, setShowMenu] = useState(false);
   const dispatch = useDispatch();
   const { getAccessTokenSilently } = useAuth0();
+  const { projectData } = useSelector((state: RootState) => state.currentProject);
 
   useEffect(() => {
     (async () => {
       const token = await getAccessTokenSilently();
       dispatch(getAllTasks(token, match.params.id));
       dispatch(getAllMembers(token, match.params.id));
+      socket.emit('member-loggedIn', { member: projectData._id });
     })();
-  }, [dispatch, getAccessTokenSilently, match.params.id]);
+  }, [dispatch, getAccessTokenSilently, match.params.id, projectData._id]);
 
   return (
     <>

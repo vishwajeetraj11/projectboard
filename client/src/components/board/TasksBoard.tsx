@@ -40,10 +40,10 @@ export const TasksBoard = () => {
     dispatch(changeStatusOfTask(draggableId, source.droppableId, destination.droppableId, source.index, destination.index, match.params.id, token));
   };
 
-  // load data
   useEffect(() => {
-    // dispatch(loadIssues());
-    socket.on('board_update', ({ updatedTask }: any) => dispatch(updateBoardAfterSocketEvent(updatedTask.task)));
+    socket.on('board_update', ({ updatedTask }: any) => {
+      dispatch(updateBoardAfterSocketEvent(updatedTask));
+    });
   }, [dispatch]);
 
   return (

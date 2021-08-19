@@ -16,7 +16,6 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { AuthenticatedRoutes } from 'routes/AuthenticatedRoutes';
 import { UnauthenticatedRoutes } from 'routes/Unauthenticated';
 import { baseURL, endpoints } from 'shared/urls';
-import socket from 'shared/utils/socket';
 import { setUserProfile } from 'store/actions/userActions';
 interface Props {
 
@@ -56,8 +55,6 @@ export const Routes: React.FC<Props> = () => {
           if (!username || !firstName || !lastName) {
             history.push('/edit-profile');
           } else {
-            socket.emit('user-loggedIn', { user: data.user });
-            socket.emit('join-session', socket.id);
             dispatch(setUserProfile(data.user));
             setAuthenticated(true);
             // setUser(data.user);
