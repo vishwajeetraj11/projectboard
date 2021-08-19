@@ -18,7 +18,7 @@ interface Props {
 }
 const sizeClasses = {
   'large': 'w-175',
-  'normal': 'w-140'
+  'normal': 'w-80 lg:w-140'
 };
 
 function Modal({ title, isOpen, center, size, className, onDismiss, children, modalStyles }: Props) {
