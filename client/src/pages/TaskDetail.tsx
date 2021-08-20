@@ -15,6 +15,9 @@ import { getTaskDetail } from 'store/actions/taskActions';
 import { useAuth0 } from '@auth0/auth0-react';
 import { GET_TASK_DETAIL_CLEAR } from 'store/contants/taskConstants';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { showError, showInfo, showWarning } from 'components/Notification';
+import axios from 'axios';
+import { baseURL, endpoints } from 'shared/urls';
 interface Props {
 
 }
@@ -27,13 +30,14 @@ export const TaskDetail: React.FC<Props> = () => {
     const [showMenuLeft, setShowMenuLeft] = useState(false);
     const [showMenuRight, setShowMenuRight] = useState(false);
     const [readOnlyMarkdown, setReadOnlyMarkdown] = useState(true);
-    const { task, loading, error } = useSelector((state: RootState) => state.taskDetail);
+    const { task, loading, error, success } = useSelector((state: RootState) => state.taskDetail);
     const dispatch = useDispatch();
     const { getAccessTokenSilently } = useAuth0();
     const params = useParams<URLParams>();
 
     const { projectData } = useSelector((state: RootState) => state.currentProject);
-    const [, setDescription] = useState(task.description);
+    const [description, setDescription] = useState(task.description);
+    const [title, setTitle] = useState(task.title);
 
     const getTask = useCallback(async () => {
         const token = await getAccessTokenSilently();
@@ -49,6 +53,11 @@ export const TaskDetail: React.FC<Props> = () => {
     }, [params.projectId, params.taskId, getAccessTokenSilently, dispatch, getTask]);
 
     useEffect(() => {
+        setTitle(task.title); setDescription(task.description);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [success]);
+
+    useEffect(() => {
         if (readOnlyMarkdown) {
             getTask();
         }
@@ -59,12 +68,39 @@ export const TaskDetail: React.FC<Props> = () => {
     };
     const onCancel = () => {
         setReadOnlyMarkdown(true);
+        setTitle(task.title);
+        setDescription(task.description);
     };
 
+    const onSave = async () => {
+        try {
+            showWarning('While we save your task.', 'Please Wait.');
+            const token = await getAccessTokenSilently();
+            await axios({
+                url: `${baseURL}${endpoints.projects}/${params.projectId}${endpoints.tasks}/${params.taskId}`,
+                method: 'PATCH',
+                data: {
+                    title,
+                    description
+                },
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            showInfo('', 'Successfully saved Task.');
+            setReadOnlyMarkdown(true);
+        } catch (e) {
+            onCancel();
+            showError(e?.response?.data?.message, 'Error saving Task.');
+        }
+    };
+    const onDelete = async () => {
+
+    };
     return (
         <div className='flex w-screen h-screen overflow-y-hidden'>
             <LeftSideBar showMenu={showMenuLeft} onCloseMenu={() => setShowMenuLeft(false)} />
-            <div className='flex flex-row flex-1'>
+            {loading ? <div className='flex items-center justify-center flex-1'><CircularProgress color="primary" /></div> : error ? <div className='flex items-center justify-center flex-1'>{error}</div> : <div className='flex flex-row flex-1'>
                 <div className='p-0 lg:p-4 flex flex-1'>
                     <div className='flex flex-1 flex-col shadow-modal modal-shadow rounded-md'>
                         {/* Top Close Box */}
@@ -86,39 +122,39 @@ export const TaskDetail: React.FC<Props> = () => {
                                 </button>
                             </div>
                         </div>
-                        {loading ? <div className='flex items-center justify-center flex-1'><CircularProgress color="primary" /></div> : error ? <div className='flex items-center justify-center flex-1'>{error}</div> : <>
-                            {/* Project Title and current task title */}
-                            <div className='px-5 border-b border-gray-200 mt-5 pb-3 flex justify-between items-center'>
-                                <p className='font-medium w-10/12 text-gray-700'>{`› ${projectData.project.title}`}</p>
-                                <div className='flex'>
-                                    {readOnlyMarkdown && <><button onClick={onEdit} className='inline-flex items-center justify-center text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'><EditIcon /></button><button className='ml-3 inline-flex items-center justify-center text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'><DeleteIcon /></button></>}
-                                    {!readOnlyMarkdown && <><button onClick={onCancel} className='inline-flex items-center justify-center px-2 py-1 transition-all rounded-md ml-2 text-gray-500 hover:bg-gray-100 rouned hover:text-gray-700'>Cancel</button>
-                                        <button className='inline-flex items-center justify-center px-2 py-1 transition-all border border-gray-200 rounded-md ml-2 text-gray-500 hover:bg-gray-100 rouned hover:text-gray-700'>Save</button></>}
-                                </div>
+
+                        {/* Project Title and current task title */}
+                        <div className='px-5 border-b border-gray-200 mt-5 pb-3 flex justify-between items-center'>
+                            <p className='font-medium w-10/12 text-gray-700'>{`› ${projectData.project.title}`}</p>
+                            <div className='flex'>
+                                {readOnlyMarkdown && <><button onClick={onEdit} className='inline-flex items-center justify-center text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'><EditIcon /></button><button onClick={onDelete} className='ml-3 inline-flex items-center justify-center text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'><DeleteIcon /></button></>}
+                                {!readOnlyMarkdown && <><button onClick={onCancel} className='inline-flex items-center justify-center px-2 py-1 transition-all rounded-md ml-2 text-gray-500 hover:bg-gray-100 rouned hover:text-gray-700'>Cancel</button>
+                                    <button onClick={onSave} className='inline-flex items-center justify-center px-2 py-1 transition-all border border-gray-200 rounded-md ml-2 text-gray-500 hover:bg-gray-100 rouned hover:text-gray-700'>Save</button></>}
                             </div>
-                            {/* Markdown Description */}
-                            <div className='mt-5 pb-3'>
-                                <p className='px-5 text-lg font-semibold mt-4 mb-3 text-gray-700'>{task.title}</p>
-                                <div className='flex'>
-                                    <MarkdownStyles taskDetail>
-                                        <Editor
-                                            autoFocus
-                                            id='editor'
-                                            readOnly={readOnlyMarkdown}
-                                            defaultValue={task.description}
-                                            value={task.description}
-                                            onChange={(value) => setDescription(value())}
-                                            className='mt-4 ml-5 font-normal border-none appearance-none min-h-12 text-md focus:outline-none'
-                                            placeholder='Add description...'
-                                        />
-                                    </MarkdownStyles>
-                                </div>
+                        </div>
+                        {/* Markdown Description */}
+                        <div className='mt-5 pb-3 px-5'>
+                            {!readOnlyMarkdown ? <input className='px-2 py-1 w-full border border-gray-700 border-dashed rounded focus:outline-none' value={title} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)} /> : <p className='text-lg font-semibold mt-4 mb-3 text-gray-700'>{task.title}</p>}
+                            <div className='flex'>
+                                <MarkdownStyles taskDetail>
+                                    <Editor
+                                        autoFocus
+                                        id='editor'
+                                        readOnly={readOnlyMarkdown}
+                                        // defaultValue={task.description}
+                                        value={task.description}
+                                        onChange={(value) => setDescription(value())}
+                                        className='mt-4 ml-5 font-normal border-none appearance-none min-h-12 text-md focus:outline-none'
+                                        placeholder='Add description...'
+                                    />
+                                </MarkdownStyles>
                             </div>
-                        </>}
+                        </div>
+
                     </div>
                 </div>
                 <RightSideBar showMenu={showMenuRight} onCloseMenu={() => setShowMenuRight(false)} />
-            </div>
+            </div>}
         </div>
     );
 };
