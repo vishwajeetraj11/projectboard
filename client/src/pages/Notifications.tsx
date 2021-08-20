@@ -18,7 +18,7 @@ export const Notifications: React.FC<Props> = ({ match }) => {
     <>
       <LeftSideBar showMenu={showMenu} onCloseMenu={() => setShowMenu(false)} />
       <div className='flex flex-col flex-grow'>
-        <TopFilter onOpenMenu={() => setShowMenu(!showMenu)} type={topFilterType.NOTIFICATIONS} title='All Tasks' />
+        <TopFilter onOpenMenu={() => setShowMenu(!showMenu)} type={topFilterType.NOTIFICATIONS} title='Notifications' />
       </div>
     </>
   );

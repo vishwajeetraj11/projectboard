@@ -36,6 +36,7 @@ interface Props {
 export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
 
   const { projectData } = useSelector((state: RootState) => state.currentProject);
+  const { user } = useSelector((state: RootState) => state.userProfile);
 
   const ref = useRef<HTMLDivElement>() as RefObject<HTMLDivElement>;
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -73,8 +74,8 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
           <div className="flex items-center justify-between">
             {/* Project selection */}
             <div className="flex items-center p-2 pr-3 rounded cursor-pointer hover:bg-gray-100">
-              <div className='flex text-sm items-center justify-center rounded-sm w-4.5 h-4.5 text-white bg-yellow-500 mr-2.5'>W</div>
-              <div className='text-sm font-medium'>Workspace</div>
+              <div className='flex text-sm items-center justify-center rounded-sm w-4.5 h-4.5 text-white bg-yellow-500 mr-2.5'>{projectData?.project?.title?.charAt(0)}</div>
+              <div className='text-sm font-medium flex-wrap flex-shrink overflow-hidden font-medium line-clamp-1 overflow-ellipsis'>{projectData?.project?.title}</div>
             </div>
 
             {/* User avatar  */}
@@ -82,7 +83,7 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
               <div className='flex items-center justify-center p-2 rounded cursor-pointer hover:bg-gray-100 select-none'
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
               >
-                <Avatar name='Tuan Nguyen' online={true} />
+                <Avatar name={`${user?.firstName} ${user?.lastName}`} online={true} />
                 <ExpandMore size={13} className='ml-2' />
               </div>
               <ProfileMenu isOpen={showProfileMenu} onDismiss={() => setShowProfileMenu(false)} className='absolute top-10' />
