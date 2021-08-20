@@ -45,7 +45,8 @@ export const topFilterType = {
 export const userType = {
   MEMBER: 'MEMBER',
   USER: 'USER'
-};;
+};
+
 
 // export const DropdownMenus = {
 //   PRIORITY: 'priority',

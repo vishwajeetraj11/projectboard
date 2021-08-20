@@ -21,7 +21,7 @@ import { Link } from 'react-router-dom';
 import { RootState } from 'store/store';
 import { Avatar } from './Avatar';
 import { ItemGroup } from './ItemGroup';
-import { ProfileMenu } from './ProfileMenu';
+import { ProfileMenu } from './menus/ProfileMenu';
 
 interface Props {
   // Show menu (for small screen only)
