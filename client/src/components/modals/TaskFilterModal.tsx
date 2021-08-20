@@ -126,7 +126,7 @@ export const TaskFilterModal = ({ isOpen, onDismiss }: Props) => {
     <Modal isOpen={isOpen} onDismiss={onDismiss} size='large' className='h-100' modalStyles={{ maxWidth: '700px', width: '100%' }}>
       <div className='flex flex-col w-full'>
         {/* Top search box */}
-        <input type='text' value={search} onChange={onSearchChange} className='flex-grow-0 w-full p-4 text-lg border-b border-gray-200 focus:outline-none'
+        <input disabled type='text' value={search} onChange={onSearchChange} className='select-none flex-grow-0 w-full p-4 text-lg border-b border-gray-200 focus:outline-none'
           placeholder='Filter Tasks...'
         />
         {/* Search option */}
