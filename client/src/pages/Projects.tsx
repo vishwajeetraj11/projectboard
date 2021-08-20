@@ -1,9 +1,9 @@
-import { LogoutButton } from 'components/auth/Logout';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { ProjectsList } from 'components/projects/ProjectList';
 import { projectsType } from 'shared/constants';
+import { MinimalNav } from 'components/layout/minimalNav';
 interface Props {
 
 }
@@ -20,10 +20,7 @@ export const Projects: React.FC<Props> = () => {
   return (
     <section className='p-4 lg:p-0 w-full min-h-screen max-w-screen-lg mx-auto bg-white'>
       {/* Nav */}
-      <div className='py-5 lg:py-10 sm:px-4 lg:px-0 flex items-center justify-between'>
-        <h2>Product Board</h2>
-        <LogoutButton />
-      </div>
+      <MinimalNav />
       <div className='bg-gray-100 w-full rounded-sm'>
         <Link to='/create-project'>
           <p className='text-md py-3 text-center font-semibold text-gray-500'>

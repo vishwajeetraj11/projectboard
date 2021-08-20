@@ -9,7 +9,7 @@ import { ReactComponent as UrgentPriorityIcon } from 'assets/icons/rounded-claim
 import { ReactComponent as MediumPriorityIcon } from 'assets/icons/signal-medium.svg';
 import { ReactComponent as HighPriorityIcon } from 'assets/icons/signal-strong.svg';
 import { ReactComponent as LowPriorityIcon } from 'assets/icons/signal-weak.svg';
-import Modal from 'components/Modal';
+import Modal from 'components/modals/Modal';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Status } from 'shared/constants';

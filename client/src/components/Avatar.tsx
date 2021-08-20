@@ -1,5 +1,5 @@
 import AvatarImg from 'assets/icons/avatar.svg';
-import React, { MouseEventHandler } from 'react';
+import { MouseEventHandler } from 'react';
 
 interface Props {
   online?: boolean;

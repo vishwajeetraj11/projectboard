@@ -1,7 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { Button, TextField } from '@material-ui/core';
 import axios from 'axios';
-import { LogoutButton } from 'components/auth/Logout';
+import { MinimalNav } from 'components/layout/minimalNav';
 import { Formik } from 'formik';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
@@ -22,10 +22,7 @@ export const CreateProject: React.FC<Props> = () => {
 
   return (
     <section className='p-4 lg:p-0 w-full min-h-screen max-w-screen-lg mx-auto bg-white'>
-      <div className='p-y lg:py-10 sm:px-4 lg:px-0 flex items-center justify-between'>
-        <h2>Product Board</h2>
-        <LogoutButton />
-      </div>
+      <MinimalNav />
       <div>
         <Formik
           initialValues={{

@@ -10,7 +10,7 @@ import { ReactComponent as IssueIcon } from 'assets/icons/issue.svg';
 import { ReactComponent as MenuIcon } from 'assets/icons/menu.svg';
 // import { ReactComponent as ViewIcon } from 'assets/icons/view.svg';
 import classNames from 'classnames';
-import HelpModal from 'components/HelpModal';
+import HelpModal from 'components/modals/HelpModal';
 import { SearchBox } from 'components/SearchBox';
 import { useClickOutside } from 'hooks/useClickOutside';
 import React, { RefObject, useEffect, useRef, useState } from 'react';
@@ -130,12 +130,10 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
               <span>To Do</span>
             </Link>
             <Link to='/' className='flex items-center pl-8 rounded cursor-pointer h-7 hover:bg-gray-100'>
-              {/* <span className='w-3 h-3 mr-2' ></span> */}
               <BacklogIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' />
               <span>Backlog</span>
             </Link>
             <Link to='/' className='flex items-center pl-8 rounded cursor-pointer h-7 hover:bg-gray-100'>
-              {/* <span className='w-3 h-3 mr-2' ></span> */}
               <InProgressIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' />
               <span>In Progress</span>
             </Link>
@@ -168,7 +166,7 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
           </div>
         </div>
       </div>
-      {/* Modals */}
+      {/* Modal */}
       {<HelpModal isOpen={showHelpModal} onDismiss={() => setShowHelpModal(false)} />}
     </>
   );

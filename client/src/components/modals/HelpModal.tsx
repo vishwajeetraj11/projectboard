@@ -3,7 +3,7 @@ import GuideIcon from 'assets/icons/guide.svg';
 import QuestionIcon from 'assets/icons/question.svg';
 import ShortcutIcon from 'assets/icons/rounded-claim.svg';
 import SlackIcon from 'assets/icons/slack.svg';
-import Modal from 'components/Modal';
+import Modal from 'components/modals/Modal';
 import React from 'react';
 
 interface Props {
