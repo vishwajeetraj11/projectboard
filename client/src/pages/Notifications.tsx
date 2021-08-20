@@ -1,6 +1,8 @@
 import { LeftSideBar } from 'components/LeftSideBar';
+import { TopFilter } from 'components/TopFilter';
 import React, { useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import { topFilterType } from 'shared/constants';
 
 interface RouteParams { id: string; }
 
@@ -16,9 +18,7 @@ export const Notifications: React.FC<Props> = ({ match }) => {
     <>
       <LeftSideBar showMenu={showMenu} onCloseMenu={() => setShowMenu(false)} />
       <div className='flex flex-col flex-grow'>
-        <div className='flex flex-col w-full py-4 flex-1'>
-          {JSON.stringify(match)}
-        </div>
+        <TopFilter onOpenMenu={() => setShowMenu(!showMenu)} type={topFilterType.NOTIFICATIONS} title='All Tasks' />
       </div>
     </>
   );

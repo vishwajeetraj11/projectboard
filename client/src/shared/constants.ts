@@ -36,7 +36,9 @@ export const projectsType = {
 };
 
 export const topFilterType = {
-  INVITE: "INVITE"
+  INVITE: "INVITE",
+  NOTIFICATIONS: "NOTIFICATIONS",
+  TASKS: "TASKS"
 };
 
 // On Invite Page either to show uninvited Members and Members of Project

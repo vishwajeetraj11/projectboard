@@ -25,6 +25,8 @@ export const TopFilter = ({ title, onOpenMenu, type }: Props) => {
     + tasks.done.length + tasks.in_progress.length + tasks.cancelled.length;
 
   const onInvitePage = type === topFilterType.INVITE;
+  // const onNotificationPage = type === topFilterType.NOTIFICATIONS;
+  const onTasksPage = type === topFilterType.TASKS;
 
   return (
     <>
@@ -38,13 +40,13 @@ export const TopFilter = ({ title, onOpenMenu, type }: Props) => {
 
           <div className='p-1 font-semibold cursor-default hover:bg-gray-100'>{title}</div>
           {!onInvitePage && <span>{totaltasks}</span>}
-          {type === 'all_tasks' && <>
+          {onTasksPage && <>
             {status && <div className='ml-3 capitalize text-gray-700 px-2 py-1 bg-gray-100 hover:bg-gray-50 rounded-md flex items-center'>
               <p>{getStatusText(status)}</p>
               <div onClick={() => dispatch(addStatusFilter(''))}><CloseIcon className='ml-1.5 w-3 h-3 cursor-pointer' /></div>
             </div>}
           </>}
-          {!onInvitePage && <button
+          {onTasksPage && <button
             className='px-1 py-0.5 ml-3 border border-gray-300 border-dashed rounded text-gray-500 hover:border-gray-400 focus:outline-none hover:text-gray-800'
             onClick={() => setShowFilter(!showFilter)}
           >+ Filter</button>}
@@ -52,7 +54,7 @@ export const TopFilter = ({ title, onOpenMenu, type }: Props) => {
 
 
       </div>
-      {!onInvitePage && <>
+      {onTasksPage && <>
         <TaskFilterModal isOpen={showFilter} onDismiss={() => setShowFilter(false)} /></>}
     </>
   );
