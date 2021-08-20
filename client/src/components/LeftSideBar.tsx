@@ -21,7 +21,7 @@ import { Link } from 'react-router-dom';
 import { RootState } from 'store/store';
 import { Avatar } from './Avatar';
 import { ItemGroup } from './ItemGroup';
-import { ProfileMenu } from './ProfileMenu';
+import { ProfileMenu } from './menus/ProfileMenu';
 
 interface Props {
   // Show menu (for small screen only)
@@ -159,7 +159,7 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
             <Link
               to={`/projects/${projectData.project._id}/members`}
               className='flex items-center focus:outline-none'
-            ><AddIcon className='w-3 mr-2' /> Manage Members</Link>
+            ><AddIcon className='w-3 mr-2' />{projectData.access === 'admin' ? 'Manage Members' : 'View Members'}</Link>
             <button
               className='flex items-center mt-1 focus:outline-none cursor-pointer'
               onClick={() => setShowHelpModal(true)}

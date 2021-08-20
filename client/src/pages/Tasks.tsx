@@ -5,6 +5,7 @@ import { TopFilter } from 'components/TopFilter';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
+import { topFilterType } from 'shared/constants';
 import socket from 'shared/utils/socket';
 import { getAllMembers } from 'store/actions/memberActions';
 import { getAllTasks } from 'store/actions/taskActions';
@@ -35,7 +36,7 @@ export const Tasks: React.FC<Props> = ({ match }) => {
     <>
       <LeftSideBar showMenu={showMenu} onCloseMenu={() => setShowMenu(false)} />
       <div className='flex flex-col flex-grow'>
-        <TopFilter onOpenMenu={() => setShowMenu(!showMenu)} type='all_tasks' title='All Tasks' />
+        <TopFilter onOpenMenu={() => setShowMenu(!showMenu)} type={topFilterType.TASKS} title='All Tasks' />
         <TaskList />
       </div>
     </>

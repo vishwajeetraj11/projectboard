@@ -3,6 +3,9 @@ import { Transition } from '@headlessui/react';
 import classnames from 'classnames';
 import { useClickOutside } from 'hooks/useClickOutside';
 import { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { RootState } from 'store/store';
 
 interface Props {
   isOpen: boolean;
@@ -13,6 +16,8 @@ export const ProfileMenu = ({ isOpen, className, onDismiss }: Props) => {
   let classes = classnames('select-none w-53 shadow-modal z-50 flex flex-col py-1 bg-white font-normal rounded text-gray-800', className);
   const ref = useRef(null);
   let ready = false;
+
+  const { projectData } = useSelector((state: RootState) => state.currentProject);
 
   const { logout } = useAuth0();
 
@@ -42,14 +47,16 @@ export const ProfileMenu = ({ isOpen, className, onDismiss }: Props) => {
         className={classes}
         style={{ left: '-140px' }}
       >
-        <div className='flex items-center h-8 px-3 hover:bg-gray-100'>View profile</div>
-        <div className='flex items-center h-8 px-3 hover:bg-gray-100 '>Settings</div>
-        <div className='flex items-center h-8 px-3 hover:bg-gray-100 '>Show keyboard shortcuts</div>
+        <Link to='/projects' className='flex items-center h-8 px-3 hover:bg-gray-100 cursor-pointer'>All Projects</Link>
         <div className='w-full px-3 my-1 border-b border-gray-200'></div>
-        <div className='flex items-center h-8 px-3 hover:bg-gray-100 '>Changelog</div>
-        <div className='flex items-center h-8 px-3 hover:bg-gray-100 '>Join Slack Community</div>
-        <div className='flex items-center h-8 px-3 hover:bg-gray-100 '>Help & Support</div>
-        <div className='flex items-center h-8 px-3 hover:bg-gray-100 '>API</div>
+        <Link to='/edit-profile' className='flex items-center h-8 px-3 hover:bg-gray-100 cursor-pointer'>Edit Profile</Link>
+        <Link to='edit-project' className='flex items-center h-8 px-3 hover:bg-gray-100 cursor-pointer'>Edit Project</Link>
+        {projectData.access === 'admin' && <><div className='w-full px-3 my-1 border-b border-gray-200'></div><Link to={`/projects/${projectData.project._id}/members`} className='flex items-center h-8 px-3 hover:bg-gray-100 '>Manage Members</Link></>}
+        <div className='w-full px-3 my-1 border-b border-gray-200'></div>
+        <a rel="noreferrer" href='https://hashnode.com/@vishwajeetraj11' target='_blank' className='flex items-center h-8 px-3 hover:bg-gray-100 '>Join me on Hashnode</a>
+        <a rel="noreferrer" href='https://vishwajeetraj11.hashnode.dev/introducing-os-resume-oversimplified-resume-builder' target='_blank' className='flex items-center h-8 px-3 hover:bg-gray-100 '>Introducing Product Board</a>
+        <a rel="noreferrer" href='https://github.com/vishwajeetraj11/productboard' target='_blank' className='flex items-center h-8 px-3 hover:bg-gray-100 '>Github</a>
+        <a rel="noreferrer" href='https://www.buymeacoffee.com/vishwajeetraj11' target='_blank' className='flex items-center h-8 px-3 hover:bg-gray-100 '>Buy Me a Coffee</a>
         <div className='w-full px-3 my-1 border-b border-gray-200'></div>
         <div className='flex items-center h-8 px-3 hover:bg-gray-100 cursor-pointer' onClick={() => logout({
           returnTo: window.location.origin,
