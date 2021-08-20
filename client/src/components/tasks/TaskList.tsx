@@ -10,12 +10,20 @@ import { TaskRow } from './TaskRow';
 export const TaskList = () => {
   // const dispatch = useDispatch<AppDispatch>();
   const allTasks = useSelector((state: RootState) => state.taskList.tasks);
-  const { status } = useSelector((state: RootState) => state.filters);
+  const { status,priority,label } = useSelector((state: RootState) => state.filters);
 
   let tasks = [...allTasks.backlog, ...allTasks.todo, ...allTasks.in_progress, ...allTasks.done, ...allTasks.cancelled];
 
   if (status) {
     tasks = tasks.filter((task: Task) => task.status === status);
+  }
+
+  if (priority) {
+    tasks = tasks.filter((task: Task) => task.priority === priority);
+  }
+
+  if (label) {
+    tasks = tasks.filter((task: Task) => task.label === label);
   }
 
   // tasks = tasks.filter((task:Task) => task.status !== filters)

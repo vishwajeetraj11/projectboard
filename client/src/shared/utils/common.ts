@@ -44,5 +44,7 @@ export const getLabelObj = (label: string) => {
       return DEFAULT_LABLES[1];
     case Labels.BUG:
       return DEFAULT_LABLES[0];
+    default :
+      return DEFAULT_LABLES[3];
   }
 };

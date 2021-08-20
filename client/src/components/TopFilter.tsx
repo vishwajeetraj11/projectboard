@@ -5,8 +5,10 @@ import { RootState } from 'store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { topFilterType } from 'shared/constants';
 import { getStatusText } from 'shared/utils/common';
+import { getPriorityString } from 'shared/utils/common';
+import { getLabelObj } from 'shared/utils/common';
 import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
-import { addStatusFilter } from 'store/actions/filterActions';
+import { addLabelFilter, addPriorityFilter, addStatusFilter } from 'store/actions/filterActions';
 
 interface Props {
   /* Top title */
@@ -19,12 +21,12 @@ export const TopFilter = ({ title, onOpenMenu, type }: Props) => {
   const [showFilter, setShowFilter] = useState(false);
   const dispatch = useDispatch();
 
-  const tasks = useSelector((state: RootState) => state.taskList.tasks);
-  const { status } = useSelector((state: RootState) => state.filters);
-  const totaltasks = tasks.backlog.length + tasks.todo.length
-    + tasks.done.length + tasks.in_progress.length + tasks.cancelled.length;
+  // const tasks = useSelector((state: RootState) => state.taskList.tasks);
+  const { status,priority,label } = useSelector((state: RootState) => state.filters);
+  // const totaltasks = tasks.backlog.length + tasks.todo.length
+  //   + tasks.done.length + tasks.in_progress.length + tasks.cancelled.length;
 
-  const onInvitePage = type === topFilterType.INVITE;
+  // const onInvitePage = type === topFilterType.INVITE;
   // const onNotificationPage = type === topFilterType.NOTIFICATIONS;
   const onTasksPage = type === topFilterType.TASKS;
 
@@ -39,11 +41,19 @@ export const TopFilter = ({ title, onOpenMenu, type }: Props) => {
           ><MenuIcon className='w-3.5 text-gray-500 hover:text-gray-800' /></button>
 
           <div className='p-1 font-semibold cursor-default hover:bg-gray-100'>{title}</div>
-          {!onInvitePage && <span>{totaltasks}</span>}
+          {/* {!onInvitePage && <span>{totaltasks}</span>} */}
           {onTasksPage && <>
             {status && <div className='ml-3 capitalize text-gray-700 px-2 py-1 bg-gray-100 hover:bg-gray-50 rounded-md flex items-center'>
               <p>{getStatusText(status)}</p>
               <div onClick={() => dispatch(addStatusFilter(''))}><CloseIcon className='ml-1.5 w-3 h-3 cursor-pointer' /></div>
+            </div>}
+            {priority && <div className='ml-3 capitalize text-gray-700 px-2 py-1 bg-gray-100 hover:bg-gray-50 rounded-md flex items-center'>
+              <p>{getPriorityString(priority)}</p>
+              <div onClick={() => dispatch(addPriorityFilter(''))}><CloseIcon className='ml-1.5 w-3 h-3 cursor-pointer' /></div>
+            </div>}
+            {label && <div className='ml-3 capitalize text-gray-700 px-2 py-1 bg-gray-100 hover:bg-gray-50 rounded-md flex items-center'>
+              <p>{getLabelObj(label).name}</p>
+              <div onClick={() => dispatch(addLabelFilter(''))}><CloseIcon className='ml-1.5 w-3 h-3 cursor-pointer' /></div>
             </div>}
           </>}
           {onTasksPage && <button

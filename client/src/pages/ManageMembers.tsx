@@ -37,8 +37,8 @@ export const ManageMembers: React.FC<Props> = () => {
             </div>
             <h2 className='text-md'>Manage Members</h2>
             <div className='flex justify-between w-full mt-4 bg-gray-100 my-4'>
-              <button className={`w-6/12 rounded-sm py-3 font-medium text-xs ${activeUsers === userType.MEMBER ? 'bg-indigo-600 text-white' : ''}`} onClick={() => toggleUsersActive(userType.MEMBER)}>My Projects</button>
-              <button className={`w-6/12 rounded-sm py-3 font-medium text-xs ${activeUsers === userType.USER ? 'bg-indigo-600 text-white' : ''}`} onClick={() => toggleUsersActive(userType.USER)}>Shared Projects</button>
+              <button className={`w-6/12 rounded-sm py-3 font-medium text-xs ${activeUsers === userType.MEMBER ? 'bg-indigo-600 text-white' : ''}`} onClick={() => toggleUsersActive(userType.MEMBER)}>Members</button>
+              <button className={`w-6/12 rounded-sm py-3 font-medium text-xs ${activeUsers === userType.USER ? 'bg-indigo-600 text-white' : ''}`} onClick={() => toggleUsersActive(userType.USER)}>Add Members</button>
             </div>
             {activeUsers === userType.MEMBER && <MemberList />}
             {activeUsers === userType.USER && <AddMembers />}
