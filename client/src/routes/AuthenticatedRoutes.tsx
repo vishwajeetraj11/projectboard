@@ -9,6 +9,7 @@ import { TestProfile } from 'pages/TestProfile';
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { TaskDetail } from 'pages/TaskDetail';
+import { EditProfile } from 'pages/EditProfile';
 
 interface Props {
 }
@@ -26,6 +27,7 @@ export const AuthenticatedRoutes: React.FC<Props> = () => {
         <Route path='/projects/:id/members' exact component={ManageMembers} />
         <Route path='/projects/:id/notifications' exact component={Notifications} />
         <Route path='/profile' exact component={TestProfile} />
+        <Route path='/edit-profile' exact component={EditProfile} />
         <Redirect path='*' to='/projects' />
       </Switch>
     </div>

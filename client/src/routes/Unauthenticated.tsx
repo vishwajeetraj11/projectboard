@@ -1,5 +1,5 @@
 import { Switch } from 'react-router-dom';
-import { EditProfile } from 'pages/EditProfile';
+import { CreateProfile } from 'pages/CreateProfile';
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { Landing } from 'pages/Landing';
@@ -13,7 +13,7 @@ export const UnauthenticatedRoutes: React.FC<Props> = ({ setAuthenticated }) => 
   return (
     <Switch>
       <Route path='/' exact component={Landing} />
-      <Route path='/edit-profile' exact component={(props: any) => <EditProfile setAuthenticated={setAuthenticated} {...props} />} />
+      <Route path='/create-profile' exact component={(props: any) => <CreateProfile setAuthenticated={setAuthenticated} {...props} />} />
       <Redirect path='*' to='/' />
     </Switch>
   );

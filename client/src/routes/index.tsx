@@ -53,7 +53,7 @@ export const Routes: React.FC<Props> = () => {
           const firstName = data?.user?.firstName;
           const lastName = data?.user?.lastName;
           if (!username || !firstName || !lastName) {
-            history.push('/edit-profile');
+            history.push('/create-profile');
           } else {
             dispatch(setUserProfile(data.user));
             setAuthenticated(true);

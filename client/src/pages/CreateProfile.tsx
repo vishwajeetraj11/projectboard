@@ -2,15 +2,11 @@ import { LogoutButton } from 'components/auth/Logout';
 import { ProfileForm } from 'components/forms/ProfileForm';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { RootState } from 'store/store';
-import { useSelector } from 'react-redux';
-
 interface Props extends RouteComponentProps<{}> {
+  setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const EditProfile: React.FC<Props> = () => {
-  const { user } = useSelector((state: RootState) => state.userProfile);
-  const { projectData } = useSelector((state: RootState) => state.currentProject);
+export const CreateProfile: React.FC<Props> = ({ setAuthenticated }) => {
 
   return (
     <section className='p-4 lg:p-0 w-full min-h-screen max-w-screen-lg mx-auto bg-white'>
@@ -19,7 +15,7 @@ export const EditProfile: React.FC<Props> = () => {
         <LogoutButton />
       </div>
       <div>
-        <ProfileForm user={user} title={'Edit your Profile.'} redirect={projectData?.project?._id ? `/projects/${projectData.project._id}` : '/projects'} />
+        <ProfileForm title={'Create your Profile.'} setAuthenticated={setAuthenticated} />
       </div>
     </section>
   );
