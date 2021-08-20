@@ -119,7 +119,7 @@ export const CreateTask: React.FC<Props> = ({ match, history, location }) => {
               <span className='ml-2 font-normal text-gray-700'>› New Task</span>
             </div>
             <div className='flex items-center'>
-              <Link to='/'
+              <Link to={`/projects/${projectData.project._id}/tasks`}
                 className='inline-flex items-center justify-center ml-2 text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'
               ><CloseIcon className='w-4' /></Link>
             </div>
