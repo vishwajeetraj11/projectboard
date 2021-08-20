@@ -41,6 +41,7 @@ export const MemberList: React.FC<Props> = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      setMembers(mems => mems.filter((mem: Member) => mem._id !== memberId));
       showInfo('', 'Member Deleted Successfully.');
     } catch (e) {
       showError(e?.response?.data?.message, 'Error Deleting Member.');
@@ -79,7 +80,6 @@ export const MemberList: React.FC<Props> = () => {
           disableDeleteButton={deleteMemberLoading}
           isMobile={isMobile}
           member={member}
-          setMembers={setMembers}
         />
       )))}
     </>
