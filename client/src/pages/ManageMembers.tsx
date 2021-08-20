@@ -1,4 +1,3 @@
-import { Button, } from '@material-ui/core';
 import { LeftSideBar } from 'components/LeftSideBar';
 import { TopFilter } from 'components/TopFilter';
 import React, { useState } from 'react';
@@ -37,9 +36,9 @@ export const ManageMembers: React.FC<Props> = () => {
               <h2 className='font-semibold text-xl mb-2'>Project Title: {projectData.project.title}</h2>
             </div>
             <h2 className='text-md'>Manage Members</h2>
-            <div className='flex items-center my-4'>
-              <Button className='w-6/12' color='primary' variant={activeUsers === userType.MEMBER ? 'contained' : 'outlined'} onClick={() => toggleUsersActive(userType.MEMBER)}>Members</Button>
-              <Button className='w-6/12' color='primary' variant={activeUsers === userType.USER ? 'contained' : 'outlined'} onClick={() => toggleUsersActive(userType.USER)}>Add Members</Button>
+            <div className='flex justify-between w-full mt-4 bg-gray-100 my-4'>
+              <button className={`w-6/12 rounded-sm py-3 font-medium text-xs ${activeUsers === userType.MEMBER ? 'bg-indigo-600 text-white' : ''}`} onClick={() => toggleUsersActive(userType.MEMBER)}>My Projects</button>
+              <button className={`w-6/12 rounded-sm py-3 font-medium text-xs ${activeUsers === userType.USER ? 'bg-indigo-600 text-white' : ''}`} onClick={() => toggleUsersActive(userType.USER)}>Shared Projects</button>
             </div>
             {activeUsers === userType.MEMBER && <MemberList />}
             {activeUsers === userType.USER && <AddMembers />}
