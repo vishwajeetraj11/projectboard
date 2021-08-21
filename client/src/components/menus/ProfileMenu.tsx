@@ -50,7 +50,7 @@ export const ProfileMenu = ({ isOpen, className, onDismiss }: Props) => {
         <Link to='/projects' className='flex items-center h-8 px-3 hover:bg-gray-100 cursor-pointer'>All Projects</Link>
         <div className='w-full px-3 my-1 border-b border-gray-200'></div>
         <Link to='/edit-profile' className='flex items-center h-8 px-3 hover:bg-gray-100 cursor-pointer'>Edit Profile</Link>
-        <Link to='edit-project' className='flex items-center h-8 px-3 hover:bg-gray-100 cursor-pointer'>Edit Project</Link>
+        <Link to='/edit-project' className='flex items-center h-8 px-3 hover:bg-gray-100 cursor-pointer'>Edit Project</Link>
         {projectData.access === 'admin' && <><div className='w-full px-3 my-1 border-b border-gray-200'></div><Link to={`/projects/${projectData.project._id}/members`} className='flex items-center h-8 px-3 hover:bg-gray-100 '>Manage Members</Link></>}
         <div className='w-full px-3 my-1 border-b border-gray-200'></div>
         <a rel="noreferrer" href='https://hashnode.com/@vishwajeetraj11' target='_blank' className='flex items-center h-8 px-3 hover:bg-gray-100 '>Join me on Hashnode</a>

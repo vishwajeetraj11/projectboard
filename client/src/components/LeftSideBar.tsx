@@ -75,7 +75,7 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
             {/* Project selection */}
             <div className="flex items-center p-2 pr-3 rounded cursor-pointer hover:bg-gray-100">
               <div className='flex text-sm items-center justify-center rounded-sm w-4.5 h-4.5 text-white bg-yellow-500 mr-2.5'>{projectData?.project?.title?.charAt(0)}</div>
-              <div className='text-sm font-medium flex-wrap flex-shrink overflow-hidden font-medium line-clamp-1 overflow-ellipsis'>{projectData?.project?.title}</div>
+              <div className='text-sm font-medium flex-wrap flex-shrink overflow-hidden font-medium line-clamp-1 overflow-ellipsis'>{projectData?.project?.title?.length > 10 ? projectData?.project?.title?.slice(0, 10) + "..." : projectData?.project?.title}</div>
             </div>
 
             {/* User avatar  */}

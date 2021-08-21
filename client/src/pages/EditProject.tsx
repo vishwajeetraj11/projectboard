@@ -9,14 +9,14 @@ interface Props extends RouteComponentProps<{}> {
 
 }
 
-export const CreateProject: React.FC<Props> = () => {
+export const EditProject: React.FC<Props> = () => {
   const { projectData } = useSelector((state: RootState) => state.currentProject);
 
   return (
     <section className='p-4 lg:p-0 w-full min-h-screen max-w-screen-lg mx-auto bg-white'>
       <MinimalNav />
       <div>
-        <ProjectForm project={projectData} redirect='/projects' title='Create Project.' type='create' />
+        <ProjectForm project={projectData.project} redirect='/projects' title='Edit Project.' type='edit' />
       </div>
     </section>
   );

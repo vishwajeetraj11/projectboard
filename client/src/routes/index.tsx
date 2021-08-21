@@ -28,17 +28,17 @@ interface Props {
 
 export const Routes: React.FC<Props> = () => {
   const [authenticated, setAuthenticated] = useState(false);
-  const { user: userAith0, isAuthenticated, getAccessTokenSilently, isLoading } = useAuth0();
+  const { user: userAith0, isAuthenticated, getAccessTokenSilently, user, isLoading } = useAuth0();
   // const [user, setUser] = useState();
+  const [appLoading, setAppLoading] = useState(true);
   const location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
 
 
   useEffect(() => {
-    // if (!isAuthenticated) { history.push('/'); return; }
-
     if (isAuthenticated && !(location.pathname === '/edit-profile')) {
+      // if ((user && !(location.pathname === '/edit-profile') || !isLoading)) {
       (async () => {
         try {
           const token = await getAccessTokenSilently();
@@ -54,18 +54,28 @@ export const Routes: React.FC<Props> = () => {
           const lastName = data?.user?.lastName;
           if (!username || !firstName || !lastName) {
             history.push('/create-profile');
+            setAppLoading(false);
           } else {
             dispatch(setUserProfile(data.user));
             setAuthenticated(true);
+            setAppLoading(false);
             // setUser(data.user);
           }
         } catch (e) {
-          showError('Could not fetch your profile. Please try again sometime later.', 'Profile Error');
+          if (!(location.pathname === '/')) {
+            showError('Could not fetch your profile. Please try again sometime later.', 'Profile Error');
+          }
+        } finally {
+          setAppLoading(false);
         }
       })();
     }
-  }, [userAith0, getAccessTokenSilently, isAuthenticated, location.pathname, history, dispatch]);
+    // else {
+    //   setAppLoading(false);
+    // }
+  }, [userAith0, getAccessTokenSilently, isAuthenticated, location.pathname, history, dispatch, appLoading, user, isLoading]);
 
+  // if (appLoading || isLoading) return <Loader fullScreen />;
   if (isLoading) return <Loader fullScreen />;
 
   return (
