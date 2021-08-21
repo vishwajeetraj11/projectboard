@@ -100,7 +100,7 @@ export const CreateTask: React.FC<Props> = ({ match, history, location }) => {
     setDescription('');
     setPriority(Priority.NO_PRIORITY);
     setStatus(Status.BACKLOG);
-    showInfo('You created new issue.', 'Issue created');
+    showInfo('You created new task.', 'Task created');
     history.push(`/projects/${projectData.project._id}/tasks`);
   };
 

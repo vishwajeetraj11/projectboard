@@ -27,12 +27,12 @@ export const TopFilter = ({ title, onOpenMenu, type }: Props) => {
   //   + tasks.done.length + tasks.in_progress.length + tasks.cancelled.length;
 
   // const onInvitePage = type === topFilterType.INVITE;
-  // const onNotificationPage = type === topFilterType.NOTIFICATIONS;
+  // const onHisyoryPage = type === topFilterType.HISTORY;
   const onTasksPage = type === topFilterType.TASKS;
 
   return (
     <>
-      <div className='flex justify-between flex-shrink-0 pl-2 pr-6 border-b border-gray-200 py-3 h-22 lg:h-18 lg:py-5 lg:pl-9'>
+      <div className='flex justify-between flex-shrink-0 pl-2 pr-6 border-b border-gray-200 py-3 h-22 lg:h-15 lg:py-5 lg:pl-9'>
         {/* left section */}
         <div className='flex items-center flex-wrap'>
           <button

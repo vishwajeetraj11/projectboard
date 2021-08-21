@@ -102,9 +102,9 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
         <div className='flex flex-col flex-shrink flex-grow overflow-y-auto mb-0.5 px-4'>
           <SearchBox className='mt-5' />
           {/* actions */}
-          <Link to={`/projects/${projectData.project._id}/notifications`} className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>
+          <Link to={`/history/projects/${projectData.project._id}`} className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>
             <InboxIcon className='w-3.5 h-3.5 mr-4 text-sm text-gray-500 group-hover:text-gray-600' />
-            <span>Notifications</span>
+            <span>History</span>
           </Link>
           <Link to={`/projects/${projectData.project._id}/tasks`} className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>
             <IssueIcon className='w-3.5 h-3.5 mr-4 text-gray-500 group-hover:text-gray-600' />

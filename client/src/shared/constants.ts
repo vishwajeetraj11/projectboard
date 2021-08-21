@@ -37,7 +37,7 @@ export const projectsType = {
 
 export const topFilterType = {
   INVITE: "INVITE",
-  NOTIFICATIONS: "NOTIFICATIONS",
+  HISTORY: "HISTORY",
   TASKS: "TASKS"
 };
 

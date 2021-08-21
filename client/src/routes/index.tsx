@@ -21,11 +21,6 @@ interface Props {
 
 }
 
-// interface Props extends RouteComponentProps<{}> {
-
-// }
-
-
 export const Routes: React.FC<Props> = () => {
   const [authenticated, setAuthenticated] = useState(false);
   const { user: userAith0, isAuthenticated, getAccessTokenSilently, user, isLoading } = useAuth0();

@@ -11,14 +11,14 @@ interface Props extends RouteComponentProps<RouteParams> {
 }
 
 
-export const Notifications: React.FC<Props> = ({ match }) => {
+export const AppHistory: React.FC<Props> = ({ match }) => {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
     <>
       <LeftSideBar showMenu={showMenu} onCloseMenu={() => setShowMenu(false)} />
       <div className='flex flex-col flex-grow'>
-        <TopFilter onOpenMenu={() => setShowMenu(!showMenu)} type={topFilterType.NOTIFICATIONS} title='Notifications' />
+        <TopFilter onOpenMenu={() => setShowMenu(!showMenu)} type={topFilterType.HISTORY} title='History' />
       </div>
     </>
   );
