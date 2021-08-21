@@ -20,6 +20,28 @@ pre {
   overflow-x: auto; 
   tab-size: 2; 
   width: min-content;
+  max-width: 700px;
+  @media only screen and (max-width: 1378px) {
+    max-width: 500px;
+  }
+  @media only screen and (max-width: 1168px) {
+    max-width: 400px;
+  }
+  @media only screen and (max-width: 1023px) {
+    max-width: 700px;
+  }
+  @media only screen and (max-width: 793px) {
+    max-width: 500px;
+  }
+  @media only screen and (max-width: 593px) {
+    max-width: 300px;
+  }
+  @media only screen and (max-width: 399px) {
+    max-width: 260px;
+  }
+  @media only screen and (max-width: 340px) {
+    max-width: 230px;
+  }
 }
 /* Blocks
 =============================================================================*/
