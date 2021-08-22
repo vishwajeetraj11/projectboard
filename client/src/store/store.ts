@@ -3,6 +3,7 @@ import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from "redux-devtools-extension";
 import ReduxThunk from 'redux-thunk';
 import { filtersReducer } from 'store/reducers/filtersReducer';
+import { projectHistoryReducer, taskHistoryReducer } from 'store/reducers/historyReducer';
 import { memberListReducer } from 'store/reducers/memberReducer';
 import { projectReducer } from 'store/reducers/projectReducer';
 import { taskDetailReducer } from 'store/reducers/taskDetailReducer';
@@ -16,7 +17,9 @@ let rootReducer = combineReducers({
   memberList: memberListReducer,
   userProfile: userProfileReducer,
   taskDetail: taskDetailReducer,
-  filters: filtersReducer
+  filters: filtersReducer,
+  projectHistory: projectHistoryReducer,
+  taskHistory: taskHistoryReducer
 });
 const middlewares = [ReduxThunk];
 

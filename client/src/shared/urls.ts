@@ -7,6 +7,7 @@ export const endpoints = {
   projects: '/projects',
   members: '/members',
   users: '/users',
+  history: '/history',
   getMyProjects: '/projects?scope=admin',
   getSharedProjects: '/projects?scope=shared',
 };

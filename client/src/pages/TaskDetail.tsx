@@ -1,5 +1,5 @@
 import { LeftSideBar } from 'components/LeftSideBar';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import React, { useCallback, useEffect, useState } from 'react';
 import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
 import { ReactComponent as MenuIcon } from 'assets/icons/menu.svg';
@@ -112,11 +112,11 @@ export const TaskDetail: React.FC<Props> = () => {
                                 <MenuIcon className='w-3.5 text-gray-500 hover:text-gray-800' />
                             </button>
                             <div className='flex items-center justify-end p-2'>
-                                <Link to={`/projects/${params.projectId}/tasks`}
+                                <button onClick={() => window.history.back()}
                                     className='inline-flex items-center justify-center ml-2 text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700 hidden lg:flex'
                                 >
                                     <CloseIcon className='w-4' />
-                                </Link>
+                                </button>
                                 <button onClick={() => setShowMenuRight(!showMenuRight)} className='flex-shrink-0 h-full p-2 ml-2 focus:outline-none lg:hidden hover:bg-gray-100'>
                                     <RightSideBarIcon />
                                 </button>

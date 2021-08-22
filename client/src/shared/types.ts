@@ -71,3 +71,36 @@ export interface Member {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface User_Populated_History {
+  task: string;
+  project: string;
+  user: User,
+  action:
+  'create' |
+  'update' |
+  'delete' |
+  'change' |
+  'assign' |
+  'add-member' |
+  'remove-member';
+  extraDetails: any,
+  createdAt: Date,
+  updatedAt: Date;
+}
+export interface Populated_History {
+  task: Task;
+  project: Project;
+  user: User,
+  action:
+  'create' |
+  'update' |
+  'delete' |
+  'change' |
+  'assign' |
+  'add-member' |
+  'remove-member';
+  extraDetails: any,
+  createdAt: Date,
+  updatedAt: Date;
+}

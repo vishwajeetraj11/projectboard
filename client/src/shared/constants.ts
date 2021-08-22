@@ -47,6 +47,16 @@ export const userType = {
   USER: 'USER'
 };
 
+export const historyActionType = {
+  CREATE: 'create',
+  UPDATE: 'update',
+  DELETE: 'delete',
+  CHANGE: 'change',
+  ASSIGN: 'assign',
+  ADD_MEMBER: 'add-member',
+  REMOVE_MEMBER: 'remove-member'
+};;
+
 
 // export const DropdownMenus = {
 //   PRIORITY: 'priority',
