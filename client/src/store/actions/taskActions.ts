@@ -8,7 +8,6 @@ import socket from 'shared/utils/socket';
 type TgetAllTasks = (token: string, projectId: string) => void;
 type TgetTaskDetail = (token: string, projectId: string, taskId: string) => void;
 type TchangeStatusOfTaskBoard = (taskId: string, srcStatus: string, destStatus: string, srcPos: number, destPos: number, projectId: string, token: string) => void;
-// type TchangeStatusOfTask = (taskId: string, srcStatus: string, destStatus: string, srcPos: number, destPos: number, projectId: string, token: string) => void;
 type TupdateBoardAfterSocketEvent = (task: any) => void;
 type TupdateTaskMicroProperties = (taskId: string, projectId: string, token: string, body: any) => void;
 
@@ -148,7 +147,7 @@ export const getTaskDetail: TgetTaskDetail = (token, projectId, taskId) => async
   }
 };
 
-export const updateTaskMicroProperties: TupdateTaskMicroProperties = (taskId, projectId, token, body) => async (dispatch: AppDispatch) => {
+export const updateTaskMicroProperties: TupdateTaskMicroProperties = (taskId, projectId, token, body) => async (dispatch: AppDispatch, getState: () => RootState) => {
   try {
     dispatch({
       type: UPDATE_TASK_MICRO_PROPS_REQUEST,
@@ -161,6 +160,30 @@ export const updateTaskMicroProperties: TupdateTaskMicroProperties = (taskId, pr
       headers: {
         Authorization: `Bearer ${token}`,
       },
+    });
+    // If status was not updated.
+    if (!updatedTask.sourceStatus) {
+      return dispatch({
+        type: UPDATE_TASK_MICRO_PROPS_SUCCESS,
+        payload: updatedTask
+      });
+    }
+
+    const { taskList, memberList, currentProject } = getState();
+    let tasks = { ...taskList.tasks };
+    const memberIds = memberList.members.map((member: Member) => member._id);
+    tasks[updatedTask.sourceStatus] = updatedTask.sourceTasks;
+    tasks[updatedTask.destinationStatus] = updatedTask.destinationTasks;
+
+    dispatch({
+      type: CHANGE_STATUS_OF_TASK_SUCCESS,
+      payload: tasks
+    });
+
+    socket.emit('board_task_status_change', {
+      member: currentProject.projectData._id,
+      updatedTask,
+      memberIds
     });
 
     dispatch({
@@ -177,51 +200,3 @@ export const updateTaskMicroProperties: TupdateTaskMicroProperties = (taskId, pr
   }
 };
 
-// export const changeStatusOfTask: TchangeStatusOfTask = (taskId, srcStatus, destStatus, srcPos, destPos, projectId, token) => async (dispatch: AppDispatch, getState: () => RootState) => {
-//   try {
-//     const { taskList, currentProject, memberList } = getState();
-//     const memberIds = memberList.members.map((member: Member) => member._id);
-//     let tasks = { ...taskList.tasks };
-//     let sourceArray: Array<Task> = [...taskList.tasks[srcStatus]];
-//     let destinationArray: Array<Task> = [...taskList.tasks[destStatus]];
-//     const task: Task = sourceArray[srcPos];
-//     task.status = destStatus;
-//     destinationArray.splice(destPos, 0, task);
-//     sourceArray.splice(srcPos, 1);
-
-//     tasks[srcStatus] = sourceArray;
-//     tasks[destStatus] = destinationArray;
-
-//     // Task with updated Status
-//     const { data: updatedTask } = await axios({
-//       url: `${baseURL}${endpoints.projects}/${projectId}${endpoints.tasks}/${taskId}/update`,
-//       method: "PATCH",
-//       data: {
-//         destinationIndex: destPos,
-//         sourceIndex: srcPos,
-//         sourceStatus: srcStatus,
-//         destinationStatus: destStatus
-//       },
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     });
-
-//     socket.emit('board_task_status_change', {
-//       member: currentProject.projectData._id,
-//       updatedTask,
-//       memberIds
-//     });
-
-//     dispatch({
-//       type: CHANGE_STATUS_OF_TASK_SUCCESS,
-//       payload: tasks
-//     });
-//   } catch (e) {
-//     // dispatch({
-//     //   type: CHANGE_STATUS_OF_TASK_FAIL,
-//     //   payload: e.response.data.message
-//     // });
-//     console.log(e);
-//   }
-// };
