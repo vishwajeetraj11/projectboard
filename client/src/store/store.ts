@@ -7,6 +7,7 @@ import { projectHistoryReducer, taskHistoryReducer } from 'store/reducers/histor
 import { memberListReducer } from 'store/reducers/memberReducer';
 import { projectReducer } from 'store/reducers/projectReducer';
 import { taskDetailReducer } from 'store/reducers/taskDetailReducer';
+import { updateTaskReducer } from 'store/reducers/updateTaskReducer';
 import { userProfileReducer } from 'store/reducers/userReducer';
 import { taskListReducer } from './reducers/taskReducer';
 
@@ -19,7 +20,8 @@ let rootReducer = combineReducers({
   taskDetail: taskDetailReducer,
   filters: filtersReducer,
   projectHistory: projectHistoryReducer,
-  taskHistory: taskHistoryReducer
+  taskHistory: taskHistoryReducer,
+  updateTask: updateTaskReducer
 });
 const middlewares = [ReduxThunk];
 

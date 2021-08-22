@@ -124,7 +124,7 @@ export const TaskDetail: React.FC<Props> = () => {
                         </div>
 
                         {/* Project Title and current task title */}
-                        <div className='px-5 border-b border-gray-200 mt-5 pb-3 flex justify-between items-center'>
+                        <div className='px-5 border-b border-gray-200 mt-2.5 pb-3 flex justify-between items-center'>
                             <p className='font-medium w-10/12 text-gray-700'>{`› ${projectData.project.title}`}</p>
                             <div className='flex'>
                                 {readOnlyMarkdown && <><button onClick={onEdit} className='inline-flex items-center justify-center text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'><EditIcon /></button><button onClick={onDelete} className='ml-3 inline-flex items-center justify-center text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'><DeleteIcon /></button></>}

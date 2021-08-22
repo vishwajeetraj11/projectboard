@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router-dom';
 import { Status } from 'shared/constants';
 import { Task } from 'shared/types';
-import { changeStatusOfTask, updateBoardAfterSocketEvent } from 'store/actions/taskActions';
+import { changeStatusOfTaskBoard, updateBoardAfterSocketEvent } from 'store/actions/taskActions';
 import { AppDispatch, RootState } from '../../store/store';
 import { IssueCol } from './BoardColumn';
 import socket from 'shared/utils/socket';
@@ -37,7 +37,7 @@ export const TasksBoard = () => {
     if (!source || !destination)
       return;
     const token = await getAccessTokenSilently();
-    dispatch(changeStatusOfTask(draggableId, source.droppableId, destination.droppableId, source.index, destination.index, match.params.id, token));
+    dispatch(changeStatusOfTaskBoard(draggableId, source.droppableId, destination.droppableId, source.index, destination.index, match.params.id, token));
   };
 
   useEffect(() => {

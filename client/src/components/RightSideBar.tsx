@@ -9,7 +9,7 @@ import { PriorityIcon } from 'components/PriorityIcon';
 import { StatusIcon } from 'components/StatusIcon';
 import { useClickOutside } from 'hooks/useClickOutside';
 import React, { RefObject, useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getLabelObj, getPriorityString, getStatusText } from 'shared/utils/common';
 import { RootState } from 'store/store';
 import { LabelMenu } from 'components/menus/LabelMenu';
@@ -20,6 +20,12 @@ import DateFnsUtils from '@date-io/date-fns';
 import { formatDate } from 'shared/utils/formatDate';
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
 import { Label, Member } from 'shared/types';
+import { updateTaskMicroProperties } from 'store/actions/taskActions';
+import { useParams } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
+import { showError, showInfo } from 'components/Notification';
+import { CircularProgress } from '@material-ui/core';
+import { UPDATE_TASK_MICRO_PROPS_CLEAR } from 'store/contants/taskConstants';
 interface Props {
   // Show menu (for small screen only)
   showMenu: boolean;
@@ -29,13 +35,21 @@ interface Props {
   onOpenInviteBox?: Function;
 }
 
+interface URLParams {
+  taskId: string;
+  projectId: string;
+}
+
 
 export const RightSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
 
   const ref = useRef<HTMLDivElement>() as RefObject<HTMLDivElement>;
   const { task } = useSelector((state: RootState) => state.taskDetail);
-
-  let classes = classNames(
+  const { error, loading, success, task: updatedTask } = useSelector((state: RootState) => state.updateTask);
+  const dispatch = useDispatch();
+  const params = useParams<URLParams>();
+  const { getAccessTokenSilently } = useAuth0();
+  const classes = classNames(
     `absolute lg:static inset-0 transform duration-300 lg:relative lg:translate-x-0 bg-white flex flex-col flex-shrink-0 w-80 font-sans text-sm text-gray-700 border-l border-gray-100 lg:shadow-none justify-items-start`,
     {
       '-translate-x-full ease-out shadow-none': !showMenu,
@@ -77,6 +91,31 @@ export const RightSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
     setStatus(task.status);
     setEdited(false);
   };
+  const onSave = async () => {
+    const fieldsToUpdate = {
+      status: task.status !== status,
+      priority: task.priority !== priority,
+      startDate: task.startDate !== startDate,
+      dueDate: task.dueDate !== dueDate,
+      label: task.label !== label,
+      assignee: task?.assignee?.user?._id !== assignee?.user?._id
+    };
+    const body: any = {};
+    if (fieldsToUpdate.dueDate) body.dueDate = dueDate;
+    if (fieldsToUpdate.startDate) body.startDate = startDate;
+    if (fieldsToUpdate.assignee) body.assignee = assignee._id;
+    if (fieldsToUpdate.priority) body.priority = priority;
+    if (fieldsToUpdate.status) body.status = status;
+    if (fieldsToUpdate.label) body.label = label;
+
+    const token = await getAccessTokenSilently();
+    // if (body.status) {
+
+    // }
+    // else {
+    dispatch(updateTaskMicroProperties(params.taskId, params.projectId, token, body));
+    // }
+  };
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -88,8 +127,20 @@ export const RightSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
     if (status !== task.status) setEdited(true);
     if (startDate !== task.startDate) setEdited(true);
     if (dueDate !== task.dueDate) setEdited(true);
-    if (assignee?.user?.username !== task?.assignee?.user?.username) setEdited(true);
-  }, [priority, label, status, assignee, edited, task.priority, task.label, task.status, task.startDate, task.dueDate, startDate, dueDate, task?.assignee?.user?.username]);
+    if (assignee?.user?._id !== task?.assignee?.user?._id) setEdited(true);
+  }, [priority, label, status, assignee, edited, task.priority, task.label, task.status, task.startDate, task.dueDate, startDate, dueDate, task?.assignee?.user?._id]);
+
+  useEffect(() => {
+    if (error) {
+      showError('Please try again later.', 'Unable to Update Task.');
+      onCancel();
+    }
+    if (success) {
+      showInfo('', 'Task Updated Successfully');
+      setEdited(false);
+      dispatch({ type: UPDATE_TASK_MICRO_PROPS_CLEAR });
+    }
+  }, [success, error, onCancel, dispatch]);
 
   return (
     <>
@@ -102,7 +153,7 @@ export const RightSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
         </button>
 
         {/* Top menu*/}
-        <div className='flex flex-col flex-grow-0 flex-shrink-0 px-5 py-3 pt-10'>
+        {loading ? <div className='flex items-center justify-center flex-1'><CircularProgress color="primary" /></div> : <div className='flex flex-col flex-grow-0 flex-shrink-0 px-5 py-3 pt-10'>
           <div className='flex justify-between items-center mb-6'>
             <p className='text-gray-400 font-medium w-28'>Status</p>
             <div className='flex items-center mr-auto'>
@@ -195,10 +246,10 @@ export const RightSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
             </div>
             <div className='flex justify-around mt-4'>
               {edited && <><button onClick={onCancel} className='inline-flex items-center justify-center px-4 py-2 transition-all rounded-md border border-gray-200 text-gray-500 hover:bg-gray-100 rouned hover:text-gray-700 w-28'>Cancel</button>
-                <button onClick={() => { }} className='ml-3 inline-flex items-center justify-center px-4 py-2 transition-all duration-400 bg-indigo-700 rounded-md  hover:bg-indigo-800 rouned w-5/12 text-white'>Save</button></>}
+                <button onClick={onSave} className='ml-3 inline-flex items-center justify-center px-4 py-2 transition-all duration-400 bg-indigo-700 rounded-md  hover:bg-indigo-800 rouned w-5/12 text-white'>Save</button></>}
             </div>
           </MuiPickersUtilsProvider>
-        </div>
+        </div>}
       </div>
     </>
   );

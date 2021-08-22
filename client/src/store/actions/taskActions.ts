@@ -2,14 +2,14 @@ import axios from 'axios';
 import { Status } from 'shared/constants';
 import { Member, Task } from 'shared/types';
 import { baseURL, endpoints } from 'shared/urls';
-import { CHANGE_STATUS_OF_TASK_SUCCESS, GET_TASKS_FAIL, GET_TASKS_REQUEST, GET_TASKS_SUCCESS, GET_TASK_DETAIL_FAIL, GET_TASK_DETAIL_REQUEST, GET_TASK_DETAIL_SUCCESS } from 'store/contants/taskConstants';
+import { CHANGE_STATUS_OF_TASK_SUCCESS, GET_TASKS_FAIL, GET_TASKS_REQUEST, GET_TASKS_SUCCESS, GET_TASK_DETAIL_FAIL, GET_TASK_DETAIL_REQUEST, GET_TASK_DETAIL_SUCCESS, UPDATE_TASK_MICRO_PROPS_REQUEST, UPDATE_TASK_MICRO_PROPS_SUCCESS } from 'store/contants/taskConstants';
 import { AppDispatch, RootState } from 'store/store';
 import socket from 'shared/utils/socket';
 type TgetAllTasks = (token: string, projectId: string) => void;
 type TgetTaskDetail = (token: string, projectId: string, taskId: string) => void;
-type TchangeStatusOfTask = (taskId: string, srcStatus: string, destStatus: string, srcPos: number, destPos: number, projectId: string, token: string) => void;
+type TchangeStatusOfTaskBoard = (taskId: string, srcStatus: string, destStatus: string, srcPos: number, destPos: number, projectId: string, token: string) => void;
 type TupdateBoardAfterSocketEvent = (task: any) => void;
-
+type TupdateTaskMicroProperties = (taskId: string, projectId: string, token: string, body: any) => void;
 export const getAllTasks: TgetAllTasks = (token, projectId) => async (dispatch: AppDispatch) => {
   try {
     dispatch({ type: GET_TASKS_REQUEST });
@@ -52,7 +52,7 @@ export const getAllTasks: TgetAllTasks = (token, projectId) => async (dispatch: 
   }
 };
 
-export const changeStatusOfTask: TchangeStatusOfTask = (taskId, srcStatus, destStatus, srcPos, destPos, projectId, token) => async (dispatch: AppDispatch, getState: () => RootState) => {
+export const changeStatusOfTaskBoard: TchangeStatusOfTaskBoard = (taskId, srcStatus, destStatus, srcPos, destPos, projectId, token) => async (dispatch: AppDispatch, getState: () => RootState) => {
   try {
     const { taskList, currentProject, memberList } = getState();
     const memberIds = memberList.members.map((member: Member) => member._id);
@@ -143,5 +143,34 @@ export const getTaskDetail: TgetTaskDetail = (token, projectId, taskId) => async
 
   } catch (e) {
     dispatch({ type: GET_TASK_DETAIL_FAIL, payload: e?.response?.data?.message });
+  }
+};
+
+export const updateTaskMicroProperties: TupdateTaskMicroProperties = (taskId, projectId, token, body) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch({
+      type: UPDATE_TASK_MICRO_PROPS_REQUEST,
+    });
+
+    const { data: updatedTask } = await axios({
+      url: `${baseURL}${endpoints.projects}/${projectId}${endpoints.tasks}/${taskId}`,
+      method: "PATCH",
+      data: body,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    dispatch({
+      type: UPDATE_TASK_MICRO_PROPS_SUCCESS,
+      payload: updatedTask
+    });
+
+  } catch (e) {
+    // dispatch({
+    //   type: UPDATE_TASK_MICRO_PROPS_FAIL,
+    //   payload: e.response.data.message
+    // });
+    console.log(e);
   }
 };
