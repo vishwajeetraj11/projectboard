@@ -45,12 +45,12 @@ export const HistoryRow: React.FC<Props> = ({ history: h }) => {
       <span className='text-xs font-normal text-gray-500 uppercase mr-2  mt-2 lg:mt-0 w-full lg:w-auto'>{h?.task}</span>
       {
         create ? <p className='text-gray-500 text-xs bg-gray-50 hover:bg-white px-1 py-1 rounded-md mt-2 lg:mt-0 w-full lg:w-auto'>{`Created Task: ${h?.extraDetails?.taskTitle?.length > 73 ? h?.extraDetails?.taskTitle?.slice(0, 73) + "..." : h?.extraDetails?.taskTitle}`}</p>
-          : update ? <p className='text-gray-500 text-xs bg-gray-50 hover:bg-white px-1 py-1 rounded-md mt-2 lg:mt-0 w-full lg:w-auto'>{`Updated Task: ${h?.extraDetails?.taskTitle?.length > 73 ? h?.extraDetails?.taskTitle?.slice(0, 73) + "..." : h?.extraDetails?.taskTitle}`}</p>
-            : del ? <p className='text-gray-500 text-xs bg-gray-50 hover:bg-white px-1 py-1 rounded-md mt-2 lg:mt-0 w-full lg:w-auto'>{`Deleted Task: ${h?.extraDetails?.taskTitle?.length > 73 ? h?.extraDetails?.taskTitle?.slice(0, 73) + "..." : h?.extraDetails?.taskTitle}`}</p>
-              : change ? <ChangeHistoryRow extraDetails={h?.extraDetails} />
-                : assign ? <div></div>
-                  : addMember ? <p className='text-gray-500 text-xs bg-gray-50 hover:bg-white px-1 py-1 rounded-md mt-2 lg:mt-0 w-full lg:w-auto'>{`Added Member: ${h?.extraDetails?.user?.firstName} ${h?.extraDetails?.user?.lastName} to the project.`}</p>
-                    : removeMember ? <p className='text-gray-500 text-xs bg-gray-50 hover:bg-white px-1 py-1 rounded-md mt-2 lg:mt-0 w-full lg:w-auto'>{`Removed Member: ${h?.extraDetails?.user?.firstName} ${h?.extraDetails?.user?.lastName} from the project.`}</p> : undefined
+          // :  ? <p className='text-gray-500 text-xs bg-gray-50 hover:bg-white px-1 py-1 rounded-md mt-2 lg:mt-0 w-full lg:w-auto'>{`Updated Task: ${h?.extraDetails?.taskTitle?.length > 73 ? h?.extraDetails?.taskTitle?.slice(0, 73) + "..." : h?.extraDetails?.taskTitle}`}</p>
+          : del ? <p className='text-gray-500 text-xs bg-gray-50 hover:bg-white px-1 py-1 rounded-md mt-2 lg:mt-0 w-full lg:w-auto'>{`Deleted Task: ${h?.extraDetails?.taskTitle?.length > 73 ? h?.extraDetails?.taskTitle?.slice(0, 73) + "..." : h?.extraDetails?.taskTitle}`}</p>
+            : (change || update) ? <ChangeHistoryRow extraDetails={h?.extraDetails} />
+              : assign ? <p className='text-gray-500 text-xs bg-gray-50 hover:bg-white px-1 py-1 rounded-md mt-2 lg:mt-0 w-full lg:w-auto'>{`Assigned Task to ${h?.extraDetails?.user?.firstName} ${h?.extraDetails?.user?.lastName}`}</p>
+                : addMember ? <p className='text-gray-500 text-xs bg-gray-50 hover:bg-white px-1 py-1 rounded-md mt-2 lg:mt-0 w-full lg:w-auto'>{`Added Member: ${h?.extraDetails?.user?.firstName} ${h?.extraDetails?.user?.lastName} to the project.`}</p>
+                  : removeMember ? <p className='text-gray-500 text-xs bg-gray-50 hover:bg-white px-1 py-1 rounded-md mt-2 lg:mt-0 w-full lg:w-auto'>{`Removed Member: ${h?.extraDetails?.user?.firstName} ${h?.extraDetails?.user?.lastName} from the project.`}</p> : undefined
       }
       <p className='ml-auto top-4 right-4 absolute lg:static text-gray-400 font-medium'>{getParsedDate(new Date(h.createdAt))}</p>
     </Link>

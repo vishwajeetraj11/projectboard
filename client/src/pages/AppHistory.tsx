@@ -43,7 +43,7 @@ export const AppHistory: React.FC<Props> = ({ match }) => {
             : error
               ? <div className='flex items-center justify-center flex-1'>{error}</div>
               : !history.length
-                ? <div className='flex flex-row justify-center flex-1'>
+                ? <div className='flex items-center justify-center flex-1'>
                   No History yet.
                 </div>
                 : <div className='flex flex-col flex-1 overflow-y-scroll'>
