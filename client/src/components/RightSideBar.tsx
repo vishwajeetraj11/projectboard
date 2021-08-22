@@ -134,6 +134,7 @@ export const RightSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
     if (error) {
       showError('Please try again later.', 'Unable to Update Task.');
       onCancel();
+      dispatch({ type: UPDATE_TASK_MICRO_PROPS_CLEAR });
     }
     if (success) {
       showInfo('', 'Task Updated Successfully');
