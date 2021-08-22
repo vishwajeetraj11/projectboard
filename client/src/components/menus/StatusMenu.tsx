@@ -15,8 +15,9 @@ interface Props {
   button: ReactNode;
   className?: string;
   onSelect?: (item: any) => void;
+  disabled?: boolean;
 }
-export const StatusMenu = ({ id, button, className, onSelect }: Props) => {
+export const StatusMenu = ({ id, button, className, onSelect, disabled }: Props) => {
   const [keyword, setKeyword] = useState('');
   const handleSelect = (status: string) => {
     if (onSelect) onSelect(status);
@@ -47,7 +48,7 @@ export const StatusMenu = ({ id, button, className, onSelect }: Props) => {
 
   return (
     <>
-      <ContextMenuTrigger id={id} holdToDisplay={1}>
+      <ContextMenuTrigger disable={disabled} id={id} holdToDisplay={1}>
         {button}
       </ContextMenuTrigger>
 

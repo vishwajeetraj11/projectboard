@@ -63,6 +63,7 @@ export const TaskRow = ({ task, onChangePriority, onChangeStatus }: Props) => {
             <StatusMenu
               id={'r-status-' + task._id}
               button={statusIcon}
+              disabled
               onSelect={handleChangeStatus}
             />
           </div>
