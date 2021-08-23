@@ -24,7 +24,7 @@ export const SearchBox = (props: Props) => {
         onChange={onChange}
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
-        className='w-full pl-8 pr-6 text-sm font-medium placeholder-gray-700 border border-transparent rounded h-7 ring-0 focus:outline-none focus:placeholder-gray-400 hover:border-gray-100 focus:border-gray-100'
+        className='w-full pl-8 pr-6 text-sm font-medium placeholder-gray-500 border border-transparent rounded h-7 ring-0 focus:outline-none focus:placeholder-gray-400 hover:border-gray-100 focus:border-gray-100'
       />
       <SearchIcon className={classnames(
         'absolute w-3.5 h-3.5 text-gray-500 left-2 top-2',

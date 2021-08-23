@@ -163,10 +163,15 @@ export const updateTaskMicroProperties: TupdateTaskMicroProperties = (taskId, pr
     });
     // If status was not updated.
     if (!updatedTask.sourceStatus) {
-      return dispatch({
+      // dispatch({
+      //   type: GET_TASK_DETAIL_SUCCESS,
+      //   payload: updatedTask.updatedTask
+      // });
+      dispatch({
         type: UPDATE_TASK_MICRO_PROPS_SUCCESS,
-        payload: updatedTask
+        payload: updatedTask.updatedTask
       });
+      return;
     }
 
     const { taskList, memberList, currentProject } = getState();
@@ -187,9 +192,15 @@ export const updateTaskMicroProperties: TupdateTaskMicroProperties = (taskId, pr
     });
 
     dispatch({
+      type: GET_TASK_DETAIL_SUCCESS,
+      payload: updatedTask.updatedTask
+    });
+
+    dispatch({
       type: UPDATE_TASK_MICRO_PROPS_SUCCESS,
       payload: updatedTask
     });
+
 
   } catch (e) {
     dispatch({

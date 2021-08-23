@@ -27,9 +27,6 @@ interface Props {
   // Show menu (for small screen only)
   showMenu: boolean;
   onCloseMenu?: () => void;
-  onCreateIssue?: Function;
-  onOpenHelp?: Function;
-  onOpenInviteBox?: Function;
 }
 
 
@@ -90,7 +87,6 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
             </div>
           </div>
 
-          {/* Create issue btn */}
           <Link to={`/projects/${projectData.project._id}/create-task`}
             className='inline-flex items-center px-2 py-2 mt-3 bg-white border border-gray-300 rounded hover:bg-gray-100 focus:outline-none h-7'
           >
@@ -100,7 +96,7 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
 
         {/* Search box */}
         <div className='flex flex-col flex-shrink flex-grow overflow-y-auto mb-0.5 px-4'>
-          <SearchBox className='mt-5' />
+          <SearchBox className='mt-5' placeholder='Not Implemented' />
           {/* actions */}
           <Link to={`/history/projects/${projectData.project._id}`} className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>
             <InboxIcon className='w-3.5 h-3.5 mr-4 text-sm text-gray-500 group-hover:text-gray-600' />
@@ -110,10 +106,6 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
             <IssueIcon className='w-3.5 h-3.5 mr-4 text-gray-500 group-hover:text-gray-600' />
             <span>Tasks</span>
           </Link>
-          {/* <Link to='/' className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>
-            <ViewIcon className='w-3.5 h-3.5 mr-4 text-gray-500 group-hover:text-gray-600' />
-            <span>Views</span>
-          </Link> */}
           <Link to={`/projects/${projectData.project._id}/board`} className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>
             <CgBoard className='w-3.5 h-3.5 mr-4 text-gray-500 group-hover:text-gray-600' />
             <span>Board</span>
