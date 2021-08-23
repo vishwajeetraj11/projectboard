@@ -2,21 +2,25 @@
 import { Avatar } from 'components/Avatar';
 import { ChangeHistoryRow } from 'components/history/ChangeHistoryRow';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { historyActionType } from 'shared/constants';
 import { User_Populated_History } from 'shared/types';
 import { getParsedDate } from 'shared/utils/formatDate';
+import { RootState } from 'store/store';
 
 interface Props {
   history: User_Populated_History;
-  task?: boolean; // Check if this component is used to display only 1 task History
+  // task?: boolean; // Check if this component is used to display only 1 task History
 }
 
 interface MatchParams {
   id: string;
 }
 
-export const HistoryRow: React.FC<Props> = ({ history: h, task }) => {
+export const HistoryRow: React.FC<Props> = ({ history: h }) => {
+
+  const { projectData } = useSelector((state: RootState) => state.currentProject);
 
   const create = h.action === historyActionType.CREATE;
   const update = h.action === historyActionType.UPDATE;
@@ -43,7 +47,7 @@ export const HistoryRow: React.FC<Props> = ({ history: h, task }) => {
       } */}
       <Avatar name={`${h?.user?.firstName} ${h?.user?.lastName}`} />
       <p className='ml-2 mr-3 font-medium w-28'>{`${h?.user?.firstName} ${h?.user?.lastName}`}</p>
-      {!task && <span className='text-xs font-normal text-gray-500 uppercase mr-2  mt-2 lg:mt-0 w-full lg:w-auto'>{h?.task}</span>}
+      {projectData.access === 'admin' && <span className='text-xs font-normal text-gray-500 uppercase mr-2  mt-2 lg:mt-0 w-full lg:w-auto'>{h?.task}</span>}
       {
         create ? <p className='text-gray-500 text-xs bg-gray-50 hover:bg-white px-1 py-1 rounded-md mt-2 lg:mt-0 w-full lg:w-auto'>{`Created Task: ${h?.extraDetails?.taskTitle?.length > 73 ? h?.extraDetails?.taskTitle?.slice(0, 73) + "..." : h?.extraDetails?.taskTitle}`}</p>
           // :  ? <p className='text-gray-500 text-xs bg-gray-50 hover:bg-white px-1 py-1 rounded-md mt-2 lg:mt-0 w-full lg:w-auto'>{`Updated Task: ${h?.extraDetails?.taskTitle?.length > 73 ? h?.extraDetails?.taskTitle?.slice(0, 73) + "..." : h?.extraDetails?.taskTitle}`}</p>

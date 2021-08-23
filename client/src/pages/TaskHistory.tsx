@@ -54,7 +54,7 @@ export const TaskHistory: React.FC<Props> = () => {
                 </div>
                 : <div className='flex flex-col flex-1 overflow-y-scroll'>
                   {React.Children.toArray(history.map((hist: User_Populated_History) =>
-                    <HistoryRow task history={hist} />
+                    <HistoryRow history={hist} />
                   ))}
                 </div>
         }

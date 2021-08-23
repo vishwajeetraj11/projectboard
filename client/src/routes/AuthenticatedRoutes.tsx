@@ -5,17 +5,28 @@ import { ManageMembers } from 'pages/ManageMembers';
 import { Projects } from 'pages/Projects';
 import { Tasks } from 'pages/Tasks';
 import { ProjectHistory } from 'pages/ProjectHistory';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { TaskDetail } from 'pages/TaskDetail';
 import { EditProfile } from 'pages/EditProfile';
 import { EditProject } from 'pages/EditProject';
 import { TaskHistory } from 'pages/TaskHistory';
+import socket from 'shared/utils/socket';
+import { useDispatch } from 'react-redux';
+import { updateTaskAfterDeleteSocketEvent } from 'store/actions/taskActions';
 
 interface Props {
 }
 
 export const AuthenticatedRoutes: React.FC<Props> = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    socket.on('delete_update', ({ taskId }: any) => {
+      dispatch(updateTaskAfterDeleteSocketEvent(taskId));
+    });
+  }, [dispatch]);
+
   return (
     <div className='flex w-full h-screen overflow-y-hidden'>
       <Switch>

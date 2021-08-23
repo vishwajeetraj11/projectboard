@@ -20,7 +20,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { formatDate } from 'shared/utils/formatDate';
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
 import { Label, Member } from 'shared/types';
-import { updateTaskMicroProperties } from 'store/actions/taskActions';
+import { getTaskDetail, updateTaskMicroProperties } from 'store/actions/taskActions';
 import { useParams } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { showError, showInfo } from 'components/Notification';
@@ -109,12 +109,7 @@ export const RightSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
     if (fieldsToUpdate.label) body.label = label;
 
     const token = await getAccessTokenSilently();
-    // if (body.status) {
-
-    // }
-    // else {
     dispatch(updateTaskMicroProperties(params.taskId, params.projectId, token, body));
-    // }
   };
 
   useEffect(() => {
@@ -139,9 +134,12 @@ export const RightSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
     if (success) {
       showInfo('', 'Task Updated Successfully');
       setEdited(false);
-      dispatch({ type: UPDATE_TASK_MICRO_PROPS_CLEAR });
+      getAccessTokenSilently().then(token => {
+        dispatch(getTaskDetail(token, params.projectId, params.taskId));
+        dispatch({ type: UPDATE_TASK_MICRO_PROPS_CLEAR });
+      });
     }
-  }, [success, error, onCancel, dispatch]);
+  }, [success, error, onCancel, dispatch, getAccessTokenSilently, params]);
 
   return (
     <>
