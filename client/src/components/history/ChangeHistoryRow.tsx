@@ -29,7 +29,7 @@ export const ChangeHistoryRow: React.FC<Props> = ({ extraDetails }) => {
   }
 
   return (
-    <p className='text-gray-500 text-xs bg-gray-50 hover:bg-white px-1 py-1 rounded-md mt-2 lg:mt-0 w-full lg:w-auto'>Updated Task <span className='capitalize'>{field}</span> to {renderValue}</p>
+    <p className='text-gray-500 text-xs bg-gray-50 hover:bg-white px-1 py-1 rounded-md mt-2 lg:mt-0 w-full lg:w-auto'>Updated Task <span className='capitalize'>{field}</span> {renderValue && `to ${renderValue}`}</p>
   );
 };
 

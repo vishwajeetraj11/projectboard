@@ -8,7 +8,7 @@ import { StatusMenu } from 'components/menus/StatusMenu';
 import { PriorityIcon } from 'components/PriorityIcon';
 import { StatusIcon } from 'components/StatusIcon';
 import { useClickOutside } from 'hooks/useClickOutside';
-import React, { RefObject, useEffect, useRef, useState } from 'react';
+import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLabelObj, getPriorityString, getStatusText } from 'shared/utils/common';
 import { RootState } from 'store/store';
@@ -45,7 +45,7 @@ export const RightSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
 
   const ref = useRef<HTMLDivElement>() as RefObject<HTMLDivElement>;
   const { task } = useSelector((state: RootState) => state.taskDetail);
-  const { error, loading, success, task: updatedTask } = useSelector((state: RootState) => state.updateTask);
+  const { error, loading, success } = useSelector((state: RootState) => state.updateTask);
   const dispatch = useDispatch();
   const params = useParams<URLParams>();
   const { getAccessTokenSilently } = useAuth0();
@@ -82,7 +82,7 @@ export const RightSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
       onCloseMenu();
   });
 
-  const onCancel = () => {
+  const onCancel = useCallback(() => {
     setPriority(task.priority);
     setLabel(task.label);
     setDueDate(task.dueDate);
@@ -90,7 +90,7 @@ export const RightSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
     setAssignee(task.assignee);
     setStatus(task.status);
     setEdited(false);
-  };
+  }, [task]);
   const onSave = async () => {
     const fieldsToUpdate = {
       status: task.status !== status,
