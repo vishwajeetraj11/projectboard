@@ -2,7 +2,7 @@ import { PriorityMenu } from 'components/menus/PriorityMenu';
 import { StatusMenu } from 'components/menus/StatusMenu';
 import { PriorityIcon } from 'components/PriorityIcon';
 import { StatusIcon } from 'components/StatusIcon';
-import { ContextMenuTrigger } from 'react-contextmenu';
+// import { ContextMenuTrigger } from 'react-contextmenu';
 import { Task } from 'shared/types';
 import { formatDate } from 'shared/utils/formatDate';
 import { Link } from "react-router-dom";
@@ -40,9 +40,7 @@ export const TaskRow = ({ task, onChangePriority, onChangeStatus }: Props) => {
     if (onChangeStatus) onChangeStatus(task, status);
   };
   return (
-    <ContextMenuTrigger
-      id={task._id}
-    >
+    <>
       <Link to={`/projects/${match.params.id}/tasks/${task._id}`}>
         <div key={task._id} className='inline-flex items-center flex-grow flex-shrink w-full min-w-0 pl-2 pr-8 text-sm border-b border-gray-100 hover:bg-gray-100 h-11' id={task._id}>
           {/* <div className='flex-shrink-0 hidden ml-2 sm:block'>
@@ -78,6 +76,6 @@ export const TaskRow = ({ task, onChangePriority, onChangeStatus }: Props) => {
           {/* <div>{`${task?.assignee?.user?.username}`}</div> */}
         </div>
       </Link>
-    </ContextMenuTrigger>
+    </>
   );
 };

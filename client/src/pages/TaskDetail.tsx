@@ -1,5 +1,5 @@
 import { LeftSideBar } from 'components/LeftSideBar';
-import { Link, useParams } from 'react-router-dom';
+import { Link, RouteComponentProps, useParams } from 'react-router-dom';
 import React, { useCallback, useEffect, useState } from 'react';
 import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
 import { ReactComponent as MenuIcon } from 'assets/icons/menu.svg';
@@ -11,24 +11,25 @@ import { RootState } from 'store/store';
 import { MarkdownStyles } from 'styled/Markdown';
 import Editor from "rich-markdown-editor";
 import { ReactComponent as DeleteIcon } from 'assets/icons/delete.svg';
-import { getTaskDetail } from 'store/actions/taskActions';
+import { getTaskDetail, deleteTask } from 'store/actions/taskActions';
 import { useAuth0 } from '@auth0/auth0-react';
-import { GET_TASK_DETAIL_CLEAR } from 'store/contants/taskConstants';
+import { DELETE_TASK_CLEAR, GET_TASK_DETAIL_CLEAR } from 'store/contants/taskConstants';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { showError, showInfo, showWarning } from 'components/Notification';
 import axios from 'axios';
 import { baseURL, endpoints } from 'shared/urls';
 import { BiSortUp } from 'react-icons/bi';
 
-interface Props {
+interface Props extends RouteComponentProps<{}> {
 
 }
+
 interface URLParams {
     taskId: string;
     projectId: string;
 }
 
-export const TaskDetail: React.FC<Props> = () => {
+export const TaskDetail: React.FC<Props> = ({ history }) => {
     const [showMenuLeft, setShowMenuLeft] = useState(false);
     const [showMenuRight, setShowMenuRight] = useState(false);
     const [readOnlyMarkdown, setReadOnlyMarkdown] = useState(true);
@@ -36,6 +37,8 @@ export const TaskDetail: React.FC<Props> = () => {
     const dispatch = useDispatch();
     const { getAccessTokenSilently } = useAuth0();
     const params = useParams<URLParams>();
+    // const history = useHistory();
+    const { success: deleteSuccess } = useSelector((state: RootState) => state.deleteTask);
 
     const { projectData } = useSelector((state: RootState) => state.currentProject);
     const [description, setDescription] = useState(task.description);
@@ -58,6 +61,24 @@ export const TaskDetail: React.FC<Props> = () => {
         setTitle(task.title); setDescription(task.description);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [success]);
+
+    // useEffect(() => {
+    //     if (deleteError) {
+    //         showError('Please try again later.', 'Unable to Update Task.');
+    //         dispatch({ type: DELETE_TASK_CLEAR });
+    //     }
+
+    //     if (deleteLoading) {
+    //         showWarning('', 'Please wait while the task is being deleted.');
+    //     }
+    // }, [deleteLoading, deleteError, dispatch, history, params.projectId]);
+
+    useEffect(() => {
+        if (deleteSuccess) {
+            history.push(`/projects/${params.projectId}/tasks`);
+            dispatch({ type: DELETE_TASK_CLEAR });
+        }
+    }, [deleteSuccess, dispatch, history, params.projectId]);
 
     useEffect(() => {
         if (readOnlyMarkdown) {
@@ -97,7 +118,8 @@ export const TaskDetail: React.FC<Props> = () => {
         }
     };
     const onDelete = async () => {
-
+        const token = await getAccessTokenSilently();
+        dispatch(deleteTask(params.taskId, params.projectId, token));
     };
     return (
         <div className='flex w-screen h-screen overflow-y-hidden'>

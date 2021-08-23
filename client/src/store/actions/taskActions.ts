@@ -2,15 +2,17 @@ import axios from 'axios';
 import { Status } from 'shared/constants';
 import { Member, Task } from 'shared/types';
 import { baseURL, endpoints } from 'shared/urls';
-import { CHANGE_STATUS_OF_TASK_SUCCESS, GET_TASKS_FAIL, GET_TASKS_REQUEST, GET_TASKS_SUCCESS, GET_TASK_DETAIL_FAIL, GET_TASK_DETAIL_REQUEST, GET_TASK_DETAIL_SUCCESS, UPDATE_TASK_MICRO_PROPS_FAIL, UPDATE_TASK_MICRO_PROPS_REQUEST, UPDATE_TASK_MICRO_PROPS_SUCCESS } from 'store/contants/taskConstants';
+import { CHANGE_STATUS_OF_TASK_SUCCESS, DELETE_TASK_CLEAR, DELETE_TASK_FAIL, DELETE_TASK_REQUEST, DELETE_TASK_SUCCESS, GET_TASKS_FAIL, GET_TASKS_REQUEST, GET_TASKS_SUCCESS, GET_TASK_DETAIL_FAIL, GET_TASK_DETAIL_REQUEST, GET_TASK_DETAIL_SUCCESS, UPDATE_TASK_MICRO_PROPS_FAIL, UPDATE_TASK_MICRO_PROPS_REQUEST, UPDATE_TASK_MICRO_PROPS_SUCCESS } from 'store/contants/taskConstants';
 import { AppDispatch, RootState } from 'store/store';
 import socket from 'shared/utils/socket';
+import { showError, showInfo } from 'components/Notification';
+
 type TgetAllTasks = (token: string, projectId: string) => void;
 type TgetTaskDetail = (token: string, projectId: string, taskId: string) => void;
 type TchangeStatusOfTaskBoard = (taskId: string, srcStatus: string, destStatus: string, srcPos: number, destPos: number, projectId: string, token: string) => void;
 type TupdateBoardAfterSocketEvent = (task: any) => void;
 type TupdateTaskMicroProperties = (taskId: string, projectId: string, token: string, body: any) => void;
-
+type TupdateTaskAfterDeleteSocketEvent = (taskId: string) => void;
 export const getAllTasks: TgetAllTasks = (token, projectId) => async (dispatch: AppDispatch) => {
   try {
     dispatch({ type: GET_TASKS_REQUEST });
@@ -211,3 +213,71 @@ export const updateTaskMicroProperties: TupdateTaskMicroProperties = (taskId, pr
   }
 };
 
+export const updateTaskAfterDeleteSocketEvent: TupdateTaskAfterDeleteSocketEvent = (taskId) => async (dispatch: AppDispatch, getState: () => RootState) => {
+  const { taskList } = getState();
+  let tasks = [...taskList.tasks.backlog, ...taskList.tasks.todo, ...taskList.tasks.in_progress, ...taskList.tasks.done, ...taskList.tasks.cancelled];
+  let tasksByStatusObj = { ...taskList.tasks };
+
+  const taskToDelete: Task = tasks.find((task: Task) => task._id === taskId);
+  const sourceTasks: Array<Task> = tasksByStatusObj[taskToDelete.status];
+
+  let updatedSourceTasks: Array<Task> = sourceTasks.filter((task: Task) => task._id !== taskId);
+
+  updatedSourceTasks = updatedSourceTasks.map((task: Task) => {
+    if (task.order > taskToDelete.order) {
+      task.order -= 1;
+    }
+    return task;
+  });
+
+  tasksByStatusObj[taskToDelete.status] = updatedSourceTasks;
+
+  dispatch({ type: GET_TASKS_SUCCESS, payload: tasksByStatusObj });
+  showInfo(`Task with title: ${taskToDelete?.title} was deleted. For more information, please check history.`, "Task Deleted");
+};
+
+export const deleteTask = (taskId: string, projectId: string, token: string) => async (dispatch: AppDispatch, getState: () => RootState) => {
+  try {
+    dispatch({ type: DELETE_TASK_REQUEST });
+    const { currentProject, taskList, memberList } = getState();
+    let tasks = [...taskList.tasks.backlog, ...taskList.tasks.todo, ...taskList.tasks.in_progress, ...taskList.tasks.done, ...taskList.tasks.cancelled];
+    let tasksByStatusObj = { ...taskList.tasks };
+    const taskToDelete: Task = tasks.find((task: Task) => task._id === taskId);
+    const sourceTasks: Array<Task> = tasksByStatusObj[taskToDelete.status];
+    let updatedSourceTasks: Array<Task> = sourceTasks.filter((task: Task) => task._id !== taskId);
+    updatedSourceTasks = updatedSourceTasks.map((task: Task) => {
+      if (task.order > taskToDelete.order) {
+        task.order -= 1;
+      }
+      return task;
+    });
+    tasksByStatusObj[taskToDelete.status] = updatedSourceTasks;
+
+    const memberIds = memberList.members.map((member: Member) => member._id);
+
+    await axios({
+      url: `${baseURL}${endpoints.projects}/${projectId}${endpoints.tasks}/${taskId}`,
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (taskId) {
+      socket.emit('delete_task_update', {
+        member: currentProject.projectData._id,
+        taskId,
+        memberIds
+      });
+    }
+
+    dispatch({ type: GET_TASKS_SUCCESS, payload: tasksByStatusObj });
+    dispatch({ type: DELETE_TASK_SUCCESS });
+    showInfo('', 'Task Deleted Successfully');
+  } catch (e) {
+    showError(e?.response?.data?.message, 'Error Deleting Task.');
+    dispatch({ type: DELETE_TASK_FAIL, payload: e?.response?.data?.message });
+    dispatch({ type: DELETE_TASK_CLEAR });
+  }
+
+};
