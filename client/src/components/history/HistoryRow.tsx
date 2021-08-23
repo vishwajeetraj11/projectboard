@@ -9,13 +9,14 @@ import { getParsedDate } from 'shared/utils/formatDate';
 
 interface Props {
   history: User_Populated_History;
+  task?: boolean; // Check if this component is used to display only 1 task History
 }
 
 interface MatchParams {
   id: string;
 }
 
-export const HistoryRow: React.FC<Props> = ({ history: h }) => {
+export const HistoryRow: React.FC<Props> = ({ history: h, task }) => {
 
   const create = h.action === historyActionType.CREATE;
   const update = h.action === historyActionType.UPDATE;
@@ -42,7 +43,7 @@ export const HistoryRow: React.FC<Props> = ({ history: h }) => {
       } */}
       <Avatar name={`${h?.user?.firstName} ${h?.user?.lastName}`} />
       <p className='ml-2 mr-3 font-medium w-28'>{`${h?.user?.firstName} ${h?.user?.lastName}`}</p>
-      <span className='text-xs font-normal text-gray-500 uppercase mr-2  mt-2 lg:mt-0 w-full lg:w-auto'>{h?.task}</span>
+      {!task && <span className='text-xs font-normal text-gray-500 uppercase mr-2  mt-2 lg:mt-0 w-full lg:w-auto'>{h?.task}</span>}
       {
         create ? <p className='text-gray-500 text-xs bg-gray-50 hover:bg-white px-1 py-1 rounded-md mt-2 lg:mt-0 w-full lg:w-auto'>{`Created Task: ${h?.extraDetails?.taskTitle?.length > 73 ? h?.extraDetails?.taskTitle?.slice(0, 73) + "..." : h?.extraDetails?.taskTitle}`}</p>
           // :  ? <p className='text-gray-500 text-xs bg-gray-50 hover:bg-white px-1 py-1 rounded-md mt-2 lg:mt-0 w-full lg:w-auto'>{`Updated Task: ${h?.extraDetails?.taskTitle?.length > 73 ? h?.extraDetails?.taskTitle?.slice(0, 73) + "..." : h?.extraDetails?.taskTitle}`}</p>

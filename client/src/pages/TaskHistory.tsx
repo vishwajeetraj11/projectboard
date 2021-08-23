@@ -6,10 +6,10 @@ import { TopFilter } from 'components/TopFilter';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, useParams } from 'react-router-dom';
 import { topFilterType } from 'shared/constants';
 import { User_Populated_History } from 'shared/types';
-import { getProjectHistory } from 'store/actions/historyActions';
+import { getTaskHistory } from 'store/actions/historyActions';
 import { RootState } from 'store/store';
 
 interface RouteParams { id: string; }
@@ -18,25 +18,31 @@ interface Props extends RouteComponentProps<RouteParams> {
 
 }
 
+interface URLParams {
+  taskId: string;
+  projectId: string;
+}
 
-export const AppHistory: React.FC<Props> = ({ match }) => {
+
+export const TaskHistory: React.FC<Props> = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const { history, loading, error } = useSelector((state: RootState) => state.projectHistory);
+  const { history, loading, error } = useSelector((state: RootState) => state.taskHistory);
   const dispatch = useDispatch();
   const { getAccessTokenSilently } = useAuth0();
+  const params = useParams<URLParams>();
 
   useEffect(() => {
     (async () => {
       const token = await getAccessTokenSilently();
-      dispatch(getProjectHistory(token, match.params.id));
+      dispatch(getTaskHistory(token, params.projectId, params.taskId));
     })();
-  }, [dispatch, getAccessTokenSilently, match.params.id]);
+  }, [dispatch, getAccessTokenSilently, params]);
 
   return (
     <>
       <LeftSideBar showMenu={showMenu} onCloseMenu={() => setShowMenu(false)} />
       <div className='flex flex-col flex-grow'>
-        <TopFilter onOpenMenu={() => setShowMenu(!showMenu)} type={topFilterType.HISTORY} title='History' />
+        <TopFilter onOpenMenu={() => setShowMenu(!showMenu)} type={topFilterType.HISTORY} title='Task History' />
         {
           loading
             ? <div className='flex items-center justify-center flex-1'><CircularProgress color="primary" /></div>
@@ -48,7 +54,7 @@ export const AppHistory: React.FC<Props> = ({ match }) => {
                 </div>
                 : <div className='flex flex-col flex-1 overflow-y-scroll'>
                   {React.Children.toArray(history.map((hist: User_Populated_History) =>
-                    <HistoryRow history={hist} />
+                    <HistoryRow task history={hist} />
                   ))}
                 </div>
         }

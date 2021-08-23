@@ -4,12 +4,13 @@ import { CreateTask } from 'pages/CreateTask';
 import { ManageMembers } from 'pages/ManageMembers';
 import { Projects } from 'pages/Projects';
 import { Tasks } from 'pages/Tasks';
-import { AppHistory } from 'pages/AppHistory';
+import { ProjectHistory } from 'pages/ProjectHistory';
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { TaskDetail } from 'pages/TaskDetail';
 import { EditProfile } from 'pages/EditProfile';
 import { EditProject } from 'pages/EditProject';
+import { TaskHistory } from 'pages/TaskHistory';
 
 interface Props {
 }
@@ -26,7 +27,8 @@ export const AuthenticatedRoutes: React.FC<Props> = () => {
         <Route path='/projects/:id/board' exact component={Board} />
         <Route path='/projects/:id/create-task' exact component={CreateTask} />
         <Route path='/projects/:id/members' exact component={ManageMembers} />
-        <Route path='/history/projects/:id' exact component={AppHistory} />
+        <Route path='/history/projects/:id' exact component={ProjectHistory} />
+        <Route path='/history/projects/:projectId/tasks/:taskId' exact component={TaskHistory} />
         <Route path='/edit-profile' exact component={EditProfile} />
         <Redirect path='*' to='/projects' />
       </Switch>

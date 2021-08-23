@@ -1,5 +1,5 @@
 import { LeftSideBar } from 'components/LeftSideBar';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import React, { useCallback, useEffect, useState } from 'react';
 import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
 import { ReactComponent as MenuIcon } from 'assets/icons/menu.svg';
@@ -18,6 +18,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { showError, showInfo, showWarning } from 'components/Notification';
 import axios from 'axios';
 import { baseURL, endpoints } from 'shared/urls';
+import { BiSortUp } from 'react-icons/bi';
+
 interface Props {
 
 }
@@ -127,7 +129,17 @@ export const TaskDetail: React.FC<Props> = () => {
                         <div className='px-5 border-b border-gray-200 mt-2.5 pb-3 flex justify-between items-center'>
                             <p className='font-medium w-10/12 text-gray-700'>{`› ${projectData.project.title}`}</p>
                             <div className='flex'>
-                                {readOnlyMarkdown && <><button onClick={onEdit} className='inline-flex items-center justify-center text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'><EditIcon /></button><button onClick={onDelete} className='ml-3 inline-flex items-center justify-center text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'><DeleteIcon /></button></>}
+                                {readOnlyMarkdown && <>
+                                    <Link to={`/history/projects/${projectData.project._id}/tasks/${task._id}`} className='inline-flex items-center justify-center text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'>
+                                        <BiSortUp size={16} />
+                                    </Link>
+                                    <button onClick={onEdit} className='ml-3 inline-flex items-center justify-center text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'>
+                                        <EditIcon />
+                                    </button>
+                                    <button onClick={onDelete} className='ml-3 inline-flex items-center justify-center text-gray-500 h-7 w-7 hover:bg-gray-100 rouned hover:text-gray-700'>
+                                        <DeleteIcon />
+                                    </button>
+                                </>}
                                 {!readOnlyMarkdown && <><button onClick={onCancel} className='inline-flex items-center justify-center px-2 py-1 transition-all rounded-md ml-2 text-gray-500 hover:bg-gray-100 rouned hover:text-gray-700'>Cancel</button>
                                     <button onClick={onSave} className='inline-flex items-center justify-center px-2 py-1 transition-all border border-gray-200 rounded-md ml-2 text-gray-500 hover:bg-gray-100 rouned hover:text-gray-700'>Save</button></>}
                             </div>

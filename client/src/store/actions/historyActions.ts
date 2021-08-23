@@ -29,7 +29,6 @@ export const getProjectHistory: TgetProjectHistory = (token, projectId) => async
 export const getTaskHistory: TgetTaskHistory = (token, projectId, taskId) => async (dispatch: AppDispatch) => {
   try {
     dispatch({ type: GET_TASK_HISTORY_REQUEST });
-
     const { data } = await axios({
       url: `${baseURL}${endpoints.history}${endpoints.projects}/${projectId}${endpoints.tasks}/${taskId}`,
       method: 'GET',
