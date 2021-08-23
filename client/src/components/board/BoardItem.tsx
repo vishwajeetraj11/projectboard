@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { Avatar } from 'components/Avatar';
 import { PriorityMenu } from 'components/menus/PriorityMenu';
 import { PriorityIcon } from 'components/PriorityIcon';
 import { Draggable, DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
@@ -23,7 +24,7 @@ export const BoardItem = ({ task, index }: Props) => {
 
   // const dispatch = useDispatch<AppDispatch>();
   const updatePriority = (priority: string) => {
-    // dispatch(updateIssuePriority(task, priority));
+    // dispatch(updatePriority(task, priority));
   };
 
   return (
@@ -47,11 +48,11 @@ export const BoardItem = ({ task, index }: Props) => {
                 <span className='text-xs font-normal text-gray-500 uppercase'>{task._id}</span>
                 <span className='mt-1 text-sm font-medium text-gray-700 line-clamp-2 overflow-ellipsis'>{task.title}</span>
               </div>
-              {/* <div className='flex-shrink-0'>
-                                {task.owner ?
-                                    <Avatar name={task.owner.name} avatarUrl={task.owner.avatar} /> :
-                                    <Avatar />}
-                            </div> */}
+              <div className='flex-shrink-0'>
+                {task.assignee ?
+                  <Avatar name={`${task?.assignee?.user?.firstName} ${task?.assignee?.user?.lastName}`} /> :
+                  <Avatar />}
+              </div>
             </div>
             <div className='mt-2.5 flex items-center'>
               <PriorityMenu
