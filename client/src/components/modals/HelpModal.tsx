@@ -1,8 +1,8 @@
 import FeedbackIcon from 'assets/icons/chat.svg';
 import GuideIcon from 'assets/icons/guide.svg';
 import QuestionIcon from 'assets/icons/question.svg';
-import ShortcutIcon from 'assets/icons/rounded-claim.svg';
-import SlackIcon from 'assets/icons/slack.svg';
+import DiscordIcon from 'assets/icons/discord.svg';
+import GithubIcon from 'assets/icons/github.svg'
 import Modal from 'components/modals/Modal';
 import React from 'react';
 
@@ -34,41 +34,40 @@ function HelpSection({ icon, title, text, link }: HelpProps) {
 export default function HelpModal({ isOpen, onDismiss }: Props) {
   return (
     <Modal
-      title='help'
+      title='Help'
       isOpen={isOpen}
       onDismiss={onDismiss}
     >
       <div className='flex flex-col w-full pl-8 pr-5 overflow-y-auto'>
         <HelpSection
-          icon={<img src={GuideIcon} alt="Read more about Linear's features" />}
-          title="Linear Guide"
-          text="Read more about Linear's features"
+          icon={<img src={GuideIcon} alt="Read more about Product Board features" />}
+          title="Product Board"
+          text="Read more about Product Board and tell us about your experience."
           link="https://docs.linear.app/Linear-Guide-cab28edf7e26469cbf0132abb539e6d0"
         />
         <HelpSection
-          icon={<img src={ShortcutIcon} alt="Create and update issue faster" />}
-          title="Keyboard shortcuts"
-          text="Create and update issue faster"
-          link="#"
-        />
-
-        <HelpSection
-          icon={<img src={SlackIcon} alt="Ask questions and help others" />}
-          title="Join our Slack community"
+          icon={<img src={DiscordIcon} alt="Ask questions and help others" />}
+          title="Join Hashnode's discord community"
           text="Ask questions and help others"
-          link="https://linear.app/join-slack"
+          link="https://discord.gg/TEJnayXT"
         />
         <HelpSection
           icon={<img src={QuestionIcon} alt="Let us know if there's an issue" />}
           title="Contact support"
-          text="Let us know if there's an issue"
-          link="#"
+          text="Let us know of an issue"
+          link="https://www.instagram.com/vishwajeet.js/"
         />
         <HelpSection
-          icon={<img src={FeedbackIcon} alt="Submit a feature requests" />}
-          title="Share feedback"
-          text="Submit a feature request"
-          link="#"
+          icon={<img src={GithubIcon} alt="Check out source code" />}
+          title="Source Code"
+          text="Check out the source code"
+          link="https://github.com/vishwajeetraj11/productboard"
+        />
+        <HelpSection
+          icon={<img src={FeedbackIcon} alt="OS Resume" />}
+          title="OS Resume"
+          text="Our previous project"
+          link="https://vishwajeetraj11.hashnode.dev/introducing-os-resume-oversimplified-resume-builder"
         />
       </div>
     </Modal>

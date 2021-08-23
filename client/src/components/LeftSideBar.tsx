@@ -8,6 +8,11 @@ import { ReactComponent as HelpIcon } from 'assets/icons/help.svg';
 import { ReactComponent as InboxIcon } from 'assets/icons/inbox.svg';
 import { ReactComponent as IssueIcon } from 'assets/icons/issue.svg';
 import { ReactComponent as MenuIcon } from 'assets/icons/menu.svg';
+import { ReactComponent as NoPriorityIcon } from 'assets/icons/dots.svg';
+import { ReactComponent as UrgentPriorityIcon } from 'assets/icons/rounded-claim.svg';
+import { ReactComponent as MediumPriorityIcon } from 'assets/icons/signal-medium.svg';
+import { ReactComponent as HighPriorityIcon } from 'assets/icons/signal-strong.svg';
+import { ReactComponent as LowPriorityIcon } from 'assets/icons/signal-weak.svg';
 // import { ReactComponent as ViewIcon } from 'assets/icons/view.svg';
 import classNames from 'classnames';
 import HelpModal from 'components/modals/HelpModal';
@@ -100,7 +105,7 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
 
         {/* Search box */}
         <div className='flex flex-col flex-shrink flex-grow overflow-y-auto mb-0.5 px-4'>
-          <SearchBox className='mt-5' />
+          {/* <SearchBox className='mt-5' /> */}
           {/* actions */}
           <Link to={`/history/projects/${projectData.project._id}`} className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>
             <InboxIcon className='w-3.5 h-3.5 mr-4 text-sm text-gray-500 group-hover:text-gray-600' />
@@ -109,7 +114,7 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
           <Link to={`/projects/${projectData.project._id}/tasks`} className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>
             <IssueIcon className='w-3.5 h-3.5 mr-4 text-gray-500 group-hover:text-gray-600' />
             <span>Tasks</span>
-          </Link>
+        </Link>
           {/* <Link to='/' className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>
             <ViewIcon className='w-3.5 h-3.5 mr-4 text-gray-500 group-hover:text-gray-600' />
             <span>Views</span>
@@ -124,29 +129,78 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
           >Your Tasks</h3>
 
           <ItemGroup title='Status'>
-            <Link to='/' className='flex items-center pl-8 rounded cursor-pointer group h-7 hover:bg-gray-100'>
+            <Link to={`/projects/${projectData.project._id}/tasks`} className='flex items-center pl-8 rounded cursor-pointer group h-7 hover:bg-gray-100'>
               {/* <FiCircle className='w-3.5 h-3.5 mr-2 text-gray-500 group-hover:text-gray-600' /> */}
               <TodoIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' />
               <span>To Do</span>
             </Link>
-            <Link to='/' className='flex items-center pl-8 rounded cursor-pointer h-7 hover:bg-gray-100'>
+            <Link to={`/projects/${projectData.project._id}/tasks`} className='flex items-center pl-8 rounded cursor-pointer h-7 hover:bg-gray-100'>
               <BacklogIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' />
               <span>Backlog</span>
             </Link>
-            <Link to='/' className='flex items-center pl-8 rounded cursor-pointer h-7 hover:bg-gray-100'>
+            <Link to={`/projects/${projectData.project._id}/tasks`} className='flex items-center pl-8 rounded cursor-pointer h-7 hover:bg-gray-100'>
               <InProgressIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' />
               <span>In Progress</span>
             </Link>
 
-            <Link to='/' className='flex items-center pl-8 rounded cursor-pointer group h-7 hover:bg-gray-100'>
+            <Link to={`/projects/${projectData.project._id}/tasks`} className='flex items-center pl-8 rounded cursor-pointer group h-7 hover:bg-gray-100'>
               {/* <ArchiveIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' /> */}
               <DoneIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' />
               <span>Done</span>
             </Link>
-            <Link to='/' className='flex items-center pl-8 rounded cursor-pointer group h-7 hover:bg-gray-100'>
+            <Link to={`/projects/${projectData.project._id}/tasks`} className='flex items-center pl-8 rounded cursor-pointer group h-7 hover:bg-gray-100'>
               {/* <ArchiveIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' /> */}
               <CancelIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' />
               <span>Cancelled</span>
+            </Link>
+          </ItemGroup>
+
+          <ItemGroup title='Priority'>
+            <Link to={`/projects/${projectData.project._id}/tasks`} className='flex items-center pl-8 rounded cursor-pointer group h-7 hover:bg-gray-100'>
+              {/* <FiCircle className='w-3.5 h-3.5 mr-2 text-gray-500 group-hover:text-gray-600' /> */}
+              <NoPriorityIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' />
+              <span>No Priority</span>
+            </Link>
+            <Link to={`/projects/${projectData.project._id}/tasks`} className='flex items-center pl-8 rounded cursor-pointer h-7 hover:bg-gray-100'>
+              <UrgentPriorityIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' />
+              <span>Urgent</span>
+            </Link>
+            <Link to={`/projects/${projectData.project._id}/tasks`} className='flex items-center pl-8 rounded cursor-pointer h-7 hover:bg-gray-100'>
+              <HighPriorityIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' />
+              <span>High</span>
+            </Link>
+
+            <Link to={`/projects/${projectData.project._id}/tasks`} className='flex items-center pl-8 rounded cursor-pointer group h-7 hover:bg-gray-100'>
+              {/* <ArchiveIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' /> */}
+              <MediumPriorityIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' />
+              <span>Medium</span>
+            </Link>
+            <Link to={`/projects/${projectData.project._id}/tasks`} className='flex items-center pl-8 rounded cursor-pointer group h-7 hover:bg-gray-100'>
+              {/* <ArchiveIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' /> */}
+              <LowPriorityIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' />
+              <span>Low</span>
+            </Link>
+          </ItemGroup>
+
+          <ItemGroup title='Label'>
+            <Link to={`/projects/${projectData.project._id}/tasks`} className='flex items-center pl-8 rounded cursor-pointer group h-7 hover:bg-gray-100'>
+              {/* <FiCircle className='w-3.5 h-3.5 mr-2 text-gray-500 group-hover:text-gray-600' /> */}
+              <div className="w-2.5 h-2.5 rounded-full mr-3" style={{ background: '#eb5757' }} />
+              <span>Bug</span>
+            </Link>
+            <Link to={`/projects/${projectData.project._id}/tasks`} className='flex items-center pl-8 rounded cursor-pointer h-7 hover:bg-gray-100'>
+            <div className="w-2.5 h-2.5 rounded-full mr-3" style={{ background: '#bb87fc' }} />
+              <span>Feature</span>
+            </Link>
+            <Link to={`/projects/${projectData.project._id}/tasks`} className='flex items-center pl-8 rounded cursor-pointer h-7 hover:bg-gray-100'>
+            <div className="w-2.5 h-2.5 rounded-full mr-3" style={{ background: '#4ea7fc' }} />
+              <span>Improvement</span>
+            </Link>
+
+            <Link to={`/projects/${projectData.project._id}/tasks`} className='flex items-center pl-8 rounded cursor-pointer group h-7 hover:bg-gray-100'>
+              {/* <ArchiveIcon className='w-3 h-3 mr-2 text-gray-500 group-hover:text-gray-700' /> */}
+              <div className="w-2.5 h-2.5 rounded-full mr-3" style={{ background: '#999999' }} />
+              <span>No Label</span>
             </Link>
           </ItemGroup>
 
