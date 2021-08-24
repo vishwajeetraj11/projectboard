@@ -3,12 +3,12 @@ import { ReactComponent as CancelIcon } from 'assets/icons/cancel.svg';
 import { ReactComponent as BacklogIcon } from 'assets/icons/circle-dot.svg';
 import { ReactComponent as TodoIcon } from 'assets/icons/circle.svg';
 import { ReactComponent as DoneIcon } from 'assets/icons/done.svg';
+import { ReactComponent as NoPriorityIcon } from 'assets/icons/dots.svg';
 import { ReactComponent as InProgressIcon } from 'assets/icons/half-circle.svg';
 import { ReactComponent as HelpIcon } from 'assets/icons/help.svg';
 import { ReactComponent as InboxIcon } from 'assets/icons/inbox.svg';
 import { ReactComponent as IssueIcon } from 'assets/icons/issue.svg';
 import { ReactComponent as MenuIcon } from 'assets/icons/menu.svg';
-import { ReactComponent as NoPriorityIcon } from 'assets/icons/dots.svg';
 import { ReactComponent as UrgentPriorityIcon } from 'assets/icons/rounded-claim.svg';
 import { ReactComponent as MediumPriorityIcon } from 'assets/icons/signal-medium.svg';
 import { ReactComponent as HighPriorityIcon } from 'assets/icons/signal-strong.svg';
@@ -16,7 +16,7 @@ import { ReactComponent as LowPriorityIcon } from 'assets/icons/signal-weak.svg'
 // import { ReactComponent as ViewIcon } from 'assets/icons/view.svg';
 import classNames from 'classnames';
 import HelpModal from 'components/modals/HelpModal';
-import { SearchBox } from 'components/SearchBox';
+// import { SearchBox } from 'components/SearchBox';
 import { useClickOutside } from 'hooks/useClickOutside';
 import React, { RefObject, useEffect, useRef, useState } from 'react';
 import { CgBoard } from "react-icons/cg";
@@ -111,7 +111,7 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
           <Link to={`/projects/${projectData.project._id}/tasks`} className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>
             <IssueIcon className='w-3.5 h-3.5 mr-4 text-gray-500 group-hover:text-gray-600' />
             <span>Tasks</span>
-        </Link>
+          </Link>
           {/* <Link to='/' className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>
             <ViewIcon className='w-3.5 h-3.5 mr-4 text-gray-500 group-hover:text-gray-600' />
             <span>Views</span>
@@ -186,11 +186,11 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
               <span>Bug</span>
             </Link>
             <Link to={`/projects/${projectData.project._id}/tasks`} className='flex items-center pl-8 rounded cursor-pointer h-7 hover:bg-gray-100'>
-            <div className="w-2.5 h-2.5 rounded-full mr-3" style={{ background: '#bb87fc' }} />
+              <div className="w-2.5 h-2.5 rounded-full mr-3" style={{ background: '#bb87fc' }} />
               <span>Feature</span>
             </Link>
             <Link to={`/projects/${projectData.project._id}/tasks`} className='flex items-center pl-8 rounded cursor-pointer h-7 hover:bg-gray-100'>
-            <div className="w-2.5 h-2.5 rounded-full mr-3" style={{ background: '#4ea7fc' }} />
+              <div className="w-2.5 h-2.5 rounded-full mr-3" style={{ background: '#4ea7fc' }} />
               <span>Improvement</span>
             </Link>
 
