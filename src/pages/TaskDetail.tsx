@@ -1,24 +1,24 @@
-import { LeftSideBar } from 'components/LeftSideBar';
-import { Link, RouteComponentProps, useParams } from 'react-router-dom';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
-import { ReactComponent as MenuIcon } from 'assets/icons/menu.svg';
-import { RightSideBar } from 'components/RightSideBar';
-import { ReactComponent as RightSideBarIcon } from 'assets/icons/right-sidebar.svg';
+import { ReactComponent as DeleteIcon } from 'assets/icons/delete.svg';
 import { ReactComponent as EditIcon } from 'assets/icons/edit.svg';
+import { ReactComponent as MenuIcon } from 'assets/icons/menu.svg';
+import { ReactComponent as RightSideBarIcon } from 'assets/icons/right-sidebar.svg';
+import axios from 'axios';
+import { LeftSideBar } from 'components/LeftSideBar';
+import { showError, showInfo, showWarning } from 'components/Notification';
+import { RightSideBar } from 'components/RightSideBar';
+import React, { useCallback, useEffect, useState } from 'react';
+import { BiSortUp } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link, RouteComponentProps, useParams } from 'react-router-dom';
+import Editor from "rich-markdown-editor";
+import { baseURL, endpoints } from 'shared/urls';
+import { deleteTask, getTaskDetail } from 'store/actions/taskActions';
+import { DELETE_TASK_CLEAR, GET_TASK_DETAIL_CLEAR } from 'store/contants/taskConstants';
 import { RootState } from 'store/store';
 import { MarkdownStyles } from 'styled/Markdown';
-import Editor from "rich-markdown-editor";
-import { ReactComponent as DeleteIcon } from 'assets/icons/delete.svg';
-import { getTaskDetail, deleteTask } from 'store/actions/taskActions';
-import { useAuth0 } from '@auth0/auth0-react';
-import { DELETE_TASK_CLEAR, GET_TASK_DETAIL_CLEAR } from 'store/contants/taskConstants';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { showError, showInfo, showWarning } from 'components/Notification';
-import axios from 'axios';
-import { baseURL, endpoints } from 'shared/urls';
-import { BiSortUp } from 'react-icons/bi';
 
 interface Props extends RouteComponentProps<{}> {
 
@@ -61,17 +61,6 @@ export const TaskDetail: React.FC<Props> = ({ history }) => {
         setTitle(task.title); setDescription(task.description);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [success]);
-
-    // useEffect(() => {
-    //     if (deleteError) {
-    //         showError('Please try again later.', 'Unable to Update Task.');
-    //         dispatch({ type: DELETE_TASK_CLEAR });
-    //     }
-
-    //     if (deleteLoading) {
-    //         showWarning('', 'Please wait while the task is being deleted.');
-    //     }
-    // }, [deleteLoading, deleteError, dispatch, history, params.projectId]);
 
     useEffect(() => {
         if (deleteSuccess) {
@@ -162,8 +151,14 @@ export const TaskDetail: React.FC<Props> = ({ history }) => {
                                         <DeleteIcon />
                                     </button>
                                 </>}
-                                {!readOnlyMarkdown && <><button onClick={onCancel} className='inline-flex items-center justify-center px-2 py-1 transition-all rounded-md ml-2 text-gray-500 hover:bg-gray-100 rouned hover:text-gray-700'>Cancel</button>
-                                    <button onClick={onSave} className='inline-flex items-center justify-center px-2 py-1 transition-all border border-gray-200 rounded-md ml-2 text-gray-500 hover:bg-gray-100 rouned hover:text-gray-700'>Save</button></>}
+                                {!readOnlyMarkdown && <>
+                                    <button onClick={onCancel} className='inline-flex items-center justify-center px-2 py-1 transition-all rounded-md ml-2 text-gray-500 hover:bg-gray-100 rouned hover:text-gray-700'>
+                                        Cancel
+                                    </button>
+                                    <button onClick={onSave} className='inline-flex items-center justify-center px-2 py-1 transition-all border border-gray-200 rounded-md ml-2 text-gray-500 hover:bg-gray-100 rouned hover:text-gray-700'>
+                                        Save
+                                    </button>
+                                </>}
                             </div>
                         </div>
                         {/* Markdown Description */}
