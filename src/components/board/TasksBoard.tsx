@@ -1,14 +1,12 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import React, { useEffect } from 'react';
 import { DragDropContext, DropResult, ResponderProvided } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router-dom';
 import { Status } from 'shared/constants';
 import { Task } from 'shared/types';
-import { changeStatusOfTaskBoard, updateBoardAfterSocketEvent } from 'store/actions/taskActions';
+import { changeStatusOfTaskBoard } from 'store/actions/taskActions';
 import { AppDispatch, RootState } from '../../store/store';
 import { IssueCol } from './BoardColumn';
-import socket from 'shared/utils/socket';
 
 interface MatchParams {
   id: string;
@@ -39,12 +37,6 @@ export const TasksBoard = () => {
     const token = await getAccessTokenSilently();
     dispatch(changeStatusOfTaskBoard(draggableId, source.droppableId, destination.droppableId, source.index, destination.index, match.params.id, token));
   };
-
-  useEffect(() => {
-    socket.on('board_update', ({ updatedTask }: any) => {
-      dispatch(updateBoardAfterSocketEvent(updatedTask));
-    });
-  }, [dispatch]);
 
   return (
     <DragDropContext

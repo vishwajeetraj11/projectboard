@@ -1,19 +1,19 @@
 import { Board } from 'pages/Board';
 import { CreateProject } from 'pages/CreateProject';
 import { CreateTask } from 'pages/CreateTask';
-import { ManageMembers } from 'pages/ManageMembers';
-import { Projects } from 'pages/Projects';
-import { Tasks } from 'pages/Tasks';
-import { ProjectHistory } from 'pages/ProjectHistory';
-import React, { useEffect } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import { TaskDetail } from 'pages/TaskDetail';
 import { EditProfile } from 'pages/EditProfile';
 import { EditProject } from 'pages/EditProject';
+import { ManageMembers } from 'pages/ManageMembers';
+import { ProjectHistory } from 'pages/ProjectHistory';
+import { Projects } from 'pages/Projects';
+import { TaskDetail } from 'pages/TaskDetail';
 import { TaskHistory } from 'pages/TaskHistory';
-import socket from 'shared/utils/socket';
+import { Tasks } from 'pages/Tasks';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateTaskAfterDeleteSocketEvent } from 'store/actions/taskActions';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import socket from 'shared/utils/socket';
+import { updateBoardAfterSocketEvent, updateTaskAfterDeleteSocketEvent } from 'store/actions/taskActions';
 
 interface Props {
 }
@@ -24,6 +24,9 @@ export const AuthenticatedRoutes: React.FC<Props> = () => {
   useEffect(() => {
     socket.on('delete_update', ({ taskId }: any) => {
       dispatch(updateTaskAfterDeleteSocketEvent(taskId));
+    });
+    socket.on('board_update', ({ updatedTask }: any) => {
+      dispatch(updateBoardAfterSocketEvent(updatedTask));
     });
   }, [dispatch]);
 
