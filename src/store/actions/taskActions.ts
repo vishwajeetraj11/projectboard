@@ -117,6 +117,7 @@ export const updateBoardAfterSocketEvent: TupdateBoardAfterSocketEvent = (update
 
     tasks[sourceStatus] = sourceTasks;
     tasks[destinationStatus] = destinationTasks;
+    showInfo(`Task with title ${updatedTask?.task?.title} has been updated.`, 'Task Updated.');
 
     dispatch({
       type: CHANGE_STATUS_OF_TASK_SUCCESS,

@@ -25,9 +25,10 @@ interface Props {
   button: ReactNode;
   className?: string;
   onSelect?: (item: string) => void;
+  disabled?: boolean;
 }
 
-export const PriorityMenu = ({ button, className, onSelect }: Props) => {
+export const PriorityMenu = ({ button, className, onSelect, disabled }: Props) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const anchorRef = useRef<HTMLDivElement>(null);
@@ -56,7 +57,9 @@ export const PriorityMenu = ({ button, className, onSelect }: Props) => {
     );
   });
   const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
+    if (!disabled) {
+      setOpen((prevOpen) => !prevOpen);
+    }
   };
 
   const handleClose = (event: any) => {
