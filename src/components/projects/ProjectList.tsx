@@ -1,12 +1,10 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
-import React from 'react';
-import { useEffect } from 'react';
-import { baseURL, endpoints } from 'shared/urls';
-import { useState } from 'react';
-import { ProjectCard } from 'components/projects/ProjectCard';
-import { projectsType } from 'shared/constants';
 import { Loader } from 'components/Loader';
+import { ProjectCard } from 'components/projects/ProjectCard';
+import React, { useEffect, useState } from 'react';
+import { projectsType } from 'shared/constants';
+import { baseURL, endpoints } from 'shared/urls';
 
 interface Props {
   type: string;
@@ -39,11 +37,22 @@ export const ProjectsList: React.FC<Props> = ({ type }) => {
       }
     })();
   }, [getAccessTokenSilently, type]);
+
   return (
     <div>
-      {loading ? <div className='w-full flex items-center justify-center' style={{ height: "50vh" }}><Loader /></div> : error ? <p>{error}</p> : projectsData.length === 0 ? <div className='w-full flex items-center justify-center' style={{ height: "50vh" }}>No Projects to show.</div> : React.Children.toArray(projectsData.map((project: any) => (
-        <ProjectCard projectData={project} />
-      )))}
+      {loading
+        ? <div className='w-full flex items-center justify-center' style={{ height: "50vh" }}>
+          <Loader />
+        </div>
+        : error
+          ? <p>{error}</p>
+          : projectsData.length === 0
+            ? <div className='w-full flex items-center justify-center' style={{ height: "50vh" }}>
+              No Projects to show.
+            </div>
+            : React.Children.toArray(projectsData.map((project: any) => (
+              <ProjectCard setProjectsData={setProjectsData} projectData={project} />
+            )))}
     </div>
   );
 };

@@ -1,9 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { ProjectsList } from 'components/projects/ProjectList';
-import { projectsType } from 'shared/constants';
 import { MinimalNav } from 'components/layout/minimalNav';
+import { ProjectsList } from 'components/projects/ProjectList';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { projectsType } from 'shared/constants';
 interface Props {
 
 }
@@ -18,7 +17,7 @@ export const Projects: React.FC<Props> = () => {
   };
 
   return (
-    <section className='p-4 lg:p-0 w-full min-h-screen max-w-screen-lg mx-auto bg-white'>
+    <section className='p-4 lg:p-0 w-full min-h-screen max-w-screen-lg mx-auto bg-white overflow-auto '>
       {/* Nav */}
       <MinimalNav />
       <div className='bg-gray-100 w-full rounded-sm'>
