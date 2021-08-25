@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connectMenu } from 'react-contextmenu';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 // import { loadIssues, updateIssuePriority, updateIssueStatus } from 'store/actions/issueActions';
 import { Task } from 'shared/types';
 import { RootState } from '../../store/store';
@@ -9,8 +10,9 @@ import { TaskRow } from './TaskRow';
 
 export const TaskList = () => {
   // const dispatch = useDispatch<AppDispatch>();
+  const location = useLocation();
   const allTasks = useSelector((state: RootState) => state.taskList.tasks);
-  const { status,priority,label } = useSelector((state: RootState) => state.filters);
+  const { status, priority, label } = useSelector((state: RootState) => state.filters);
 
   let tasks = [...allTasks.backlog, ...allTasks.todo, ...allTasks.in_progress, ...allTasks.done, ...allTasks.cancelled];
 
@@ -18,11 +20,11 @@ export const TaskList = () => {
     tasks = tasks.filter((task: Task) => task.status === status);
   }
 
-  if (priority) {
+  if (priority || location?.state?.priority) {
     tasks = tasks.filter((task: Task) => task.priority === priority);
   }
 
-  if (label) {
+  if (label || location?.state?.label) {
     tasks = tasks.filter((task: Task) => task.label === label);
   }
 

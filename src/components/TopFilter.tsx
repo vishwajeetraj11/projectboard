@@ -1,14 +1,12 @@
+import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
 import { ReactComponent as MenuIcon } from 'assets/icons/menu.svg';
 import { useState } from 'react';
-import { TaskFilterModal } from './modals/TaskFilterModal';
-import { RootState } from 'store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { topFilterType } from 'shared/constants';
-import { getStatusText } from 'shared/utils/common';
-import { getPriorityString } from 'shared/utils/common';
-import { getLabelObj } from 'shared/utils/common';
-import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
+import { getLabelObj, getPriorityString, getStatusText } from 'shared/utils/common';
 import { addLabelFilter, addPriorityFilter, addStatusFilter } from 'store/actions/filterActions';
+import { RootState } from 'store/store';
+import { TaskFilterModal } from './modals/TaskFilterModal';
 
 interface Props {
   /* Top title */
@@ -40,7 +38,7 @@ export const TopFilter = ({ title, onOpenMenu, type }: Props) => {
             onClick={onOpenMenu}
           ><MenuIcon className='w-3.5 text-gray-500 hover:text-gray-800' /></button>
 
-          <div className='p-1 font-semibold cursor-default hover:bg-gray-100'>{title}</div>
+          <div className='mt-2 lg:mt-0 p-1 font-semibold cursor-default hover:bg-gray-100'>{title}</div>
           {/* {!onInvitePage && <span>{totaltasks}</span>} */}
           {onTasksPage && <>
             {status && <div className='mt-2 lg:mt-0 ml-3 capitalize text-gray-700 px-2 py-1 bg-gray-100 hover:bg-gray-50 rounded-md flex items-center'>

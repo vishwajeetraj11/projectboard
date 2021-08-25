@@ -28,8 +28,8 @@ export const ProjectForm: React.FC<Props> = ({ project, redirect, title, type })
   const { getAccessTokenSilently } = useAuth0();
   const history = useHistory();
   const projectData = {
-    title: project.title || '',
-    description: project.description || '',
+    title: project?.title || '',
+    description: project?.description || '',
   };
   return (
     <Formik
