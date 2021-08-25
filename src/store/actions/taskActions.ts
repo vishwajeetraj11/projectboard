@@ -1,11 +1,12 @@
 import axios from 'axios';
+import { showError, showInfo } from 'components/Notification';
 import { Status } from 'shared/constants';
 import { Member, Task } from 'shared/types';
 import { baseURL, endpoints } from 'shared/urls';
+import socket from 'shared/utils/socket';
+import { GET_PROJECT_HISTORY_SUCCESS } from 'store/contants/historyConstants';
 import { CHANGE_STATUS_OF_TASK_SUCCESS, DELETE_TASK_CLEAR, DELETE_TASK_FAIL, DELETE_TASK_REQUEST, DELETE_TASK_SUCCESS, GET_TASKS_FAIL, GET_TASKS_REQUEST, GET_TASKS_SUCCESS, GET_TASK_DETAIL_FAIL, GET_TASK_DETAIL_REQUEST, GET_TASK_DETAIL_SUCCESS, UPDATE_TASK_MICRO_PROPS_FAIL, UPDATE_TASK_MICRO_PROPS_REQUEST, UPDATE_TASK_MICRO_PROPS_SUCCESS } from 'store/contants/taskConstants';
 import { AppDispatch, RootState } from 'store/store';
-import socket from 'shared/utils/socket';
-import { showError, showInfo } from 'components/Notification';
 
 type TgetAllTasks = (token: string, projectId: string) => void;
 type TgetTaskDetail = (token: string, projectId: string, taskId: string) => void;
@@ -280,4 +281,21 @@ export const deleteTask = (taskId: string, projectId: string, token: string) => 
     dispatch({ type: DELETE_TASK_CLEAR });
   }
 
+};
+
+export const updateTasksAfterSocketEvent = (newTaskData: { history: History, task: Task, success: string; }) => async (dispatch: AppDispatch, getState: () => RootState) => {
+  const { taskList, projectHistory } = getState();
+  const { task, history } = newTaskData;
+  let tasksByStatusObj = { ...taskList.tasks };
+  const sourceTasks: Array<Task> = tasksByStatusObj[task.status];
+  sourceTasks.push(task);
+  tasksByStatusObj[task.status] = sourceTasks;
+
+  dispatch({ type: GET_TASKS_SUCCESS, payload: tasksByStatusObj });
+  showInfo(`New Task with title: ${task?.title} was created. For more information, please check history.`, "A new Task was created.");
+
+  const allProjectHistory = [...projectHistory.history];
+  allProjectHistory.unshift(history);
+
+  dispatch({ type: GET_PROJECT_HISTORY_SUCCESS, payload: allProjectHistory });
 };

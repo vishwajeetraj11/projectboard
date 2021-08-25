@@ -1,4 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-react';
+import DateFnsUtils from '@date-io/date-fns';
+import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
 import { ReactComponent as OwnerIcon } from 'assets/icons/avatar.svg';
 import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
 import { ReactComponent as GitIssueIcon } from 'assets/icons/git-issue.svg';
@@ -17,15 +20,13 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import Editor from "rich-markdown-editor";
 import { Label, Member } from 'shared/types';
 import { baseURL, endpoints } from 'shared/urls';
+import { getPriorityString } from 'shared/utils/common';
+import { formatDate } from 'shared/utils/formatDate';
+import socket from 'shared/utils/socket';
 import { RootState } from 'store/store';
 import { MarkdownStyles } from 'styled/Markdown';
 import { showError, showInfo, showWarning } from '../components/Notification';
 import { DEFAULT_LABLES, Priority, Status } from '../shared/constants';
-import { DatePicker, MuiPickersUtilsProvider, } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
-import { formatDate } from 'shared/utils/formatDate';
-import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
-import { getPriorityString } from 'shared/utils/common';
 
 interface RouteParams { id: string; }
 interface Props extends RouteComponentProps<RouteParams> {
@@ -53,6 +54,8 @@ export const CreateTask: React.FC<Props> = ({ match, history, location }) => {
   const [isOpenDueDate, setIsOpenDueDate] = useState(false);
 
   const { projectData } = useSelector((state: RootState) => state.currentProject);
+  const { memberList } = useSelector((state: RootState) => state);
+  const memberIds = memberList.members.map((member: Member) => member._id);
 
   const { getAccessTokenSilently } = useAuth0();
 
@@ -85,7 +88,7 @@ export const CreateTask: React.FC<Props> = ({ match, history, location }) => {
     try {
       const token = await getAccessTokenSilently();
 
-      await axios({
+      const { data } = await axios({
         url: `${baseURL}${endpoints.projects}/${match.params.id}${endpoints.tasks}`,
         method: 'POST',
         data: body,
@@ -93,6 +96,7 @@ export const CreateTask: React.FC<Props> = ({ match, history, location }) => {
           Authorization: `Bearer ${token}`,
         },
       });
+      socket.emit('create_task_update', { newTask: data, member: projectData._id, memberIds });
     } catch (e) {
       showError("", 'Error Creating Task.');
     }
@@ -101,6 +105,8 @@ export const CreateTask: React.FC<Props> = ({ match, history, location }) => {
     setPriority(Priority.NO_PRIORITY);
     setStatus(Status.BACKLOG);
     showInfo('You created new task.', 'Task created');
+
+
     history.push(`/projects/${projectData.project._id}/tasks`);
   };
 

@@ -13,7 +13,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import socket from 'shared/utils/socket';
-import { updateBoardAfterSocketEvent, updateTaskAfterDeleteSocketEvent } from 'store/actions/taskActions';
+import { updateBoardAfterSocketEvent, updateTaskAfterDeleteSocketEvent, updateTasksAfterSocketEvent } from 'store/actions/taskActions';
 
 interface Props {
 }
@@ -27,6 +27,9 @@ export const AuthenticatedRoutes: React.FC<Props> = () => {
     });
     socket.on('board_update', ({ updatedTask }: any) => {
       dispatch(updateBoardAfterSocketEvent(updatedTask));
+    });
+    socket.on('create_update', ({ newTask }: any) => {
+      dispatch(updateTasksAfterSocketEvent(newTask));
     });
   }, [dispatch]);
 
