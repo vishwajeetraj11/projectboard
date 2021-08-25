@@ -1,12 +1,12 @@
-import React from 'react';
-import EditRoundedIcon from '@material-ui/icons/EditRounded';
-import DeleteIcon from '@material-ui/icons/Delete';
-import LaunchIcon from '@material-ui/icons/Launch';
 import { Button } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import { setCurrentProject } from 'store/actions/projectActions';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditRoundedIcon from '@material-ui/icons/EditRounded';
+import LaunchIcon from '@material-ui/icons/Launch';
+import React from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Member } from 'shared/types';
+import { setCurrentProject } from 'store/actions/projectActions';
 
 interface Props {
   projectData: Member;
@@ -15,6 +15,9 @@ interface Props {
 export const ProjectCard: React.FC<Props> = ({ projectData }) => {
   const dispatch = useDispatch();
   const onOpen = () => {
+    dispatch(setCurrentProject(projectData));
+  };
+  const onEdit = () => {
     dispatch(setCurrentProject(projectData));
   };
 
@@ -27,7 +30,7 @@ export const ProjectCard: React.FC<Props> = ({ projectData }) => {
           <Button onClick={onOpen} className='flex items-center'><LaunchIcon className='w-5 h-5 text-white' color='action' /><p className='ml-2 text-xs text-white'>Open</p></Button>
         </Link>
         {projectData.access === 'admin' && (<> <Link className='mr-2 sm:mr-4' to='/edit-project'>
-          <Button className='flex items-center'><EditRoundedIcon className='w-5 h-5 text-white' color='action' /><p className='ml-2 text-xs text-white'>Edit</p></Button>
+          <Button onClick={onEdit} className='flex items-center'><EditRoundedIcon className='w-5 h-5 text-white' color='action' /><p className='ml-2 text-xs text-white'>Edit</p></Button>
         </Link>
           <Button className='flex items-center'><DeleteIcon className='w-5 h-5 text-white' color='action' /><p className='ml-2 text-xs text-white'>Delete</p></Button></>)}
       </div>
