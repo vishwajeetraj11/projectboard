@@ -11,7 +11,7 @@
     "start:prod": "node server/src/app.js",
     "client": "yarn start --prefix client",
     "dev": "concurrently \"yarn run server\" \"yarn run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false yarn --prefix client && yarn run build --prefix client"
+    "heroku-postbuild": "yarn install && yarn --cwd ./client install && yarn --cwd ./client run build"
   },
   "dependencies": {
     "axios": "^0.21.1",
