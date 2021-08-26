@@ -8,8 +8,8 @@
   "scripts": {
     "start": "node server/src/app.js",
     "server": "nodemon server/src/app.js",
-    "start:prod": "SET NODE_ENV=production& node server/src/app.js",
-    "client": "SET PORT=3001& npm start --prefix client",
+    "start:prod": "node server/src/app.js",
+    "client": "yarn start --prefix client",
     "dev": "concurrently \"yarn run server\" \"yarn run client\"",
     "heroku-postbuild": "YARN_PRODUCTION=false yarn --prefix client && yarn run build --prefix client"
   },
