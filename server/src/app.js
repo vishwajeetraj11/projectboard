@@ -12,7 +12,7 @@ try {
 
   const server = app
     .listen(config.port, () => {
-      console.log(`
+      console.log(` 
       ################################################
       🛡️  Server listening on port: ${config.port} 🛡️
       ################################################
