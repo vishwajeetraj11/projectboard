@@ -8,7 +8,7 @@
   "scripts": {
     "start": "node server/src/app.js",
     "server": "nodemon server/src/app.js",
-    "start:prod": "node server/src/app.js",
+    "start:prod": "SET NODE_ENV=production& node server/src/app.js",
     "client": "yarn start --prefix client",
     "dev": "concurrently \"yarn run server\" \"yarn run client\"",
     "heroku-postbuild": "yarn install && yarn --cwd ./client install && yarn --cwd ./client run build"
@@ -33,6 +33,6 @@
     "prettier": "^2.3.2"
   },
   "engines": {
-    "node": "14.x"
+    "node": ">=14.x"
   }
 }
