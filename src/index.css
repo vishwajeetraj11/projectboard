@@ -107,3 +107,19 @@ body {
   *::-webkit-scrollbar-thumb:hover {
     background: #a0aec0;
   }
+
+  .features-grid-container {
+	display: grid;
+	grid-gap: 1rem;
+	grid-template-columns: 1fr;
+    }
+@media screen and (min-width: 600px) {
+    .features-grid-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media screen and (min-width: 1200px) {
+    .features-grid-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

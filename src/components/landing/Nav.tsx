@@ -1,26 +1,56 @@
-import { LoginButton } from 'components/auth/LoginButton';
+import { useAuth0 } from "@auth0/auth0-react";
 import React from 'react';
-import { Link } from "react-router-dom";
 
 interface Props {
 
 }
 
 export const Nav: React.FC<Props> = () => {
+  const { loginWithRedirect } = useAuth0();
+
   return (
-    <header className="text-black-700 body-font border-b border-gray-200">
-      <div className="container bg-primary mx-auto flex flex-wrap justify-between p-5 flex-col md:flex-row items-center">
-        <Link className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" to="/">
-          {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-10 h-10 text-white p-2 rounded-full" viewBox="0 0 24 24">
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-          </svg> */}
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" className="w-10 h-10 text-white p-2 rounded-full" viewBox="0 0 24 24">
-            <path fillRule="evenodd" clipRule="evenodd" d="M12.6541 10.7952L14.7544 11.6213C14.8576 11.6618 14.9394 11.7434 14.9801 11.8466C15.0511 12.0264 14.9828 12.2268 14.827 12.3284L14.755 12.3656L8.35645 14.8924C8.15935 14.9703 7.94372 14.9831 7.74052 14.9309L7.62035 14.8918L1.25259 12.3653C1.1499 12.3246 1.06864 12.2432 1.02806 12.1404C0.957068 11.9607 1.02536 11.7603 1.1812 11.6587L1.25319 11.6215L3.34307 10.7962L7.06917 12.2751C7.65895 12.5091 8.31525 12.5097 8.9054 12.2766L12.6541 10.7952ZM12.6541 6.77688L14.7544 7.60289C14.8576 7.64346 14.9394 7.72508 14.9801 7.82824C15.0511 8.00803 14.9828 8.20839 14.827 8.31004L14.755 8.3472L10.6001 9.98825L9.619 10.375L8.35645 10.8741L8.317 10.886L8.23566 10.9132C8.20301 10.9215 8.17004 10.9282 8.13688 10.9331C8.12585 10.9346 8.11547 10.936 8.10507 10.9372C8.02541 10.9468 7.94422 10.9464 7.86397 10.9363L7.74052 10.9126L7.62035 10.8735L6.391 10.385L5.38907 9.98825L1.25259 8.34697C1.1499 8.30623 1.06864 8.22483 1.02806 8.12208C0.957068 7.94229 1.02536 7.74192 1.1812 7.64029L1.25319 7.60312L3.34307 6.77788L7.06917 8.25677C7.65895 8.49078 8.31525 8.4913 8.9054 8.25824L12.6541 6.77688ZM7.62186 1.06989C7.85734 0.976906 8.11932 0.976697 8.35494 1.06931L14.7544 3.58452C14.8576 3.62509 14.9394 3.70671 14.9801 3.80987C15.0612 4.01534 14.9605 4.24769 14.755 4.32884L10.6001 5.96988L8.35565 6.856L8.27468 6.88396C8.25405 6.8901 8.23326 6.89557 8.21236 6.90036C8.09824 6.92674 7.98013 6.93258 7.86397 6.91788L7.74052 6.89419L7.62035 6.8551L1.25259 4.3286C1.1499 4.28786 1.06864 4.20646 1.02806 4.10371C0.946925 3.89823 1.04772 3.66589 1.25319 3.58475L7.62186 1.06989Z"></path>
-          </svg>
-          <span className="ml-3 text-xl font-bold text-white text-xl">ProductBoard</span>
-        </Link>
-        <LoginButton />
-      </div>
-    </header>
+    <>
+      <header className="max-w-screen-lg mx-auto my-6 px-2 lg:px-0 min-h-screen flex flex-col" >
+        <div className=' flex justify-between z-10'>
+          <div className='flex items-center'>
+            <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="40" height="40" rx="20" fill="#4338CA" />
+              <path fillRule="evenodd" clipRule="evenodd" d="M26.639 24.0309L29.6377 25.2142C29.785 25.2722 29.9018 25.3891 29.9599 25.5369C30.0613 25.7945 29.9638 26.0816 29.7413 26.2271L29.6385 26.2804L20.5031 29.8998C20.2217 30.0114 19.9138 30.0297 19.6237 29.955L19.4521 29.899L10.3606 26.2799C10.214 26.2216 10.098 26.105 10.0401 25.9578C9.93871 25.7004 10.0362 25.4133 10.2587 25.2678L10.3615 25.2145L13.3453 24.0323L18.6652 26.1507C19.5072 26.4859 20.4443 26.4868 21.2868 26.1529L26.639 24.0309ZM26.639 18.2749L29.6377 19.4581C29.785 19.5163 29.9018 19.6332 29.9599 19.7809C30.0613 20.0385 29.9638 20.3255 29.7413 20.4711L29.6385 20.5243L20.5031 24.1439L20.4468 24.161L20.3306 24.1999C20.284 24.2118 20.2369 24.2214 20.1896 24.2284C20.1739 24.2306 20.159 24.2326 20.1442 24.2343C20.0305 24.248 19.9145 24.2475 19.8 24.233L19.6237 24.1991L19.4521 24.1431L17.6969 23.4433L10.3606 20.524C10.214 20.4656 10.098 20.349 10.0401 20.2018C9.93871 19.9443 10.0362 19.6573 10.2587 19.5117L10.3615 19.4585L13.3453 18.2764L18.6652 20.3948C19.5072 20.73 20.4443 20.7307 21.2868 20.3969L26.639 18.2749ZM19.4543 10.1001C19.7905 9.96692 20.1645 9.96662 20.5009 10.0993L29.6377 13.7021C29.785 13.7602 29.9018 13.8772 29.9599 14.0249C30.0757 14.3192 29.9319 14.6521 29.6385 14.7683L20.5019 18.3883L20.3863 18.4283C20.3569 18.4371 20.3272 18.445 20.2974 18.4518C20.1344 18.4896 19.9658 18.498 19.8 18.4769L19.6237 18.443L19.4521 18.387L10.3606 14.768C10.214 14.7096 10.098 14.593 10.0401 14.4458C9.92423 14.1515 10.0681 13.8187 10.3615 13.7025L19.4543 10.1001Z" fill="white" />
+            </svg>
+            <p className='ml-4 font-medium text-gray-700 text-md'>Product Board</p>
+          </div>
+          <div className='flex items-center'>
+            <button
+              className="bg-indigo-600 px-4 py-2 rounded-sm text-white font-medium cursor-pointer"
+              onClick={() => loginWithRedirect()}
+            >
+              Log In
+            </button>
+            <button
+              className="ml-3 border border-indigo-600  px-4 py-2 rounded-sm  text-indigo-600 font-medium cursor-pointer"
+              onClick={() => loginWithRedirect({ screen_hint: 'signup' })}
+            >
+              Sign up
+            </button>
+          </div>
+        </div>
+        <section className='flex flex-col flex-1 items-center justify-center -mt-20'>
+          <div className='max-w-screen-lg mx-auto px-2 lg:px-0 px-10'>
+            <h1 className='text-center mb-5 text-sm lg:text-md uppercase tracking-wide text-gray-600'>An all-in-one workspace that handles your work.</h1>
+            <h1 className='text-center text-3xl lg:text-5xl font-semibold text-gray-600' style={{ lineHeight: 1.2 }}>Unlock your team's potential. Get started with Product Board today.</h1>
+            <h3 className='text-center text-md font-normal text-gray-600 mt-6'>Organize your team and keep track of your work with a single tool.</h3>
+          </div>
+          <div className='flex items-center mt-7'>
+            <button
+              className="bg-indigo-600 px-10 py-4 rounded-sm text-white font-medium uppercase tracking-wide cursor-pointer"
+              onClick={() => loginWithRedirect({ screen_hint: 'signup' })}
+              style={{ fontWeight: 100 }}
+            >
+              Get Started Now
+            </button>
+          </div>
+        </section>
+      </header>
+    </>
   );
 };

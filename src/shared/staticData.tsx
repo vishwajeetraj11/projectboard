@@ -1,24 +1,10 @@
+import { BiSortUp } from 'react-icons/bi';
+import { CgBoard, CgLivePhoto } from "react-icons/cg";
+import { MdNotificationsActive } from 'react-icons/md';
+import { RiTeamFill } from "react-icons/ri";
+import { TiThMenu } from "react-icons/ti";
+
 export const features = [
-  {
-    id: '1',
-    Icon: (
-      <svg
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        className="w-6 h-6"
-        viewBox="0 0 24 24"
-      >
-        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
-        <circle cx="12" cy="7" r="4" />
-      </svg>
-    ),
-    title: 'Sign Up',
-    description:
-      'Signing Up using auth0 service is as easy it gets. Your data is completely safe.',
-  },
   {
     id: '2',
     Icon: (
@@ -36,9 +22,9 @@ export const features = [
         <path d="M20 4L8.12 15.88M14.47 14.48L20 20M8.12 8.12L12 12" />
       </svg>
     ),
-    title: 'Create projects',
+    title: 'Manage projects',
     description:
-      'Create projects for your teams or become a member on a project of other member.',
+      'Create projects for your teams or become a member on another project.',
   },
   {
     id: '3',
@@ -100,24 +86,62 @@ export const features = [
     description:
       'Using our multi layer filter, keep a track of tasks based on multiple fields.',
   },
+];
+
+export const newFeatures = [
+  {
+    id: '1',
+    Icon: (
+      <CgBoard className='w-10 h-10' />
+    ),
+    title: 'Boards',
+    description:
+      'Empower teams to self-manage as they move tasks from one stage to the other and visualize workflows in boards.',
+  },
+  {
+    id: '2',
+    Icon: (
+      <RiTeamFill className='w-10 h-10' />
+    ),
+    title: 'Team Management',
+    description:
+      'Provide access to your project or revoke them when necessary.'
+  },
+  {
+    id: '3',
+    Icon: (
+      <BiSortUp className='w-10 h-10' />
+    ),
+    title: 'History',
+    description:
+      'Track history of entire project or individual task.',
+  },
+  {
+    id: '4',
+    Icon: (
+      <MdNotificationsActive className='w-10 h-10' />
+    ),
+    title: 'Get Notified Immediately',
+    description:
+      'Get Notifications when anyone in team creates or deletes a task or update boards.',
+  },
+  {
+    id: '5',
+    Icon: (
+      <TiThMenu className='w-10 h-10' />
+    ),
+    title: 'Context Menu',
+    description:
+      "Make new Tasks with interactive menu that appears on every new line when you type '/'.",
+  },
   {
     id: '6',
     Icon: (
-      <svg
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        className="w-6 h-6"
-        viewBox="0 0 24 24"
-      >
-        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-      </svg>
+      <CgLivePhoto className='w-10 h-10' />
     ),
-    title: 'Instant connect',
+    title: 'Live Markdown Editor',
     description:
-      'Establish a connection with our community and talk to us directly regarding your queries.',
+      'Seamless experience as both a readder and a writer. Providing a real live preview feature to help your concentrate on the content itself.',
   },
 ];
 

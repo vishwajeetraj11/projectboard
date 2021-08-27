@@ -1,19 +1,18 @@
 import { ReactComponent as AddIcon } from 'assets/icons/add.svg';
 import { ReactComponent as NoPriorityIcon } from 'assets/icons/dots.svg';
 import { ReactComponent as HelpIcon } from 'assets/icons/help.svg';
-import { ReactComponent as InboxIcon } from 'assets/icons/inbox.svg';
 import { ReactComponent as IssueIcon } from 'assets/icons/issue.svg';
 import { ReactComponent as MenuIcon } from 'assets/icons/menu.svg';
 import { ReactComponent as UrgentPriorityIcon } from 'assets/icons/rounded-claim.svg';
 import { ReactComponent as MediumPriorityIcon } from 'assets/icons/signal-medium.svg';
 import { ReactComponent as HighPriorityIcon } from 'assets/icons/signal-strong.svg';
 import { ReactComponent as LowPriorityIcon } from 'assets/icons/signal-weak.svg';
-// import { ReactComponent as ViewIcon } from 'assets/icons/view.svg';
 import classNames from 'classnames';
 import HelpModal from 'components/modals/HelpModal';
 // import { SearchBox } from 'components/SearchBox';
 import { useClickOutside } from 'hooks/useClickOutside';
 import React, { RefObject, useEffect, useRef, useState } from 'react';
+import { BiSortUp } from 'react-icons/bi';
 import { CgBoard } from "react-icons/cg";
 import { MdKeyboardArrowDown as ExpandMore } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
@@ -43,7 +42,7 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
   const dispatch = useDispatch();
 
   let classes = classNames(
-    'absolute lg:static inset-0 transform duration-300 lg:relative lg:translate-x-0 bg-white flex flex-col flex-shrink-0 w-56 font-sans text-sm text-gray-700 border-r border-gray-100 lg:shadow-none justify-items-start',
+    'absolute lg:static inset-0 transform duration-300 lg:relative lg:translate-x-0 bg-white flex flex-col flex-shrink-0 w-56 font-sans text-sm text-gray-700 border-r border-gray-100 lg:shadow-none justify-items-start h-screen',
     {
       '-translate-x-full ease-out shadow-none': !showMenu,
       'translate-x-0 ease-in shadow-xl': showMenu
@@ -113,7 +112,7 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
           {/* <SearchBox className='mt-5' placeholder='Not Implemented' /> */}
           {/* actions */}
           <Link to={`/history/projects/${projectData.project._id}`} className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>
-            <InboxIcon className='w-3.5 h-3.5 mr-4 text-sm text-gray-500 group-hover:text-gray-600' />
+            <BiSortUp className='w-3.5 h-3.5 mr-4 text-sm text-gray-500 group-hover:text-gray-600' />
             <span>History</span>
           </Link>
           <Link to={`/projects/${projectData.project._id}/tasks`} className='group relative w-full mt-0.5 py-2 px-2 h-7 flex items-center rounded hover:bg-gray-100 cursor-pointer'>

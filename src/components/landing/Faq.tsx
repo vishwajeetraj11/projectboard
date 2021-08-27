@@ -1,32 +1,62 @@
+import Accordion from '@material-ui/core/Accordion';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React from 'react';
 import { Faqs } from 'shared/staticData';
-import { Item } from './FaqItem';
 
+const useStyles = makeStyles((theme: Theme) =>
+	createStyles({
+		root: {
+			width: '100%',
+		},
+		heading: {
+			fontSize: theme.typography.pxToRem(15),
+			// flexBasis: '33.33%',
+			flexBasis: '80%',
+			flexShrink: 0,
+		},
+		secondaryHeading: {
+			fontSize: theme.typography.pxToRem(15),
+			color: theme.palette.text.secondary,
+		},
+	}),
+);
 
+export const Faq = () => {
+	const classes = useStyles();
+	const [expanded, setExpanded] = React.useState<string | false>(false);
 
-interface Props {
+	const handleChange = (panel: string) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
+		setExpanded(isExpanded ? panel : false);
+	};
 
-}
-
-
-export const Faq: React.FC<Props> = () => {
-    return (
-		<div className="px-12 pb-12 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:pt-4  ">
-    		<div className="max-w-xl sm:mx-auto lg:max-w-2xl">
-      			<div className="max-w-xl flex align-center md:mx-auto sm:text-center lg:max-w-2xl md:mb-12 lg:">
-        			<h2 className="max-w-lg px-40 mb-4 font-sans text-3xl font-bold leading-none tracking-tight text-gray-900 sm:text-4xl md:mx-auto">
-          				FAQs
-        			</h2>
-      			</div>
-      			<div className="space-y-4">
-        			{Faqs.map(faq => (
-          				<Item key={faq.id} title={faq.question}> 
-						  {/*  */}
-            				{faq.ans}
-          				</Item>
-        			))}
-      			</div>
-    		</div>
-  		</div>
-  	);
+	return (
+		<div className={classes.root}>
+			<div className="px-12 pb-12 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:pt-4">
+				<h2 className="text-center font-bold text-3xl text-gray-700 mb-6">
+					FAQs
+				</h2>
+				{React.Children.toArray(Faqs.map((faq: any, index: number) => (
+					<Accordion className='shadow-small' expanded={expanded === `panel${index}`} onChange={handleChange(`panel${index}`)}>
+						<AccordionSummary
+							expandIcon={<ExpandMoreIcon />}
+							aria-controls="panel1bh-content"
+							id={`panel${index}bh-header`}
+						>
+							<Typography className={classes.heading}>{faq.question}</Typography>
+							{/* <Typography className={classes.secondaryHeading}>Secondary Heading</Typography> */}
+						</AccordionSummary>
+						<AccordionDetails>
+							<Typography>
+								{faq.ans}
+							</Typography>
+						</AccordionDetails>
+					</Accordion>
+				)))}
+			</div>
+		</div>
+	);
 };

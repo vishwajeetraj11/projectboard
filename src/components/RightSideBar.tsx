@@ -1,31 +1,31 @@
-import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
+import { useAuth0 } from '@auth0/auth0-react';
+import DateFnsUtils from '@date-io/date-fns';
+import { CircularProgress } from '@material-ui/core';
+import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
 // import { ReactComponent as ViewIcon } from 'assets/icons/view.svg';
 import { ReactComponent as OwnerIcon } from 'assets/icons/avatar.svg';
+import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
+// import { Label } from 'shared/types';
+import { ReactComponent as LabelIcon } from 'assets/icons/label.svg';
 import classNames from 'classnames';
 import { AssigneeMenu } from 'components/menus/AssigneeMenu';
+import { LabelMenu } from 'components/menus/LabelMenu';
 import { PriorityMenu } from 'components/menus/PriorityMenu';
 import { StatusMenu } from 'components/menus/StatusMenu';
+import { showError, showInfo } from 'components/Notification';
 import { PriorityIcon } from 'components/PriorityIcon';
 import { StatusIcon } from 'components/StatusIcon';
 import { useClickOutside } from 'hooks/useClickOutside';
 import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getLabelObj, getPriorityString, getStatusText } from 'shared/utils/common';
-import { RootState } from 'store/store';
-import { LabelMenu } from 'components/menus/LabelMenu';
-// import { Label } from 'shared/types';
-import { ReactComponent as LabelIcon } from 'assets/icons/label.svg';
-import { DatePicker, MuiPickersUtilsProvider, } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
-import { formatDate } from 'shared/utils/formatDate';
-import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
-import { Label, Member } from 'shared/types';
-import { getTaskDetail, updateTaskMicroProperties } from 'store/actions/taskActions';
 import { useParams } from 'react-router-dom';
-import { useAuth0 } from '@auth0/auth0-react';
-import { showError, showInfo } from 'components/Notification';
-import { CircularProgress } from '@material-ui/core';
+import { Label, Member } from 'shared/types';
+import { getLabelObj, getPriorityString, getStatusText } from 'shared/utils/common';
+import { formatDate } from 'shared/utils/formatDate';
+import { getTaskDetail, updateTaskMicroProperties } from 'store/actions/taskActions';
 import { UPDATE_TASK_MICRO_PROPS_CLEAR } from 'store/contants/taskConstants';
+import { RootState } from 'store/store';
 interface Props {
   // Show menu (for small screen only)
   showMenu: boolean;
@@ -50,7 +50,7 @@ export const RightSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
   const params = useParams<URLParams>();
   const { getAccessTokenSilently } = useAuth0();
   const classes = classNames(
-    `absolute lg:static inset-0 transform duration-300 lg:relative lg:translate-x-0 bg-white flex flex-col flex-shrink-0 w-80 font-sans text-sm text-gray-700 border-l border-gray-100 lg:shadow-none justify-items-start`,
+    `absolute lg:static inset-0 transform duration-300 lg:relative lg:translate-x-0 bg-white flex flex-col flex-shrink-0 w-80 font-sans text-sm text-gray-700 border-l border-gray-100 lg:shadow-none justify-items-start h-screen`,
     {
       '-translate-x-full ease-out shadow-none': !showMenu,
       'translate-x-0 ease-in shadow-xl': showMenu

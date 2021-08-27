@@ -53,6 +53,8 @@ module.exports = {
         extend: {
             boxShadow: {
                 modal: 'rgb(0 0 0 / 9%) 0px 3px 12px',
+                small: 'rgb(0 0 0 / 7%) 0px 5px 10px',
+                large: 'rgb(0 0 0 / 7%) 0px 5px 20px',
                 'large-modal': 'rgb(0 0 0 / 50%) 0px 16px 70px'
             },
             spacing: {
