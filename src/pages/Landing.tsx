@@ -1,6 +1,9 @@
 import { Cards } from 'components/landing/Cards';
+import { DescList } from 'components/landing/DescList';
 import { Faq } from 'components/landing/Faq';
+import { FilterVideo } from 'components/landing/FilterVideo';
 import { Footer } from 'components/landing/Footer';
+import { GetStarted } from 'components/landing/GetStarted';
 import { Main } from 'components/landing/Main';
 import { Nav } from 'components/landing/Nav';
 import { Support } from 'components/landing/Support';
@@ -16,7 +19,10 @@ export const Landing: React.FC<Props> = () => {
       <Nav />
       <Main />
       <Cards />
+      <FilterVideo />
+      <DescList />
       <Faq />
+      <GetStarted />
       <Support />
       <Footer />
     </>

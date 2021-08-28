@@ -1,6 +1,6 @@
-import React from 'react';
 import { Button } from '@material-ui/core';
 import GitHubIcon from '@material-ui/icons/GitHub';
+import React from 'react';
 import { BuyMeACoffee } from './SVGs';
 
 

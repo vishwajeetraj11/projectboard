@@ -1,8 +1,7 @@
-import { Switch } from 'react-router-dom';
 import { CreateProfile } from 'pages/CreateProfile';
-import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
 import { Landing } from 'pages/Landing';
+import React from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 interface Props {
   setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;

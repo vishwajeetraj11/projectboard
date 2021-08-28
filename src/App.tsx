@@ -9,7 +9,6 @@ const slideUp = cssTransition({
 });
 
 export const App = () => {
-  console.log('Apples and Chloromints ');
 
   return (
     <div className="App">

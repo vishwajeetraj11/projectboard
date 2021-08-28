@@ -7,7 +7,7 @@ interface Props {
   children: React.ReactNode;
 }
 export const ItemGroup = ({ title, children }: Props) => {
-  const [showItems, setshowItems] = useState(true);
+  const [showItems, setshowItems] = useState(false);
 
   let Icon = showItems ? ArrowDropDown : ArrowRight;
   return (

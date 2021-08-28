@@ -148,7 +148,7 @@ export const newFeatures = [
 export const Faqs = [
   {
     id: '1',
-    question: 'Why another management app ?',
+    question: 'Why another Product Board ?',
     ans: 'Its simple. To remove all the hassle of managing teams and projects with multiple people aboard.',
   },
   {
@@ -158,7 +158,7 @@ export const Faqs = [
   },
   {
     id: '3',
-    question: 'We have got a big team. Can your app handle it ?',
-    ans: 'Yes, no problem. Our app provides all the features required to bring a big team together or manage existing ones.',
+    question: 'How can I contact you?',
+    ans: "Head over to instagram @vishwajeet.js or twitter @Vishwajeet323 and DM",
   },
 ];
