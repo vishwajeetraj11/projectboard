@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { showError, showInfo } from 'components/Notification';
+import { showError, showInfo, showWarning } from 'components/Notification';
 import { Status } from 'shared/constants';
 import { Member, Task } from 'shared/types';
 import { baseURL, endpoints } from 'shared/urls';
@@ -71,6 +71,7 @@ export const changeStatusOfTaskBoard: TchangeStatusOfTaskBoard = (taskId, srcSta
     tasks[srcStatus] = sourceArray;
     tasks[destStatus] = destinationArray;
 
+    showWarning("Please wait!", 'Updating Task...');
     // Task with updated Status
     const { data: updatedTask } = await axios({
       url: `${baseURL}${endpoints.projects}/${projectId}${endpoints.tasks}/${taskId}/update`,

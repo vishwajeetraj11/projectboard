@@ -55,7 +55,7 @@ export const TopFilter = ({ title, onOpenMenu, type }: Props) => {
             </div>}
           </>}
           {onTasksPage && <button
-            className='mt-2 lg:mt-0 px-1 py-0.5 ml-3 border border-gray-300 border-dashed rounded text-gray-500 hover:border-gray-400 focus:outline-none hover:text-gray-800'
+            className='select-none mt-2 lg:mt-0 px-1 py-0.5 ml-3 border border-gray-300 border-dashed rounded text-gray-500 hover:border-gray-400 focus:outline-none hover:text-gray-800'
             onClick={() => setShowFilter(!showFilter)}
           >+ Filter</button>}
         </div>

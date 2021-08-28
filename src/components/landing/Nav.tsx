@@ -40,16 +40,16 @@ export const Nav: React.FC<Props> = () => {
             <h1 className='text-center text-3xl lg:text-5xl font-semibold text-gray-600' style={{ lineHeight: 1.2 }}>Unlock your team's potential. Get started with Product Board today.</h1>
             <h3 className='text-center text-md font-normal text-gray-600 mt-6'>Organize your team and keep track of your work with a single tool.</h3>
           </div>
-          <div className='flex items-center mt-7 flex-wrap justify-center'>
+          <div className='flex items-center mt-4 flex-wrap justify-center'>
             <button
-              className="bg-indigo-600 px-10 py-4 rounded-sm text-white font-medium uppercase tracking-wide cursor-pointer"
+              className="mt-3 bg-indigo-600 px-10 py-4 rounded-sm text-white font-medium uppercase tracking-wide cursor-pointer"
               onClick={() => loginWithRedirect({ screen_hint: 'signup' })}
               style={{ fontWeight: 100 }}
             >
               Get Started Now
             </button>
             <button
-              className="mt-3 xs:mt-0 ml-0 xs:ml-3 text-indigo-600 border-2 border-indigo-600 px-10 py-4 text-medium rounded-sm font-medium uppercase tracking-wide cursor-pointer"
+              className="mt-3 ml-0 xs:ml-3 text-indigo-600 border-2 border-indigo-600 px-10 py-4 text-medium rounded-sm font-medium uppercase tracking-wide cursor-pointer"
               onClick={() => loginWithRedirect({ screen_hint: 'signup' })}
             >
               Watch A Video

@@ -10,8 +10,8 @@ interface Props {
 export const Footer: React.FC<Props> = () => {
     return (
         <footer className="m-4 p-4 lg:p-10 rounded-md bg-indigo-600 text-white">
-            <div className='flex justify-between'>
-                <h1 className='font-semibold text-3xl'>Product Board</h1>
+            <div className='flex justify-between flex-col md:flex-row items-center'>
+                <h1 className='font-semibold text-xl md:text-3xl'>Product Board</h1>
                 <div>
                     <Button>
                         <a href='https://github.com/vishwajeetraj11/productboard' target='_blank' referrerPolicy='no-referrer' rel="noreferrer">

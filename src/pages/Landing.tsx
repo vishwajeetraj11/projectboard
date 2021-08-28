@@ -6,7 +6,6 @@ import { Footer } from 'components/landing/Footer';
 import { GetStarted } from 'components/landing/GetStarted';
 import { Main } from 'components/landing/Main';
 import { Nav } from 'components/landing/Nav';
-import { Support } from 'components/landing/Support';
 import React from 'react';
 
 interface Props {
@@ -23,7 +22,6 @@ export const Landing: React.FC<Props> = () => {
       <DescList />
       <Faq />
       <GetStarted />
-      <Support />
       <Footer />
     </>
   );

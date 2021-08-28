@@ -86,6 +86,7 @@ export const CreateTask: React.FC<Props> = ({ match, history, location }) => {
       dueDate
     };
     try {
+      showWarning("Please wait!", 'Creating Task...');
       const token = await getAccessTokenSilently();
 
       const { data } = await axios({
