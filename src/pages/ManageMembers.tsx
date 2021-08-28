@@ -1,12 +1,12 @@
 import { LeftSideBar } from 'components/LeftSideBar';
+import { AddMembers } from 'components/members/AddMembers';
+import { MemberList } from 'components/members/MemberList';
 import { TopFilter } from 'components/TopFilter';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import { topFilterType, userType } from 'shared/constants';
 import { RootState } from 'store/store';
-import { MemberList } from 'components/members/MemberList';
-import { AddMembers } from 'components/members/AddMembers';
 
 interface RouteParams { id: string; }
 
@@ -38,7 +38,7 @@ export const ManageMembers: React.FC<Props> = () => {
             <h2 className='text-md'>Manage Members</h2>
             <div className='flex justify-between w-full mt-4 bg-gray-100 my-4'>
               <button className={`w-6/12 rounded-sm py-3 font-medium text-xs ${activeUsers === userType.MEMBER ? 'bg-indigo-600 text-white' : ''}`} onClick={() => toggleUsersActive(userType.MEMBER)}>Members</button>
-              <button className={`w-6/12 rounded-sm py-3 font-medium text-xs ${activeUsers === userType.USER ? 'bg-indigo-600 text-white' : ''}`} onClick={() => toggleUsersActive(userType.USER)}>Add Members</button>
+              {projectData.access === 'admin' && <button className={`w-6/12 rounded-sm py-3 font-medium text-xs ${activeUsers === userType.USER ? 'bg-indigo-600 text-white' : ''}`} onClick={() => toggleUsersActive(userType.USER)}>Add Members</button>}
             </div>
             {activeUsers === userType.MEMBER && <MemberList />}
             {activeUsers === userType.USER && <AddMembers />}
