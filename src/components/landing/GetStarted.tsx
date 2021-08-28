@@ -16,7 +16,7 @@ export const GetStarted: React.FC<Props> = () => {
       </svg>
 
       <h1 className='text-3xl font-semibold text-gray-700 mt-10 text-center'>Get started with Product Board today.</h1>
-      <p className='text-md text-gray-500 mt-4 font-medium text-center'>Increase Your Team Efficienly and Project Output Today.</p>
+      <p className='text-md text-gray-500 mt-4 font-medium text-center'>Increase Your Team Efficiency and Project Output Today.</p>
       <button className='mt-7 bg-indigo-600 text-white uppercase tracking-wide px-8 py-4 rounded-md'
         onClick={() => loginWithRedirect({ screen_hint: 'signup' })}
       >Sign up Now</button>

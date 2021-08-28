@@ -148,7 +148,7 @@ export const newFeatures = [
 export const Faqs = [
   {
     id: '1',
-    question: 'Why another Product Board ?',
+    question: 'Why Product Board ?',
     ans: 'Its simple. To remove all the hassle of managing teams and projects with multiple people aboard.',
   },
   {
