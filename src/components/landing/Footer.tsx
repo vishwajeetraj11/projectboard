@@ -9,7 +9,7 @@ interface Props {
 
 export const Footer: React.FC<Props> = () => {
     return (
-        <footer className="m-4 p-10 rounded-md bg-indigo-600 text-white">
+        <footer className="m-4 p-4 lg:p-10 rounded-md bg-indigo-600 text-white">
             <div className='flex justify-between'>
                 <h1 className='font-semibold text-3xl'>Product Board</h1>
                 <div>
