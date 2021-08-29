@@ -1,8 +1,8 @@
 import FeedbackIcon from 'assets/icons/chat.svg';
+import DiscordIcon from 'assets/icons/discord.svg';
+import GithubIcon from 'assets/icons/github.svg';
 import GuideIcon from 'assets/icons/guide.svg';
 import QuestionIcon from 'assets/icons/question.svg';
-import DiscordIcon from 'assets/icons/discord.svg';
-import GithubIcon from 'assets/icons/github.svg'
 import Modal from 'components/modals/Modal';
 import React from 'react';
 
@@ -43,7 +43,7 @@ export default function HelpModal({ isOpen, onDismiss }: Props) {
           icon={<img src={GuideIcon} alt="Read more about Product Board features" />}
           title="Product Board"
           text="Read more about Product Board and tell us about your experience."
-          link="https://docs.linear.app/Linear-Guide-cab28edf7e26469cbf0132abb539e6d0"
+          link="https://vishwajeetraj11.hashnode.dev/introducing-os-resume-oversimplified-resume-builder"
         />
         <HelpSection
           icon={<img src={DiscordIcon} alt="Ask questions and help others" />}

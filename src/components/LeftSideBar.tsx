@@ -183,7 +183,7 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
             ><AddIcon className='w-3 mr-2' />{projectData.access === 'admin' ? 'Manage Members' : 'View Members'}</Link>
             <button
               className='flex items-center mt-1 focus:outline-none cursor-pointer'
-              onClick={() => setShowHelpModal(true)}
+              onClick={() => { setShowHelpModal(true); onCloseMenu && onCloseMenu(); }}
             ><HelpIcon className='w-3 mr-2 mt-0.5' /> Help & Feedback</button>
           </div>
         </div>

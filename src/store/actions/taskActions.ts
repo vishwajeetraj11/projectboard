@@ -93,6 +93,8 @@ export const changeStatusOfTaskBoard: TchangeStatusOfTaskBoard = (taskId, srcSta
       memberIds
     });
 
+    showInfo("", 'Board Updated Successfully');
+
     dispatch({
       type: CHANGE_STATUS_OF_TASK_SUCCESS,
       payload: tasks
