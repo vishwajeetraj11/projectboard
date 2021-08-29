@@ -1,25 +1,23 @@
+import { Avatar } from 'components/Avatar';
 import { PriorityMenu } from 'components/menus/PriorityMenu';
 import { StatusMenu } from 'components/menus/StatusMenu';
 import { PriorityIcon } from 'components/PriorityIcon';
 import { StatusIcon } from 'components/StatusIcon';
+import { Link, useRouteMatch } from "react-router-dom";
 // import { ContextMenuTrigger } from 'react-contextmenu';
 import { Task } from 'shared/types';
-import { formatDate } from 'shared/utils/formatDate';
-import { Link } from "react-router-dom";
-import { useRouteMatch } from 'react-router-dom';
 import { getLabelObj } from 'shared/utils/common';
+import { formatDate } from 'shared/utils/formatDate';
 
 interface Props {
   task: Task;
-  onChangePriority?: (issue: Task, priority: string) => void;
-  onChangeStatus?: (issue: Task, priority: string) => void;
 }
 
 interface MatchParams {
   id: string;
 }
 
-export const TaskRow = ({ task, onChangePriority, onChangeStatus }: Props) => {
+export const TaskRow = ({ task }: Props) => {
   const match = useRouteMatch<MatchParams>();
 
   const statusIcon = (
@@ -28,17 +26,12 @@ export const TaskRow = ({ task, onChangePriority, onChangeStatus }: Props) => {
 
   const labelObj = getLabelObj(task.label);
 
-  // let avatar = task.author && task.author.avatar
-  //   ? <img src={task.author.avatar} className='w-4.5 h-4.5 rounded-full overflow-hidden' alt={`User - ${task.author.email}`} />
-  //   : <img src={DefaultAvatarIcon} className='w-4.5 h-4.5 rounded-full overflow-hidden' alt={`User - ${task.author.email}`} />;
+  let avatar = (
+    task.assignee ?
+      <Avatar name={`${task?.assignee?.user?.firstName} ${task?.assignee?.user?.lastName}`} /> :
+      <Avatar />
+  );
 
-  const handleChangePriority = (p: string) => {
-    if (onChangePriority) onChangePriority(task, p);
-  };
-
-  const handleChangeStatus = (status: string) => {
-    if (onChangeStatus) onChangeStatus(task, status);
-  };
   return (
     <>
       <Link to={`/projects/${match.params.id}/tasks/${task._id}`}>
@@ -54,7 +47,6 @@ export const TaskRow = ({ task, onChangePriority, onChangeStatus }: Props) => {
                     priority={task.priority} />
                 </div>
               )}
-              onSelect={handleChangePriority}
             />
           </div>
           <div className='flex-shrink-0 ml-2'>
@@ -62,7 +54,6 @@ export const TaskRow = ({ task, onChangePriority, onChangeStatus }: Props) => {
               id={'r-status-' + task._id}
               button={statusIcon}
               disabled
-              onSelect={handleChangeStatus}
             />
           </div>
           <div className='flex-wrap flex-shrink ml-2 overflow-hidden font-medium line-clamp-1 overflow-ellipsis'>{task.title.substr(0, 100) || ''}</div>
@@ -72,7 +63,7 @@ export const TaskRow = ({ task, onChangePriority, onChangeStatus }: Props) => {
             <div className='text-xs'>{labelObj?.name}</div>
           </div>}
           <div className='flex-shrink-0 hidden w-max ml-2 mr-3 font-normal sm:block'>{formatDate(task.startDate)}</div>
-          {/* <div className='flex-shrink-0 ml-auto'>{avatar}</div> */}
+          <div className='flex-shrink-0 ml-auto'>{avatar}</div>
           {/* <div>{`${task?.assignee?.user?.username}`}</div> */}
         </div>
       </Link>

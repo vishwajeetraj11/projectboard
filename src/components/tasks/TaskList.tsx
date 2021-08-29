@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import { CircularProgress } from '@material-ui/core';
+import React from 'react';
 import { connectMenu } from 'react-contextmenu';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -12,6 +13,7 @@ export const TaskList = () => {
   // const dispatch = useDispatch<AppDispatch>();
   const location = useLocation();
   const allTasks = useSelector((state: RootState) => state.taskList.tasks);
+  const { loading, error } = useSelector((state: RootState) => state.taskList);
   const { status, priority, label } = useSelector((state: RootState) => state.filters);
 
   let tasks = [...allTasks.backlog, ...allTasks.todo, ...allTasks.in_progress, ...allTasks.done, ...allTasks.cancelled];
@@ -36,27 +38,12 @@ export const TaskList = () => {
   //     return aId - bId;
   // });
 
-  const handleTaskStatusChange = (task: Task, status: string) => {
-
-    // dispatch(updateTaskStatus(task, status));
-  };
-
-  const handleTaskPriorityChange = (task: Task, priority: string) => {
-    // dispatch(updateTaskPriority(task, priority));
-  };
-
-  useEffect(() => {
-    // dispatch(loadTasks());
-  }, []);
-
   const taskRows = tasks.map((task, idx) => {
     const ConnectedMenu = connectMenu(task._id)(TaskContextMenu);
     return (
       <>
         <TaskRow
           task={task}
-          onChangePriority={handleTaskPriorityChange}
-          onChangeStatus={handleTaskStatusChange}
         />
         <ConnectedMenu />
       </>
@@ -64,7 +51,14 @@ export const TaskList = () => {
   });
   return (
     <div className={`flex flex-col overflow-auto ${!taskRows.length ? 'flex-1' : ''}`}>
-      {taskRows.length === 0 ? <div className='flex-1 flex items-center justify-center'>No Tasks Yet</div> : React.Children.toArray(taskRows)}
+      {
+        loading
+          ? <div className='flex items-center justify-center flex-1' style={{ minHeight: '50vh' }}><CircularProgress color="primary" /></div>
+          : error ? <div className='flex items-center justify-center flex-1' style={{ minHeight: '50vh' }}>{error}</div>
+            : taskRows.length === 0
+              ? <div className='flex-1 flex items-center justify-center'>No Tasks Yet</div>
+              : React.Children.toArray(taskRows)
+      }
     </div>
   );
 };
