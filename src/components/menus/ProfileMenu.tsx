@@ -54,7 +54,7 @@ export const ProfileMenu = ({ isOpen, className, onDismiss }: Props) => {
         {projectData.access === 'admin' && <><div className='w-full px-3 my-1 border-b border-gray-200'></div><Link to={`/projects/${projectData.project._id}/members`} className='flex items-center h-8 px-3 hover:bg-gray-100 '>Manage Members</Link></>}
         <div className='w-full px-3 my-1 border-b border-gray-200'></div>
         <a rel="noreferrer" href='https://hashnode.com/@vishwajeetraj11' target='_blank' className='flex items-center h-8 px-3 hover:bg-gray-100 '>Join me on Hashnode</a>
-        <a rel="noreferrer" href='https://vishwajeetraj11.hashnode.dev/introducing-os-resume-oversimplified-resume-builder' target='_blank' className='flex items-center h-8 px-3 hover:bg-gray-100 '>Introducing Product Board</a>
+        <a rel="noreferrer" href='https://vishwajeetraj11.hashnode.dev/introducing-product-board-a-project-management-platform' target='_blank' className='flex items-center h-8 px-3 hover:bg-gray-100 '>Introducing Product Board</a>
         <a rel="noreferrer" href='https://github.com/vishwajeetraj11/productboard' target='_blank' className='flex items-center h-8 px-3 hover:bg-gray-100 '>Github</a>
         <a rel="noreferrer" href='https://www.buymeacoffee.com/vishwajeetraj11' target='_blank' className='flex items-center h-8 px-3 hover:bg-gray-100 '>Buy Me a Coffee</a>
         <div className='w-full px-3 my-1 border-b border-gray-200'></div>

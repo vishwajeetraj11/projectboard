@@ -3,8 +3,7 @@ import { CircularProgress } from '@material-ui/core';
 import { HistoryRow } from 'components/history/HistoryRow';
 import { LeftSideBar } from 'components/LeftSideBar';
 import { TopFilter } from 'components/TopFilter';
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import { topFilterType } from 'shared/constants';
@@ -46,7 +45,7 @@ export const ProjectHistory: React.FC<Props> = ({ match }) => {
                 ? <div className='flex items-center justify-center flex-1'>
                   No History yet.
                 </div>
-                : <div className='flex flex-col flex-1 overflow-y-scroll'>
+                : <div className='flex flex-col flex-1 overflow-y-scroll pb-20'>
                   {React.Children.toArray(history.map((hist: User_Populated_History) =>
                     <HistoryRow history={hist} />
                   ))}

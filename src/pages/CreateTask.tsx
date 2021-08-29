@@ -14,7 +14,7 @@ import { PriorityMenu } from 'components/menus/PriorityMenu';
 import { StatusMenu } from 'components/menus/StatusMenu';
 import { PriorityIcon } from 'components/PriorityIcon';
 import { StatusIcon } from 'components/StatusIcon';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import Editor from "rich-markdown-editor";
@@ -110,6 +110,21 @@ export const CreateTask: React.FC<Props> = ({ match, history, location }) => {
 
     history.push(`/projects/${projectData.project._id}/tasks`);
   };
+
+  useEffect(() => {
+    const buyCoffee = document.getElementById("bmc-wbtn");
+    if (buyCoffee) {
+      buyCoffee.style.opacity = '0';
+      buyCoffee.style.visibility = 'hidden';
+    }
+    return () => {
+      const buyCoffee = document.getElementById("bmc-wbtn");
+      if (buyCoffee) {
+        buyCoffee.style.opacity = '1';
+        buyCoffee.style.visibility = 'visible';
+      }
+    };
+  }, []);
 
   return (
     <>

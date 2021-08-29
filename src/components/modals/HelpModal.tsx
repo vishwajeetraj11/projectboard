@@ -20,7 +20,7 @@ interface HelpProps {
 }
 function HelpSection({ icon, title, text, link }: HelpProps) {
   return (
-    <a className="flex items-start py-3" href={link}>
+    <a className="flex items-start py-3" href={link} target='_blank' rel="noreferrer">
       <div className='pt-1'>
         {icon}
       </div>
