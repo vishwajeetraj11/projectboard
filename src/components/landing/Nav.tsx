@@ -48,12 +48,14 @@ export const Nav: React.FC<Props> = () => {
             >
               Get Started Now
             </button>
-            <button
-              className="mt-3 ml-0 xs:ml-3 text-indigo-600 border-2 border-indigo-600 px-10 py-4 text-medium rounded-sm font-medium uppercase tracking-wide cursor-pointer"
-              onClick={() => loginWithRedirect({ screen_hint: 'signup' })}
+            <a
+              href='https://www.youtube.com/watch?v=tizIKO14OB8'
+              target='_blank'
+              referrerPolicy='no-referrer'
+              className="mt-3 ml-0 xs:ml-3 text-indigo-600 border-2 border-indigo-600 px-10 py-4 text-medium rounded-sm font-medium uppercase tracking-wide cursor-pointer" rel="noreferrer"
             >
               Watch A Video
-            </button>
+            </a>
           </div>
         </section>
       </header>
