@@ -1,7 +1,8 @@
 # 🚀 Product Board - Project Management Platform.
 
 Live: https://productboard-application.vercel.app/  
-Backend: https://github.com/vishwajeetraj11/productboard-backend
+Backend: https://github.com/vishwajeetraj11/productboard-backend  
+Fronend: https://github.com/vishwajeetraj11/productboard  
 
 # Deployment:  
 ### Frontend: Vercel  
