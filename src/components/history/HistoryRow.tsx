@@ -15,7 +15,7 @@ interface Props {
 }
 
 interface MatchParams {
-  id: string;
+  projectId: string;
 }
 
 export const HistoryRow: React.FC<Props> = ({ history: h }) => {
@@ -35,7 +35,7 @@ export const HistoryRow: React.FC<Props> = ({ history: h }) => {
   const match = useRouteMatch<MatchParams>();
 
   return (
-    <Link to={`/projects/${match.params.id}/tasks/${h?.task}`} className='px-4 py-4 border-b border-gray-100 hover:bg-gray-100 transition-all flex flex-row items-center flex-wrap relative'>
+    <Link to={`/projects/${match.params.projectId}/tasks/${h?.task}`} className='px-4 py-4 border-b border-gray-100 hover:bg-gray-100 transition-all flex flex-row items-center flex-wrap relative'>
       {/* {
         create ? <CreateHistoryRow />
           : update ? <UpdateHistoryRow />

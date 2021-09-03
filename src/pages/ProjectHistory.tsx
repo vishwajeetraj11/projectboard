@@ -11,7 +11,7 @@ import { User_Populated_History } from 'shared/types';
 import { getProjectHistory } from 'store/actions/historyActions';
 import { RootState } from 'store/store';
 
-interface RouteParams { id: string; }
+interface RouteParams { projectId: string; }
 
 interface Props extends RouteComponentProps<RouteParams> {
 
@@ -27,9 +27,9 @@ export const ProjectHistory: React.FC<Props> = ({ match }) => {
   useEffect(() => {
     (async () => {
       const token = await getAccessTokenSilently();
-      dispatch(getProjectHistory(token, match.params.id));
+      dispatch(getProjectHistory(token, match.params.projectId));
     })();
-  }, [dispatch, getAccessTokenSilently, match.params.id]);
+  }, [dispatch, getAccessTokenSilently, match.params.projectId]);
 
   return (
     <>
