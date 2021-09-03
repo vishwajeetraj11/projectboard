@@ -21,12 +21,22 @@ Edit Project / Edit Profile        |  Add Members
 <img src="https://cdn.hashnode.com/res/hashnode/image/upload/v1630153390720/oMN0ES-gF.png" alt="Product Board Edit Screen"> | <img src="https://cdn.hashnode.com/res/hashnode/image/upload/v1630153419566/dKBwRusw1.png" alt="ADD Members Screen">
 Manage Members
  <img src="https://cdn.hashnode.com/res/hashnode/image/upload/v1630153308630/WU5JneMCO.png" alt="Manage Members Screen">
-   
-Getting Started:   
+  
+# Setting up Auth0  
+1. Login/Signup to Auth0  
+2. Create Application: ```Single Page Web Applications```  
+3. Inside The Application configure these urls  
+   Allowed Callback URLs  ```http://localhost:<YOUR_FRONTEND_PORT>/```  
+   Allowed Logout URLs  ```http://localhost:<YOUR_FRONTEND_PORT>/```  
+   Allowed Web Origins  ```http://localhost:<YOUR_FRONTEND_PORT>/```  
+4. Setup Custom Database: https://www.youtube.com/watch?v=TXnDFU4sG0A&t=306s  
+
+# Getting Started:   
 - Clone both frontend and backend  
 - Make an account if you don't already have one on Auth0 and get required credentials. (check .env.example)  
 - Get your mongodb db uri  
 - Install Dependencies  
+- Make sure you setup auth0 before this.
 - That's it you are done. ```npm start``` or ```yarn start```  
 
 <h2><a id="user-content-about" class="anchor" aria-hidden="true" href="#about"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Support</h2>
