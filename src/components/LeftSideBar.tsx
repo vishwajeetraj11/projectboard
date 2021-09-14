@@ -73,7 +73,7 @@ export const LeftSideBar: React.FC<Props> = ({ showMenu, onCloseMenu }) => {
 
   return (
     <>
-      <div className={classes} style={{ zIndex: 1000 }} ref={ref}>
+      <div className={classes} style={{ zIndex: 2 }} ref={ref}>
         <button
           className='flex-shrink-0 px-5 ml-2 lg:hidden h-14 focus:outline-none'
           onClick={onCloseMenu}
