@@ -3,7 +3,7 @@
 ![productboard](https://socialify.git.ci/vishwajeetraj11/productboard/image?description=1&language=1&owner=1&pattern=Floating%20Cogs&theme=Dark)
 
 Live: https://productboard-application.vercel.app/  
-Backend: https://github.com/vishwajeetraj11/projecttboard-backend  
+Backend: https://github.com/vishwajeetraj11/projectboard-backend  
 Fronend: https://github.com/vishwajeetraj11/projectboard  
 
 # Deployment:  
