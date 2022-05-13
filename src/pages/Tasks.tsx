@@ -11,34 +11,37 @@ import { getAllMembers } from 'store/actions/memberActions';
 import { getAllTasks } from 'store/actions/taskActions';
 import { RootState } from 'store/store';
 
-interface RouteParams { id: string; }
-interface Props extends RouteComponentProps<RouteParams> {
-
+interface RouteParams {
+    projectId: string;
 }
-
+interface Props extends RouteComponentProps<RouteParams> {}
 
 export const Tasks: React.FC<Props> = ({ match }) => {
-  const [showMenu, setShowMenu] = useState(false);
-  const dispatch = useDispatch();
-  const { getAccessTokenSilently } = useAuth0();
-  const { projectData } = useSelector((state: RootState) => state.currentProject);
+    const [showMenu, setShowMenu] = useState(false);
+    const dispatch = useDispatch();
+    const { getAccessTokenSilently } = useAuth0();
+    const { projectData } = useSelector((state: RootState) => state.currentProject);
 
-  useEffect(() => {
-    (async () => {
-      const token = await getAccessTokenSilently();
-      dispatch(getAllTasks(token, match.params.id));
-      dispatch(getAllMembers(token, match.params.id));
-      socket.emit('member-loggedIn', { member: projectData._id });
-    })();
-  }, [dispatch, getAccessTokenSilently, match.params.id, projectData._id]);
+    useEffect(() => {
+        (async () => {
+            const token = await getAccessTokenSilently();
+            dispatch(getAllTasks(token, match.params.projectId));
+            dispatch(getAllMembers(token, match.params.projectId));
+            socket.emit('member-loggedIn', { member: projectData._id });
+        })();
+    }, [dispatch, getAccessTokenSilently, match.params.projectId, projectData._id]);
 
-  return (
-    <>
-      <LeftSideBar showMenu={showMenu} onCloseMenu={() => setShowMenu(false)} />
-      <div className='flex flex-col flex-grow'>
-        <TopFilter onOpenMenu={() => setShowMenu(!showMenu)} type={topFilterType.TASKS} title='All Tasks' />
-        <TaskList />
-      </div>
-    </>
-  );
+    return (
+        <>
+            <LeftSideBar showMenu={showMenu} onCloseMenu={() => setShowMenu(false)} />
+            <div className="flex flex-col flex-grow">
+                <TopFilter
+                    onOpenMenu={() => setShowMenu(!showMenu)}
+                    type={topFilterType.TASKS}
+                    title="All Tasks"
+                />
+                <TaskList />
+            </div>
+        </>
+    );
 };

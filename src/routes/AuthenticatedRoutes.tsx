@@ -13,42 +13,45 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import socket from 'shared/utils/socket';
-import { updateBoardAfterSocketEvent, updateTaskAfterDeleteSocketEvent, updateTasksAfterSocketEvent } from 'store/actions/taskActions';
+import {
+    updateBoardAfterSocketEvent,
+    updateTaskAfterDeleteSocketEvent,
+    updateTasksAfterSocketEvent
+} from 'store/actions/taskActions';
 
-interface Props {
-}
+interface Props {}
 
 export const AuthenticatedRoutes: React.FC<Props> = () => {
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-  useEffect(() => {
-    socket.on('delete_update', ({ taskId }: any) => {
-      dispatch(updateTaskAfterDeleteSocketEvent(taskId));
-    });
-    socket.on('board_update', ({ updatedTask }: any) => {
-      dispatch(updateBoardAfterSocketEvent(updatedTask));
-    });
-    socket.on('create_update', ({ newTask }: any) => {
-      dispatch(updateTasksAfterSocketEvent(newTask));
-    });
-  }, [dispatch]);
+    useEffect(() => {
+        socket.on('delete_update', ({ taskId }: any) => {
+            dispatch(updateTaskAfterDeleteSocketEvent(taskId));
+        });
+        socket.on('board_update', ({ updatedTask }: any) => {
+            dispatch(updateBoardAfterSocketEvent(updatedTask));
+        });
+        socket.on('create_update', ({ newTask }: any) => {
+            dispatch(updateTasksAfterSocketEvent(newTask));
+        });
+    }, [dispatch]);
 
-  return (
-    <div className='flex w-full h-screen overflow-y-hidden'>
-      <Switch>
-        <Route path='/projects' exact component={Projects} />
-        <Route path='/edit-project' exact component={EditProject} />
-        <Route path='/create-project' exact component={CreateProject} />
-        <Route path='/projects/:id/tasks' exact component={Tasks} />
-        <Route path='/projects/:projectId/tasks/:taskId' exact component={TaskDetail} />
-        <Route path='/projects/:id/board' exact component={Board} />
-        <Route path='/projects/:id/create-task' exact component={CreateTask} />
-        <Route path='/projects/:id/members' exact component={ManageMembers} />
-        <Route path='/history/projects/:projectId' exact component={ProjectHistory} />
-        <Route path='/history/projects/:projectId/tasks/:taskId' exact component={TaskHistory} />
-        <Route path='/edit-profile' exact component={EditProfile} />
-        <Redirect path='*' to='/projects' />
-      </Switch>
-    </div>
-  );
+    return (
+        <div className="flex w-full h-screen overflow-y-hidden">
+            <Switch>
+                <Route path="/projects" exact component={Projects} />
+                <Route path="/edit-project" exact component={EditProject} />
+                <Route path="/create-project" exact component={CreateProject} />
+                <Route path="/projects/:projectId/tasks" exact component={Tasks} />
+                <Route path="/projects/:projectId/tasks/:taskId" exact component={TaskDetail} />
+                <Route path="/projects/:projectId/board" exact component={Board} />
+                <Route path="/projects/:projectId/create-task" exact component={CreateTask} />
+                <Route path="/projects/:projectId/members" exact component={ManageMembers} />
+                <Route path="/history/projects/:projectId" exact component={ProjectHistory} />
+                <Route path="/history/projects/:projectId/tasks/:taskId" exact component={TaskHistory} />
+                <Route path="/edit-profile" exact component={EditProfile} />
+                <Redirect path="*" to="/projects" />
+            </Switch>
+        </div>
+    );
 };
