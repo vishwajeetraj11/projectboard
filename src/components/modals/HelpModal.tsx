@@ -54,7 +54,7 @@ export default function HelpModal({ isOpen, onDismiss }: Props) {
                     icon={<img src={GithubIcon} alt="Check out source code" />}
                     title="Source Code"
                     text="Check out the source code"
-                    link="https://github.com/vishwajeetraj11/productboard"
+                    link="https://github.com/vishwajeetraj11/projectboard"
                 />
                 <HelpSection
                     icon={<img src={FeedbackIcon} alt="OS Resume" />}

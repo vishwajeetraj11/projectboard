@@ -13,7 +13,7 @@ export const Footer: React.FC<Props> = () => {
                 <div>
                     <Button>
                         <a
-                            href="https://github.com/vishwajeetraj11/productboard"
+                            href="https://github.com/vishwajeetraj11/projectboard"
                             target="_blank"
                             referrerPolicy="no-referrer"
                             rel="noreferrer"
