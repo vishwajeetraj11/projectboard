@@ -26,7 +26,7 @@ export const Nav: React.FC<Props> = () => {
                                 fill="white"
                             />
                         </svg>
-                        <p className="ml-4 font-medium text-gray-700 text-md">Product Board</p>
+                        <p className="ml-4 font-medium text-gray-700 text-md">Project Board</p>
                     </div>
                     <div className="flex items-center">
                         <button
