@@ -71,6 +71,9 @@
       "last 1 safari version"
     ]
   },
+  "engines": {
+    "node": ">=16"
+  },
   "devDependencies": {
     "autoprefixer": "^9",
     "postcss": "^7",
