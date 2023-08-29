@@ -7,4 +7,4 @@ socket.on('connect_error', (err: any) => {
 });
 
 export default socket;
-console.log('socket')
+console.log('socket 1')
